@@ -1,0 +1,12 @@
+# Exclude from Vercel deploy (over 100MB per-file limit)
+# This file is hosted via GitHub Releases instead
+downloads/code/eqc-yearbook-starter.zip
+
+# Editor / OS
+.DS_Store
+.vscode
+.claude
+.remember
+.git
+node_modules
+_archive
