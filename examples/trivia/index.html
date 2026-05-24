@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#1a2332">
+<title>26B Trivia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --cream:#fef8ec;
+  --cream-2:#f5edd7;
+  --ink:#1a2332;
+  --ink-soft:#2c3e54;
+  --coral:#ff5757;
+  --coral-dark:#e63e3e;
+  --mustard:#ffb627;
+  --emerald:#10b981;
+  --emerald-dark:#0d9668;
+  --rose:#fce7e7;
+  --mist:#eee5cb;
+  --muted:#7c8ba1;
+  --shadow:0 4px 0 var(--ink);
+  --shadow-press:0 2px 0 var(--ink);
+  --radius:14px;
+  --radius-sm:10px;
+}
+html,body{margin:0;padding:0;height:100%;overflow:hidden}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  -webkit-tap-highlight-color:transparent;
+  font-size:16px;
+  line-height:1.4;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;padding:0;margin:0}
+button:focus-visible{outline:3px solid var(--mustard);outline-offset:2px}
+input,select{font-family:inherit;font-size:inherit}
+
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:560px;margin:0 auto;background:var(--cream);position:relative;border-left:2px solid var(--ink);border-right:2px solid var(--ink)}
+@media (max-width:600px){.app{border:none}}
+
+/* ===== HEADER ===== */
+.app-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px 10px;
+  background:var(--ink);color:var(--cream);
+  border-bottom:3px solid var(--mustard);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--mustard);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Caprasimo',serif;font-size:20px;
+  transform:rotate(-6deg);
+}
+.brand-title{font-family:'Caprasimo',serif;font-size:22px;letter-spacing:0.5px;line-height:1}
+.brand-sub{font-size:11px;opacity:0.7;letter-spacing:1px;text-transform:uppercase}
+
+.live-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--coral);box-shadow:0 0 0 0 var(--coral);
+  animation:pulse 1.8s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,87,87,0.6)}
+  70%{box-shadow:0 0 0 10px rgba(255,87,87,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,87,87,0)}
+}
+
+/* ===== TAB NAV ===== */
+.tabs{
+  display:flex;
+  background:var(--cream-2);
+  border-bottom:2px solid var(--ink);
+  padding:0;
+}
+.tab{
+  flex:1;padding:14px 8px;
+  font-weight:700;font-size:13px;letter-spacing:0.5px;text-transform:uppercase;
+  color:var(--ink-soft);
+  border-right:1px solid rgba(26,35,50,0.15);
+  position:relative;
+  transition:background 0.15s;
+}
+.tab:last-child{border-right:none}
+.tab.active{background:var(--cream);color:var(--ink)}
+.tab.active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;
+  background:var(--coral);
+}
+
+/* ===== MAIN ===== */
+.main{flex:1;overflow-y:auto;overscroll-behavior:contain}
+.view{display:none;padding:18px;animation:fadein 0.25s}
+.view.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== TYPOGRAPHY ===== */
+.section-title{
+  font-family:'Caprasimo',serif;font-size:24px;line-height:1;
+  margin:0 0 4px;color:var(--ink);
+}
+.section-sub{font-size:13px;color:var(--muted);margin:0 0 18px}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 22px;
+  background:var(--ink);color:var(--cream);
+  font-weight:700;font-size:15px;letter-spacing:0.3px;
+  border-radius:var(--radius);
+  border:2px solid var(--ink);
+  box-shadow:var(--shadow);
+  transition:transform 0.08s,box-shadow 0.08s;
+}
+.btn:hover{transform:translateY(1px);box-shadow:var(--shadow-press)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn-coral{background:var(--coral);color:var(--cream);border-color:var(--ink)}
+.btn-mustard{background:var(--mustard);color:var(--ink)}
+.btn-emerald{background:var(--emerald);color:var(--cream);border-color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+.btn-ghost:hover{background:var(--ink);color:var(--cream)}
+.btn-block{display:flex;width:100%}
+.btn-sm{padding:8px 14px;font-size:13px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ===== PLAY VIEW — LOBBY ===== */
+.lobby-card{
+  background:#fff;border:2px solid var(--ink);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;margin-bottom:18px;
+}
+.lobby-card h3{font-family:'Caprasimo',serif;margin:0 0 12px;font-size:18px;font-weight:400}
+.lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
+.lesson-chip{
+  padding:12px 10px;border:2px solid var(--ink);border-radius:var(--radius-sm);
+  background:var(--cream);font-weight:700;font-size:13px;text-align:center;
+  transition:all 0.12s;
+}
+.lesson-chip:hover{background:var(--mustard)}
+.lesson-chip.selected{background:var(--coral);color:var(--cream);transform:translateY(-2px);box-shadow:0 4px 0 var(--ink)}
+.lesson-chip .chip-count{display:block;font-size:10px;font-weight:500;opacity:0.7;letter-spacing:0.5px;margin-top:2px}
+.lesson-chip.selected .chip-count{opacity:1}
+
+.toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.toggle{
+  padding:8px 14px;border:2px solid var(--ink);border-radius:99px;
+  background:var(--cream);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;
+}
+.toggle.on{background:var(--ink);color:var(--cream)}
+
+/* ===== PLAY VIEW — IN GAME ===== */
+.game-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;font-size:12px;color:var(--muted);font-weight:600;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.game-pill{
+  display:inline-block;padding:4px 10px;border-radius:99px;
+  background:var(--ink);color:var(--cream);font-size:11px;
+}
+.game-pill.general{background:var(--mustard);color:var(--ink)}
+
+.question-card{
+  background:#fff;
+  border:3px solid var(--ink);
+  border-radius:18px;
+  box-shadow:6px 6px 0 var(--ink);
+  padding:22px 20px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+}
+.question-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at top right,rgba(255,182,39,0.12),transparent 60%);
+  pointer-events:none;
+}
+.question-text{
+  font-family:'Caprasimo',serif;
+  font-size:22px;line-height:1.25;
+  margin:0;color:var(--ink);position:relative;
+}
+
+.options-grid{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.option{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:#fff;border:2px solid var(--ink);border-radius:var(--radius);
+  font-weight:600;font-size:15px;text-align:left;
+  transition:all 0.12s;color:var(--ink);
+}
+.option:hover{background:var(--cream-2)}
+.option-letter{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--ink);color:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Caprasimo',serif;font-size:14px;flex-shrink:0;
+}
+.option.correct{background:var(--emerald);color:#fff;border-color:var(--ink);transform:translateY(-2px);box-shadow:0 4px 0 var(--ink)}
+.option.correct .option-letter{background:var(--cream);color:var(--emerald-dark)}
+.option.wrong{background:var(--rose);border-color:#c44}
+.option.wrong .option-letter{background:#c44;color:#fff}
+.option:disabled{cursor:default}
+
+.game-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+/* ===== AWARD PANEL ===== */
+.award-panel{
+  background:var(--mustard);
+  border:3px solid var(--ink);
+  border-radius:18px;
+  box-shadow:6px 6px 0 var(--ink);
+  padding:18px;margin-top:14px;
+  animation:slidein 0.3s;
+}
+@keyframes slidein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.award-title{
+  font-family:'Caprasimo',serif;font-size:18px;margin:0 0 10px;color:var(--ink);
+  display:flex;align-items:center;gap:10px;
+}
+.award-title::before{content:"";width:10px;height:10px;background:var(--coral);border-radius:50%;animation:pulse 1.8s infinite}
+.award-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:6px;
+}
+.award-btn{
+  padding:10px 8px;
+  background:#fff;border:2px solid var(--ink);border-radius:var(--radius-sm);
+  font-weight:700;font-size:13px;
+  transition:all 0.1s;
+}
+.award-btn:hover{background:var(--coral);color:var(--cream);transform:translateY(-2px);box-shadow:0 3px 0 var(--ink)}
+.award-btn.awarded{background:var(--emerald);color:#fff;animation:bounce 0.4s}
+@keyframes bounce{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.award-skip{margin-top:10px;text-align:center}
+
+/* ===== SCORES ===== */
+.podium{
+  display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:6px;
+  margin-bottom:20px;align-items:end;
+}
+.podium-step{
+  border:2px solid var(--ink);border-radius:var(--radius-sm) var(--radius-sm) 0 0;
+  padding:10px 6px 12px;text-align:center;
+  position:relative;
+}
+.podium-step.gold{background:var(--mustard);min-height:120px}
+.podium-step.silver{background:#d4dae3;min-height:95px}
+.podium-step.bronze{background:#e8a87c;min-height:80px}
+.podium-rank{font-family:'Caprasimo',serif;font-size:24px;line-height:1;margin-bottom:4px}
+.podium-name{font-weight:800;font-size:13px;line-height:1.1;word-break:break-word}
+.podium-pts{font-size:11px;font-weight:600;margin-top:2px;opacity:0.85}
+
+.leaderboard{display:flex;flex-direction:column;gap:6px}
+.lb-row{
+  display:grid;grid-template-columns:30px 1fr auto auto;gap:10px;align-items:center;
+  padding:10px 12px;background:#fff;border:2px solid var(--ink);border-radius:var(--radius-sm);
+}
+.lb-row.top{box-shadow:3px 3px 0 var(--ink)}
+.lb-rank{font-family:'Caprasimo',serif;font-size:16px;color:var(--muted)}
+.lb-name{font-weight:700}
+.lb-trivia{font-size:12px;color:var(--muted)}
+.lb-total{font-family:'Caprasimo',serif;font-size:20px;color:var(--coral)}
+
+/* ===== ATTENDANCE ===== */
+.week-card{
+  background:#fff;border:2px solid var(--ink);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;margin-bottom:18px;
+}
+.week-card h3{font-family:'Caprasimo',serif;margin:0 0 12px;font-size:18px;font-weight:400}
+.week-input{
+  width:100%;padding:10px 12px;
+  border:2px solid var(--ink);border-radius:var(--radius-sm);
+  background:var(--cream);font-weight:700;
+  margin-bottom:14px;
+}
+.rank-slot{
+  display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;
+  padding:10px;border:2px dashed var(--ink);border-radius:var(--radius-sm);
+  margin-bottom:8px;background:var(--cream);
+}
+.rank-slot.filled{border-style:solid;background:#fff}
+.rank-badge{
+  display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--ink);color:var(--cream);
+  font-family:'Caprasimo',serif;font-size:18px;
+}
+.rank-slot.r1 .rank-badge{background:var(--mustard);color:var(--ink)}
+.rank-slot.r2 .rank-badge{background:#aab4c2;color:var(--ink)}
+.rank-slot.r3 .rank-badge{background:#e8a87c;color:var(--ink)}
+.rank-pts{font-family:'Caprasimo',serif;color:var(--coral);font-size:16px}
+.rank-name-btn{padding:8px 12px;background:transparent;border:none;font-weight:700;text-align:left;width:100%}
+.rank-clear{font-size:11px;color:var(--muted);background:none;border:none;padding:4px 8px;text-decoration:underline}
+
+.student-picker{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  gap:6px;padding:14px;background:var(--cream-2);border:2px solid var(--ink);
+  border-radius:var(--radius);max-height:300px;overflow-y:auto;
+}
+.picker-btn{
+  padding:8px 6px;background:#fff;border:2px solid var(--ink);
+  border-radius:var(--radius-sm);font-weight:700;font-size:12px;
+}
+.picker-btn:hover{background:var(--coral);color:var(--cream)}
+.picker-btn:disabled{opacity:0.3;cursor:not-allowed}
+
+.week-history{margin-top:10px}
+.history-row{
+  display:flex;align-items:center;gap:8px;padding:10px;
+  background:var(--cream);border:1px solid var(--ink);border-radius:var(--radius-sm);
+  margin-bottom:6px;font-size:13px;
+}
+.history-week{font-weight:800;min-width:90px}
+.history-podium{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.history-name{padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700}
+.history-name.r1{background:var(--mustard);color:var(--ink)}
+.history-name.r2{background:#d4dae3;color:var(--ink)}
+.history-name.r3{background:#e8a87c;color:var(--ink)}
+
+/* ===== ROSTER ===== */
+.roster-list{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.roster-row{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;
+  background:#fff;border:2px solid var(--ink);border-radius:var(--radius-sm);
+}
+.roster-row input{
+  flex:1;border:none;background:transparent;font-weight:700;outline:none;padding:4px;
+}
+.roster-row .roster-pts{font-size:11px;color:var(--muted);font-weight:600}
+.roster-del{
+  background:transparent;border:none;font-size:18px;color:var(--coral-dark);padding:4px 8px;
+}
+.add-row{
+  display:flex;gap:8px;
+}
+.add-row input{
+  flex:1;padding:10px 12px;border:2px solid var(--ink);border-radius:var(--radius-sm);
+  background:var(--cream);font-weight:700;
+}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--cream);padding:12px 20px;
+  border-radius:99px;font-weight:700;font-size:13px;
+  box-shadow:0 6px 0 rgba(0,0,0,0.15);
+  z-index:50;animation:toast 2.5s;pointer-events:none;
+}
+@keyframes toast{
+  0%{opacity:0;transform:translate(-50%,20px)}
+  10%,90%{opacity:1;transform:translate(-50%,0)}
+  100%{opacity:0;transform:translate(-50%,-10px)}
+}
+
+.empty{
+  text-align:center;padding:30px 20px;color:var(--muted);
+  border:2px dashed var(--ink);border-radius:var(--radius);
+  font-style:italic;
+}
+
+.danger-zone{
+  margin-top:30px;padding:14px;
+  border:2px dashed #c44;border-radius:var(--radius);
+  background:var(--rose);
+}
+.danger-zone h4{margin:0 0 8px;font-size:13px;color:#c44;text-transform:uppercase;letter-spacing:0.5px}
+
+/* responsive type */
+@media (max-width:380px){
+  .question-text{font-size:18px}
+  .section-title{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div>
+        <div class="brand-title">26B TRIVIA</div>
+        <div class="brand-sub">EQC · Web Dev</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:1px">
+      <span class="live-dot" id="syncDot"></span><span style="opacity:0.7">SAVED</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="play">Play</button>
+    <button class="tab" data-tab="scores">Scores</button>
+    <button class="tab" data-tab="attend">Bonus</button>
+    <button class="tab" data-tab="roster">Roster</button>
+  </nav>
+
+  <main class="main">
+    <!-- PLAY VIEW -->
+    <section class="view active" id="v-play">
+      <div id="lobby">
+        <h2 class="section-title">Pick a lesson</h2>
+        <p class="section-sub">20 questions per lesson · 16 topic + 4 general knowledge</p>
+        <div class="lesson-grid" id="lessonGrid"></div>
+
+        <div class="lobby-card" style="margin-top:18px">
+          <h3>Game settings</h3>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase">Order</div>
+          <div class="toggle-row">
+            <button class="toggle on" data-setting="order" data-val="shuffle">Shuffle</button>
+            <button class="toggle" data-setting="order" data-val="sequential">In order</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin:14px 0 6px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase">Length</div>
+          <div class="toggle-row">
+            <button class="toggle" data-setting="length" data-val="5">5 Q</button>
+            <button class="toggle on" data-setting="length" data-val="10">10 Q</button>
+            <button class="toggle" data-setting="length" data-val="20">All 20</button>
+          </div>
+          <button class="btn btn-coral btn-block" id="startGameBtn" style="margin-top:18px" disabled>Start round →</button>
+        </div>
+      </div>
+
+      <div id="game" style="display:none">
+        <div class="game-header">
+          <span><span id="gameLesson">—</span> · Q <span id="gameProgress">1/10</span></span>
+          <span class="game-pill" id="gameTypePill">Topic</span>
+        </div>
+        <div class="question-card">
+          <p class="question-text" id="questionText"></p>
+          <div class="options-grid" id="optionsGrid"></div>
+        </div>
+        <div class="game-actions">
+          <button class="btn btn-coral" id="revealBtn">Reveal answer</button>
+          <button class="btn btn-ghost" id="skipBtn">Skip</button>
+          <button class="btn btn-ghost" id="quitBtn">Quit</button>
+        </div>
+        <div id="awardPanel"></div>
+      </div>
+    </section>
+
+    <!-- SCORES VIEW -->
+    <section class="view" id="v-scores">
+      <h2 class="section-title">Leaderboard</h2>
+      <p class="section-sub">Trivia points + weekly attendance bonuses (10 / 5 / 2)</p>
+      <div id="podium" class="podium"></div>
+      <div id="leaderboard" class="leaderboard"></div>
+    </section>
+
+    <!-- ATTENDANCE BONUS VIEW -->
+    <section class="view" id="v-attend">
+      <h2 class="section-title">Weekly attendance bonus</h2>
+      <p class="section-sub">Top 3 attenders each week get 10 / 5 / 2 bonus points</p>
+
+      <div class="week-card">
+        <h3>This week</h3>
+        <input class="week-input" id="weekInput" placeholder="e.g. 2026-W21">
+
+        <div class="rank-slot r1" id="slot1" data-rank="1">
+          <div class="rank-badge">1</div>
+          <button class="rank-name-btn">Tap to pick…</button>
+          <div class="rank-pts">+10</div>
+        </div>
+        <div class="rank-slot r2" id="slot2" data-rank="2">
+          <div class="rank-badge">2</div>
+          <button class="rank-name-btn">Tap to pick…</button>
+          <div class="rank-pts">+5</div>
+        </div>
+        <div class="rank-slot r3" id="slot3" data-rank="3">
+          <div class="rank-badge">3</div>
+          <button class="rank-name-btn">Tap to pick…</button>
+          <div class="rank-pts">+2</div>
+        </div>
+
+        <div id="weekPicker" style="display:none;margin-top:12px">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:8px">Pick student for rank <span id="pickRank">1</span></div>
+          <div class="student-picker" id="weekStudents"></div>
+          <button class="btn btn-ghost btn-sm" id="cancelPickBtn" style="margin-top:10px">Cancel</button>
+        </div>
+
+        <button class="btn btn-emerald btn-block" id="saveWeekBtn" style="margin-top:14px" disabled>Save week & award bonuses</button>
+      </div>
+
+      <h3 style="font-family:'Caprasimo',serif;font-weight:400;font-size:18px;margin:20px 0 10px">Past weeks</h3>
+      <div class="week-history" id="weekHistory"></div>
+    </section>
+
+    <!-- ROSTER VIEW -->
+    <section class="view" id="v-roster">
+      <h2 class="section-title">Roster</h2>
+      <p class="section-sub">Edit names · long-press to delete · tracked across the whole intake</p>
+      <div class="roster-list" id="rosterList"></div>
+      <div class="add-row">
+        <input id="newStudent" placeholder="Add student name" maxlength="40">
+        <button class="btn btn-mustard btn-sm" id="addStudentBtn">Add</button>
+      </div>
+
+      <div class="danger-zone">
+        <h4>Reset zone</h4>
+        <div class="btn-row">
+          <button class="btn btn-ghost btn-sm" id="resetPointsBtn">Reset all points</button>
+          <button class="btn btn-ghost btn-sm" id="resetAllBtn">Reset everything</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// ============================================================
+// QUESTIONS
+// ============================================================
+const QUESTIONS = JSON.parse(`{"HTML":{"topic":[{"q":"Which tag defines the largest heading in HTML?","options":["<h6>","<heading>","<h1>","<head>"],"correct":2},{"q":"What does HTML stand for?","options":["Hyper Trainer Marking Language","HyperText Markup Language","Home Tool Markup Language","Hyperlinks and Text Markup Language"],"correct":1},{"q":"Which attribute provides alternative text for an image?","options":["title","src","alt","label"],"correct":2},{"q":"Which element is used for the largest container of a webpage's main content?","options":["<section>","<main>","<div>","<body>"],"correct":1},{"q":"Which tag creates an unordered (bulleted) list?","options":["<ol>","<list>","<ul>","<bullet>"],"correct":2},{"q":"What is the correct HTML element for inserting a line break?","options":["<break>","<br>","<lb>","<newline>"],"correct":1},{"q":"Which attribute on an <a> tag specifies the destination URL?","options":["link","src","href","url"],"correct":2},{"q":"Which element should wrap navigation links?","options":["<menu>","<navigate>","<links>","<nav>"],"correct":3},{"q":"Which input type creates a checkbox?","options":["type=\\"check\\"","type=\\"checkbox\\"","type=\\"tick\\"","type=\\"box\\""],"correct":1},{"q":"What does the <meta charset=\\"UTF-8\\"> tag do?","options":["Sets the page title","Defines character encoding","Links a stylesheet","Loads JavaScript"],"correct":1},{"q":"Which tag is used to embed a video?","options":["<media>","<movie>","<video>","<embed>"],"correct":2},{"q":"What is the correct way to comment in HTML?","options":["// comment","/* comment */","<!-- comment -->","# comment"],"correct":2},{"q":"Which element represents the footer of a document or section?","options":["<bottom>","<footer>","<end>","<foot>"],"correct":1},{"q":"Which attribute makes an input field required before form submission?","options":["mandatory","needed","required","must-fill"],"correct":2},{"q":"What does semantic HTML mean?","options":["Using tags that describe their meaning","Writing shorter code","Using only divs and spans","Adding more comments"],"correct":0},{"q":"Which tag groups related form fields together?","options":["<group>","<fieldset>","<formgroup>","<section>"],"correct":1}],"general":[{"q":"What is the capital city of Western Australia?","options":["Adelaide","Darwin","Perth","Brisbane"],"correct":2},{"q":"How many continents are there?","options":["5","6","7","8"],"correct":2},{"q":"Which planet is known as the Red Planet?","options":["Venus","Jupiter","Mars","Saturn"],"correct":2},{"q":"Who painted the Mona Lisa?","options":["Vincent van Gogh","Pablo Picasso","Leonardo da Vinci","Michelangelo"],"correct":2}]},"CSS":{"topic":[{"q":"What does CSS stand for?","options":["Computer Style Sheets","Cascading Style Sheets","Creative Style System","Coded Style Syntax"],"correct":1},{"q":"Which property changes the text colour?","options":["font-color","text-color","color","foreground"],"correct":2},{"q":"How do you select an element with id=\\"header\\" in CSS?","options":[".header","*header","#header","header"],"correct":2},{"q":"Which property controls the space inside an element's border?","options":["margin","spacing","padding","gap"],"correct":2},{"q":"Which property is used to make text bold?","options":["text-style: bold","font-weight: bold","font-bold: true","text-weight: bold"],"correct":1},{"q":"What does the box model consist of, from inside out?","options":["Margin, border, padding, content","Content, padding, border, margin","Padding, content, margin, border","Border, margin, padding, content"],"correct":1},{"q":"Which value of \`display\` removes an element from the layout entirely?","options":["hidden","invisible","none","remove"],"correct":2},{"q":"Which CSS unit is relative to the root element's font size?","options":["em","px","rem","vh"],"correct":2},{"q":"Which property aligns flex items along the main axis?","options":["align-items","justify-content","flex-align","place-items"],"correct":1},{"q":"Which selector targets every <p> directly inside a <div>?","options":["div p","div > p","div + p","div ~ p"],"correct":1},{"q":"What does \`position: absolute\` do?","options":["Stays in the document flow","Positions relative to nearest positioned ancestor","Always positions to the viewport","Removes the element"],"correct":1},{"q":"Which property creates rounded corners?","options":["corner-radius","border-round","border-radius","round-edge"],"correct":2},{"q":"What's the difference between \`em\` and \`rem\`?","options":["em is older, rem is newer","em is relative to parent, rem is relative to root","There is no difference","rem is for mobile only"],"correct":1},{"q":"Which CSS property would you use to create a CSS Grid layout?","options":["display: grid","layout: grid","grid: on","type: grid"],"correct":0},{"q":"How do you apply a style only to screens 768px wide or less?","options":["@small (max: 768px)","@media (max-width: 768px)","@screen (768px)","@responsive (small)"],"correct":1},{"q":"Which pseudo-class targets a link a user is hovering over?","options":[":active",":focus",":hover",":visited"],"correct":2}],"general":[{"q":"What's the tallest mountain in the world?","options":["K2","Mount Kilimanjaro","Mount Everest","Denali"],"correct":2},{"q":"Which Australian animal lays eggs but is a mammal?","options":["Wombat","Platypus","Koala","Quokka"],"correct":1},{"q":"How many sides does a hexagon have?","options":["5","6","7","8"],"correct":1},{"q":"What's the largest ocean on Earth?","options":["Atlantic","Indian","Arctic","Pacific"],"correct":3}]},"JavaScript":{"topic":[{"q":"Which keyword declares a variable that cannot be reassigned?","options":["var","let","const","static"],"correct":2},{"q":"What does \`typeof null\` return?","options":["\\"null\\"","\\"undefined\\"","\\"object\\"","\\"none\\""],"correct":2},{"q":"Which method adds an item to the end of an array?","options":["push()","add()","append()","insert()"],"correct":0},{"q":"What's the result of \`2 + \\"2\\"\` in JavaScript?","options":["4","\\"22\\"","NaN","Error"],"correct":1},{"q":"Which symbol is used for strict equality?","options":["=","==","===","!="],"correct":2},{"q":"How do you write a function expression assigned to a variable?","options":["function myFunc() {}","const myFunc = function() {}","func myFunc()","def myFunc():"],"correct":1},{"q":"What does the DOM stand for?","options":["Document Object Model","Data Object Mapping","Display Object Manager","Dynamic Output Module"],"correct":0},{"q":"Which method selects the first element matching a CSS selector?","options":["getElementById()","querySelector()","selectElement()","find()"],"correct":1},{"q":"What's an arrow function?","options":["A function with a return arrow","A shorter syntax: \`() => {}\`","A function that only returns objects","A function inside a function"],"correct":1},{"q":"What does \`addEventListener\` do?","options":["Removes an event","Listens for and responds to events","Adds a new event type","Logs events"],"correct":1},{"q":"What's the difference between \`let\` and \`var\`?","options":["No difference","let is block-scoped, var is function-scoped","var is newer","let is faster"],"correct":1},{"q":"Which array method creates a new array with results of calling a function on every element?","options":["forEach()","filter()","map()","reduce()"],"correct":2},{"q":"What is JSON?","options":["Java Source Object Notation","JavaScript Object Notation","JavaScript Online Network","Just Some Object Notes"],"correct":1},{"q":"What's the purpose of \`async/await\`?","options":["To make code run faster","To handle asynchronous operations more cleanly","To pause the browser","To add delays"],"correct":1},{"q":"How do you write a template literal?","options":["\\"Hello \$name\\"","'Hello {name}'","\`Hello \${name}\`","[Hello \$name]"],"correct":2},{"q":"What does \`JSON.parse()\` do?","options":["Converts an object to a string","Converts a JSON string to an object","Validates JSON","Formats JSON"],"correct":1}],"general":[{"q":"Which Australian PM disappeared while swimming in 1967?","options":["John Curtin","Robert Menzies","Harold Holt","Gough Whitlam"],"correct":2},{"q":"How many strings does a standard guitar have?","options":["4","5","6","7"],"correct":2},{"q":"Which element has the chemical symbol 'Au'?","options":["Silver","Gold","Aluminium","Argon"],"correct":1},{"q":"What year did Australia federate?","options":["1788","1901","1945","1788"],"correct":1}]},"Bootstrap":{"topic":[{"q":"What is Bootstrap primarily used for?","options":["Database management","Frontend CSS framework for responsive design","Backend Node.js framework","Image editing"],"correct":1},{"q":"How many columns are in Bootstrap's default grid?","options":["6","10","12","16"],"correct":2},{"q":"Which class makes an element span all 12 columns on small screens and 6 on medium+?","options":["col-12 col-md-6","col-6-12","col-all col-half","span-12 span-6"],"correct":0},{"q":"Which Bootstrap class creates a primary blue button?","options":["btn btn-blue","button-primary","btn btn-primary","btn-primary-button"],"correct":2},{"q":"Which class adds responsive container behaviour?","options":["container","wrapper","main","frame"],"correct":0},{"q":"What does \`d-flex\` do?","options":["Adds a deflate animation","Applies display: flex","Disables flex","Adds a delay"],"correct":1},{"q":"Which class hides an element on screens smaller than large?","options":["d-none d-lg-block","hidden-mobile","display-large","show-lg"],"correct":0},{"q":"What does \`mt-3\` mean in Bootstrap?","options":["Margin-top size 3","Max-text 3 lines","Move-top 3","Multi-target 3"],"correct":0},{"q":"Which file must you include to use Bootstrap's interactive components like dropdowns?","options":["Bootstrap CSS only","Bootstrap JavaScript bundle","jQuery only","A custom plugin"],"correct":1},{"q":"Which class creates a horizontal navigation bar?","options":["nav-horizontal","navbar","nav-bar","menu-h"],"correct":1},{"q":"What is the Bootstrap class for a card component?","options":["box","panel","card","tile"],"correct":2},{"q":"Which breakpoint prefix is for extra-large screens (≥1200px)?","options":["xl","lg","xxl","xs"],"correct":0},{"q":"Which class creates a Bootstrap modal?","options":["popup","modal","dialog","overlay"],"correct":1},{"q":"What does \`text-center\` do?","options":["Centers an element horizontally","Aligns text to the center","Vertically centers text","Creates a text container"],"correct":1},{"q":"Which class makes a button take the full width of its container?","options":["btn-full","btn-100","w-100","btn-block"],"correct":2},{"q":"What is the purpose of \`data-bs-toggle\`?","options":["Toggling Bootstrap version","Triggering Bootstrap components like modals/dropdowns","Disabling Bootstrap styles","Enabling dark mode"],"correct":1}],"general":[{"q":"What's the currency of Japan?","options":["Yuan","Won","Yen","Ringgit"],"correct":2},{"q":"Which AFL team is based in Perth and plays at Optus Stadium?","options":["Fremantle and West Coast","Only West Coast","Only Fremantle","Perth Wildcats"],"correct":0},{"q":"How many bones are in the adult human body?","options":["196","206","216","246"],"correct":1},{"q":"Who wrote 'Romeo and Juliet'?","options":["Charles Dickens","Jane Austen","William Shakespeare","Mark Twain"],"correct":2}]},"React/Tailwind":{"topic":[{"q":"What is React?","options":["A database","A CSS framework","A JavaScript library for building UIs","A backend server"],"correct":2},{"q":"What is JSX?","options":["Java Syntax Extension","JavaScript XML — HTML-like syntax in JS","A new JS version","A type of CSS"],"correct":1},{"q":"Which hook is used to add state to a functional component?","options":["useEffect","useState","useRef","useContext"],"correct":1},{"q":"What does \`useEffect\` do?","options":["Adds CSS effects","Runs side effects after render","Creates state","Improves performance"],"correct":1},{"q":"How do you pass data from parent to child component?","options":["Through state","Through props","Through context","Through hooks"],"correct":1},{"q":"What's the correct way to render a list in React?","options":["Use a for loop","Use map() to return JSX elements","Use forEach()","Use innerHTML"],"correct":1},{"q":"Why does React need a \`key\` prop when rendering lists?","options":["For SEO","To uniquely identify elements for efficient updates","It's optional","For styling"],"correct":1},{"q":"What is Tailwind CSS?","options":["A component library","A utility-first CSS framework","A React alternative","A build tool"],"correct":1},{"q":"Which Tailwind class sets padding of 1rem on all sides?","options":["p-4","padding-4","pad-1rem","p-1"],"correct":0},{"q":"Which Tailwind class makes text bold?","options":["text-bold","font-bold","bold","weight-bold"],"correct":1},{"q":"What does \`flex\` do in Tailwind?","options":["Makes the element flexible in size","Sets display: flex","Allows scrolling","Adds animation"],"correct":1},{"q":"Which class makes a div take the full width of its parent in Tailwind?","options":["w-100","width-full","w-full","full-width"],"correct":2},{"q":"What's the Tailwind prefix for tablet-size and larger screens (768px+)?","options":["sm:","md:","lg:","tablet:"],"correct":1},{"q":"In React, what's the correct way to handle a click event?","options":["onclick=\\"handle()\\"","onClick={handle}","on-click=handle","click={handle}"],"correct":1},{"q":"What's a React component?","options":["A CSS class","A reusable piece of UI defined as a function or class","A database table","An HTML file"],"correct":1},{"q":"Which Tailwind class adds a hover background colour change?","options":["bg-hover-blue","hover:bg-blue-500","on-hover-bg","bg:hover-blue"],"correct":1}],"general":[{"q":"Which band is Liam and Noel Gallagher famous for?","options":["Blur","Pulp","Oasis","Radiohead"],"correct":2},{"q":"What's the largest country by land area?","options":["USA","China","Canada","Russia"],"correct":3},{"q":"How many minutes are in a full day?","options":["1240","1440","1640","1840"],"correct":1},{"q":"What's the capital of Italy?","options":["Milan","Naples","Rome","Venice"],"correct":2}]},"Python":{"topic":[{"q":"Which symbol starts a single-line comment in Python?","options":["//","#","<!--","--"],"correct":1},{"q":"What is the correct way to print 'Hello, World!' in Python?","options":["echo \\"Hello, World!\\"","print(\\"Hello, World!\\")","println(\\"Hello, World!\\")","console.log(\\"Hello, World!\\")"],"correct":1},{"q":"Which of these is a Python list?","options":["{1, 2, 3}","(1, 2, 3)","[1, 2, 3]","<1, 2, 3>"],"correct":2},{"q":"What does \`len([1, 2, 3, 4])\` return?","options":["3","4","5","0"],"correct":1},{"q":"Which keyword defines a function in Python?","options":["function","func","def","fn"],"correct":2},{"q":"What's the result of \`5 // 2\` in Python?","options":["2.5","2","3","2.0"],"correct":1},{"q":"Which data type is \`True\`?","options":["int","bool","str","None"],"correct":1},{"q":"How do you start a \`for\` loop iterating over numbers 0–4?","options":["for i in range(5):","for(i=0; i<5; i++)","for i to 5:","loop i 0 to 4:"],"correct":0},{"q":"Which symbol is used for exponents in Python?","options":["^","**","exp","//"],"correct":1},{"q":"What does \`input()\` return?","options":["An integer","A float","A string","Whatever the user types as its native type"],"correct":2},{"q":"Which method adds an item to the end of a list?","options":[".add()",".append()",".push()",".insert()"],"correct":1},{"q":"How do you create a dictionary in Python?","options":["[key: value]","{\\"key\\": \\"value\\"}","<key=value>","(key, value)"],"correct":1},{"q":"What does the \`if __name__ == \\"__main__\\":\` block do?","options":["Names the file","Runs code only when the file is executed directly","Defines the entry function","Imports modules"],"correct":1},{"q":"Which keyword is used to handle exceptions?","options":["catch","except","error","rescue"],"correct":1},{"q":"What does \`import math\` do?","options":["Calculates a value","Imports the math module for use","Defines a math function","Runs math tests"],"correct":1},{"q":"How do you write an f-string in Python?","options":["f\\"Hello, {name}\\"","\\"Hello, \$name\\"","format(\\"Hello, {}\\", name)","All of the above are valid f-strings"],"correct":0}],"general":[{"q":"Which fictional snake gives Python its name?","options":["Cobra Kai","The Monty Python comedy group","Slytherin's basilisk","Anaconda"],"correct":1},{"q":"What's the speed of light (approximate)?","options":["3,000 km/s","300,000 km/s","30,000 km/s","3,000,000 km/s"],"correct":1},{"q":"Which Australian band released 'Highway to Hell'?","options":["Midnight Oil","INXS","AC/DC","Cold Chisel"],"correct":2},{"q":"How many degrees in a right angle?","options":["45","60","90","180"],"correct":2}]},"Node/Express":{"topic":[{"q":"What is Node.js?","options":["A browser","A JavaScript runtime that runs outside the browser","A database","A CSS framework"],"correct":1},{"q":"Which command installs a package called 'express'?","options":["node install express","npm install express","install express","npm get express"],"correct":1},{"q":"What is Express?","options":["A package manager","A web application framework for Node.js","A database driver","A CSS preprocessor"],"correct":1},{"q":"Which file lists a Node project's dependencies?","options":["dependencies.txt","package.json","node.config","modules.json"],"correct":1},{"q":"What does \`npm init\` do?","options":["Installs all packages","Creates a new package.json file","Starts a server","Updates Node.js"],"correct":1},{"q":"Which method handles HTTP GET requests in Express?","options":["app.get()","app.fetch()","app.read()","app.request()"],"correct":0},{"q":"What does middleware do in Express?","options":["Stores data","Runs code during the request/response cycle","Renders HTML","Connects to databases only"],"correct":1},{"q":"Which Node module is built-in for working with file paths?","options":["files","filesystem","path","directory"],"correct":2},{"q":"What's the default port often used for Express dev servers in tutorials?","options":["80","3000","8080","5000"],"correct":1},{"q":"Which HTTP method is used to create a new resource?","options":["GET","POST","PUT","DELETE"],"correct":1},{"q":"What does \`res.json(data)\` do in Express?","options":["Logs JSON","Sends a JSON response","Parses JSON","Validates JSON"],"correct":1},{"q":"Which function loads environment variables from a .env file?","options":["env.load()","require('dotenv').config()","process.loadEnv()","node --env"],"correct":1},{"q":"What does CORS stand for?","options":["Cross-Origin Resource Sharing","Client Origin Request Server","Core Origin Routing System","Content Origin Resource Standard"],"correct":0},{"q":"Which module bundles npm packages into your project?","options":["node_modules folder","package-lock.json","npm_cache","modules.lock"],"correct":0},{"q":"What does \`app.use(express.json())\` do?","options":["Sends JSON","Parses incoming JSON request bodies","Connects to a JSON database","Renders JSON pages"],"correct":1},{"q":"What's the role of \`req\` and \`res\` in an Express route?","options":["They are arbitrary names","request and response objects","Database connections","Error handlers"],"correct":1}],"general":[{"q":"What's the longest river in the world?","options":["Amazon","Nile","Yangtze","Mississippi"],"correct":1},{"q":"Who is the lead singer of Powderfinger?","options":["Bernard Fanning","Daniel Johns","Jet Black","Chris Cheney"],"correct":0},{"q":"How many players on a netball team?","options":["5","6","7","8"],"correct":2},{"q":"What gas do plants absorb from the air?","options":["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],"correct":3}]},"MongoDB":{"topic":[{"q":"What kind of database is MongoDB?","options":["Relational (SQL)","Document-based (NoSQL)","Graph","Key-value only"],"correct":1},{"q":"What's the equivalent of a 'row' in MongoDB?","options":["Record","Tuple","Document","Entry"],"correct":2},{"q":"What's the equivalent of a 'table' in MongoDB?","options":["Collection","Schema","Bucket","Folder"],"correct":0},{"q":"What format does MongoDB use to store documents?","options":["XML","BSON (binary JSON)","CSV","Plain text"],"correct":1},{"q":"Which command inserts a single document into a collection?","options":["insert()","add()","insertOne()","create()"],"correct":2},{"q":"Which command finds all documents in a collection?","options":["findAll()","getAll()","find({})","all()"],"correct":2},{"q":"What's a common Node.js library for connecting to MongoDB?","options":["mongodb-connect","mongoose","mongolink","mongojs"],"correct":1},{"q":"What is a schema in Mongoose?","options":["The database location","The structure/blueprint of documents in a collection","A query","A user role"],"correct":1},{"q":"What does \`_id\` refer to in a MongoDB document?","options":["The username","A unique identifier automatically generated for each document","A foreign key","A timestamp"],"correct":1},{"q":"Which operator finds documents where a field is greater than a value?","options":["\$gt","\$greater",">","\$more"],"correct":0},{"q":"What's MongoDB Atlas?","options":["A schema designer","MongoDB's cloud database service","A query language","A CLI tool"],"correct":1},{"q":"Which method updates documents matching a filter?","options":["change()","update()","updateMany()","modify()"],"correct":2},{"q":"How do you delete a single matching document?","options":["remove()","deleteOne()","destroy()","drop()"],"correct":1},{"q":"What's a connection string used for?","options":["Encryption","Connecting your app to the MongoDB server","Joining collections","Defining schemas"],"correct":1},{"q":"What's the advantage of NoSQL over SQL for some use cases?","options":["Strict typing","Flexible schema, easier to scale horizontally","Forced relationships","Faster always"],"correct":1},{"q":"Which environment variable is commonly used to store a MongoDB URI?","options":["DB_PATH","MONGO_URI","DATABASE","DB_LINK"],"correct":1}],"general":[{"q":"What does WA stand for in Australia?","options":["West Australia","Western Australia","Wonderful Australia","Wild Aussie"],"correct":1},{"q":"Which planet is closest to the Sun?","options":["Venus","Earth","Mercury","Mars"],"correct":2},{"q":"What food group is bread mainly in?","options":["Protein","Dairy","Grains/Carbs","Fruit"],"correct":2},{"q":"In what year did the first Star Wars film release?","options":["1975","1977","1980","1983"],"correct":1}]},"Privacy & Security":{"topic":[{"q":"What does HTTPS stand for?","options":["HyperText Transfer Protocol Standard","HyperText Transfer Protocol Secure","High Trust Transfer Protocol","Hosted Text Transfer Protocol Secure"],"correct":1},{"q":"What does an SSL certificate do?","options":["Slows the website","Encrypts data between client and server","Backs up the site","Logs visitors"],"correct":1},{"q":"What is phishing?","options":["A type of password","Fraudulent attempts to obtain sensitive info by impersonation","A coding technique","An SEO method"],"correct":1},{"q":"What's a strong password practice?","options":["Reusing one strong password everywhere","Using a long passphrase + 2FA + password manager","Writing it on a sticky note","Using your dog's name"],"correct":1},{"q":"What is 2FA?","options":["Two-Factor Authentication","Two File Access","Twice-Failed Attempt","Two-Form Application"],"correct":0},{"q":"What does SQL injection do?","options":["Speeds up queries","Injects malicious SQL via user input to attack a database","Adds new tables","Backs up data"],"correct":1},{"q":"Which is a way to prevent SQL injection?","options":["Use parameterised queries / prepared statements","Trust all user input","Disable HTTPS","Make all queries strings"],"correct":0},{"q":"What's XSS?","options":["Cross-Site Scripting — injecting malicious scripts into webpages","Extra Stylesheet System","External Server Sync","X-Server Security"],"correct":0},{"q":"What does GDPR primarily protect?","options":["Software licences","Personal data of EU residents","Open source code","Web hosting providers"],"correct":1},{"q":"What's Australia's main privacy legislation?","options":["The Internet Act","The Privacy Act 1988","The Data Protection Code","The Cyber Safety Act"],"correct":1},{"q":"What's a CSRF attack?","options":["Cross-Site Request Forgery — tricks a user into submitting a request they didn't intend","CSS Reset Framework","Cached Server Request Failure","Client Side Resource Fetch"],"correct":0},{"q":"Why should passwords be hashed, not stored in plain text?","options":["For speed","So that if the database is breached, raw passwords aren't exposed","Hashing is optional","To make them shorter"],"correct":1},{"q":"What's the principle of least privilege?","options":["Give users only the permissions they need","Give admins extra power","Always deny access first","All users get equal access"],"correct":0},{"q":"What does a firewall do?","options":["Cools the server","Controls incoming and outgoing network traffic based on rules","Stores files","Sends emails"],"correct":1},{"q":"What's a 'cookie' in web terms?","options":["A small piece of data a website stores in your browser","A type of malware","A backup file","A login button"],"correct":0},{"q":"What's a VPN's main purpose?","options":["Speed up the internet","Encrypt and mask your traffic via an intermediary server","Block ads only","Compress images"],"correct":1}],"general":[{"q":"Which country invented sushi?","options":["China","Korea","Japan","Thailand"],"correct":2},{"q":"Who painted the Sistine Chapel ceiling?","options":["Donatello","Raphael","Michelangelo","Botticelli"],"correct":2},{"q":"What's the smallest country in the world?","options":["Monaco","Vatican City","San Marino","Liechtenstein"],"correct":1},{"q":"How many wheels on a standard skateboard?","options":["2","3","4","6"],"correct":2}]},"Deployment & Hosting":{"topic":[{"q":"What does 'deployment' mean in web development?","options":["Writing code","Putting your code on a server so people can access it","Designing the site","Testing locally"],"correct":1},{"q":"Which of these is a popular static site hosting service?","options":["Vercel","MongoDB","Express","React"],"correct":0},{"q":"What's a domain name?","options":["A type of file","A human-readable address for a website (e.g., example.com)","An IP address","An email"],"correct":1},{"q":"What's DNS?","options":["Domain Name System — translates domain names to IP addresses","Data Networking Server","Dynamic Node Service","Digital Naming Standard"],"correct":0},{"q":"What does a CDN do?","options":["Stores backups","Serves content from servers geographically closer to users","Encrypts data","Generates code"],"correct":1},{"q":"What's the difference between staging and production?","options":["No difference","Staging is a pre-release test environment; production is the live version users access","Staging is faster","Production is for testing"],"correct":1},{"q":"Which service is famous for free static hosting via Git pushes?","options":["MongoDB Atlas","GitHub Pages","Stripe","Auth0"],"correct":1},{"q":"What does CI/CD stand for?","options":["Continuous Integration / Continuous Deployment","Client Interface / Code Display","Code Integration / Component Design","Cloud Infrastructure / Container Deploy"],"correct":0},{"q":"Which command builds a Vite project for production?","options":["npm run start","npm run build","npm run deploy","npm run prod"],"correct":1},{"q":"What's a build artifact?","options":["A bug","The optimised, compiled output ready to be served","A test file","A design file"],"correct":1},{"q":"Why is HTTPS required for many modern browser features?","options":["For security and to enable features like service workers, camera access","It's not required","For SEO only","Faster loading"],"correct":0},{"q":"What's a 404 error?","options":["Server error","The requested resource was not found","Unauthorised access","Server too busy"],"correct":1},{"q":"What does 'serverless' actually mean?","options":["No servers exist","You don't manage the servers — the provider does","It runs only on the client","It uses peer-to-peer networking"],"correct":1},{"q":"Which file commonly tells search engines what to index?","options":["sitemap.xml and robots.txt","index.html","package.json","README.md"],"correct":0},{"q":"What does environment configuration usually live in?","options":["A .env file","The HTML head","node_modules","The README"],"correct":0},{"q":"What's a 500 error?","options":["Page not found","An internal server error","Permission denied","Redirect"],"correct":1}],"general":[{"q":"Which Aussie reptile is named for its frilled neck?","options":["Blue-tongued lizard","Frilled-neck lizard","Bearded dragon","Goanna"],"correct":1},{"q":"What's the chemical formula for water?","options":["CO2","H2O","O2","NaCl"],"correct":1},{"q":"Which artist painted 'Starry Night'?","options":["Monet","van Gogh","Picasso","Dali"],"correct":1},{"q":"How many degrees in a circle?","options":["180","270","360","400"],"correct":2}]},"Blockchain":{"topic":[{"q":"What is a blockchain?","options":["A type of database","A distributed, immutable ledger of transactions linked in blocks","A coding language","A web framework"],"correct":1},{"q":"What's the first and most famous cryptocurrency?","options":["Ethereum","Bitcoin","Litecoin","Dogecoin"],"correct":1},{"q":"Who created Bitcoin (or at least published its whitepaper)?","options":["Vitalik Buterin","Elon Musk","Satoshi Nakamoto","Tim Berners-Lee"],"correct":2},{"q":"What does 'decentralised' mean for blockchains?","options":["No single entity controls the system","Run by one company","Stored on one server","Only the rich can use it"],"correct":0},{"q":"What's a smart contract?","options":["A legal lawyer chat","Self-executing code that runs on a blockchain when conditions are met","An NFT","A purchase agreement"],"correct":1},{"q":"Which blockchain is best known for smart contracts?","options":["Bitcoin","Ethereum","Solana mainly","Dogecoin"],"correct":1},{"q":"What does NFT stand for?","options":["Non-Fungible Token","New Fast Transaction","Network File Transfer","Numeric Function Type"],"correct":0},{"q":"What's mining in crypto?","options":["Physical digging","Validating transactions and adding blocks (often using compute work)","Buying coins","Selling NFTs"],"correct":1},{"q":"What's a 'wallet' in crypto?","options":["A bank account","Software that stores your private keys and lets you sign transactions","An NFT marketplace","A type of token"],"correct":1},{"q":"What's a private key?","options":["A public address","A secret cryptographic key proving ownership — never share it","A username","A type of token"],"correct":1},{"q":"What does 'gas' refer to on Ethereum?","options":["A type of coin","Fees paid to execute operations on the network","Storage","Mining hardware"],"correct":1},{"q":"What's a hash function?","options":["A breakfast item","A one-way function that produces a fixed-size output from input","A loop","An API endpoint"],"correct":1},{"q":"What's Proof of Work?","options":["A signed contract","A consensus mechanism where miners solve compute puzzles to validate blocks","A type of NFT","A wallet check"],"correct":1},{"q":"What's Proof of Stake?","options":["Using physical stakes","Validators are chosen based on the amount of crypto they lock up","A trading method","A wallet feature"],"correct":1},{"q":"What's a 51% attack?","options":["When a regulator owns 51%","When a single entity controls more than half the network and can manipulate it","A type of phishing","A wallet exploit"],"correct":1},{"q":"What's a DAO?","options":["Decentralised Autonomous Organisation — governed by smart contracts and tokenholders","Data Access Object","Digital Asset Operation","Distributed Application Owner"],"correct":0}],"general":[{"q":"What's the largest desert in the world (by definition: driest, not hottest)?","options":["Sahara","Gobi","Antarctica","Kalahari"],"correct":2},{"q":"Which artist sang 'Riptide'?","options":["Vance Joy","Ed Sheeran","Hozier","Matt Corby"],"correct":0},{"q":"How many time zones does Australia have?","options":["1","3","5","8"],"correct":1},{"q":"What's the capital of New Zealand?","options":["Auckland","Wellington","Christchurch","Hamilton"],"correct":1}]},"AI/ML":{"topic":[{"q":"What does AI stand for?","options":["Algorithm Implementation","Artificial Intelligence","Automated Inference","Advanced Integration"],"correct":1},{"q":"What's machine learning?","options":["Hand-coding every rule","Building systems that learn patterns from data","A type of programming language","A specific algorithm"],"correct":1},{"q":"Which is a type of machine learning?","options":["Supervised","Unsupervised","Reinforcement","All of the above"],"correct":3},{"q":"What's supervised learning?","options":["A human watches the computer","Training a model on labelled data","Learning without examples","Always wrong predictions"],"correct":1},{"q":"What's unsupervised learning best at?","options":["Finding patterns or clusters in unlabelled data","Exact predictions","Generating images only","Replacing humans"],"correct":0},{"q":"What's a neural network loosely modelled on?","options":["Spider webs","The structure of the human brain","Power grids","Roads"],"correct":1},{"q":"What does 'training' a model mean?","options":["Running it on user data","Adjusting its parameters using data so it improves at a task","Translating it","Deploying it"],"correct":1},{"q":"What's overfitting?","options":["The model is too small","When a model learns the training data too well and fails on new data","When the model is fast","When the model has too many users"],"correct":1},{"q":"What's an LLM?","options":["Large Language Model — trained on huge text datasets to generate or understand language","Local Learning Method","Linked List Module","Light Logic Machine"],"correct":0},{"q":"What's a 'prompt' in AI?","options":["A bug","The input/instructions you give to a model","A login screen","A backup"],"correct":1},{"q":"Which Python library is most commonly used for deep learning?","options":["NumPy alone","TensorFlow or PyTorch","Matplotlib","Flask"],"correct":1},{"q":"What's the goal of a classification model?","options":["Generate text","Predict which category an input belongs to","Store data","Render UIs"],"correct":1},{"q":"What's bias in AI?","options":["A type of motherboard","Systematic errors in a model often due to skewed training data","A network setting","A coding mistake only"],"correct":1},{"q":"What's a dataset?","options":["A computer","A collection of data used for training/testing models","A function","A graphics card"],"correct":1},{"q":"Which company makes Claude?","options":["OpenAI","Google","Anthropic","Meta"],"correct":2},{"q":"What's the difference between AI, ML and deep learning?","options":["They're the same","AI is the broadest field; ML is a subset; deep learning is a subset of ML using neural networks","Deep learning is older than ML","AI is a single algorithm"],"correct":1}],"general":[{"q":"What's the largest mammal on Earth?","options":["Elephant","Giraffe","Blue whale","Polar bear"],"correct":2},{"q":"Which Australian band recorded 'Cattle and Cane'?","options":["Crowded House","The Go-Betweens","Hunters & Collectors","Cold Chisel"],"correct":1},{"q":"How many sides does a stop sign have?","options":["6","7","8","10"],"correct":2},{"q":"Who developed the theory of general relativity?","options":["Isaac Newton","Albert Einstein","Stephen Hawking","Galileo"],"correct":1}]}}`);
+
+// ============================================================
+// DEFAULT ROSTER (from your contact sheet + recent attendance)
+// ============================================================
+const DEFAULT_ROSTER = [
+  "Cameron","Jamie","Jesline","Nisha","Pietro","Richard","Rodna",
+  "Emma","Mydi","Court","Peter","Ayu","Hayden","Beren","Chris",
+  "Jeff","Gwain","Victor","William","Anthony"
+];
+
+// ============================================================
+// STORAGE — uses window.storage when available (claude.ai), else localStorage
+// ============================================================
+const hasClaudeStorage = typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function';
+const Store = {
+  async get(key, def) {
+    try {
+      if (hasClaudeStorage) {
+        const r = await window.storage.get(key);
+        return r && r.value !== undefined ? JSON.parse(r.value) : def;
+      }
+      const r = localStorage.getItem('trivia26b:' + key);
+      return r ? JSON.parse(r) : def;
+    } catch (e) { return def; }
+  },
+  async set(key, value) {
+    try {
+      const s = JSON.stringify(value);
+      if (hasClaudeStorage) { await window.storage.set(key, s); }
+      else { localStorage.setItem('trivia26b:' + key, s); }
+      flashSync();
+    } catch (e) { console.warn('save failed', e); }
+  },
+  async del(key) {
+    try {
+      if (hasClaudeStorage) { await window.storage.delete(key); }
+      else { localStorage.removeItem('trivia26b:' + key); }
+    } catch (e) {}
+  }
+};
+
+function flashSync(){
+  const dot = document.getElementById('syncDot');
+  if (!dot) return;
+  dot.style.background = 'var(--emerald)';
+  setTimeout(()=> dot.style.background = 'var(--coral)', 600);
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  roster: DEFAULT_ROSTER.slice(),
+  points: {},        // { name: { trivia: int, bonus: int } }
+  weeks: {},         // { 'YYYY-Www': [name1, name2, name3] }
+  settings: { order: 'shuffle', length: 10 },
+  game: null,
+  pickingRank: null,
+  weekDraft: { week: '', ranks: [null, null, null] }
+};
+
+function ensurePoints(){
+  state.roster.forEach(n => {
+    if (!state.points[n]) state.points[n] = { trivia: 0, bonus: 0 };
+  });
+}
+
+async function loadState(){
+  state.roster = await Store.get('roster', DEFAULT_ROSTER.slice());
+  state.points = await Store.get('points', {});
+  state.weeks = await Store.get('weeks', {});
+  state.settings = await Store.get('settings', { order: 'shuffle', length: 10 });
+  ensurePoints();
+}
+
+async function saveRoster(){ ensurePoints(); await Store.set('roster', state.roster); }
+async function savePoints(){ await Store.set('points', state.points); }
+async function saveWeeks(){ await Store.set('weeks', state.weeks); }
+async function saveSettings(){ await Store.set('settings', state.settings); }
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function $(id){ return document.getElementById(id); }
+function el(tag, attrs={}, ...kids){
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)){
+    if (k === 'class') e.className = v;
+    else if (k === 'html') e.innerHTML = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (k === 'dataset') Object.assign(e.dataset, v);
+    else e.setAttribute(k, v);
+  }
+  for (const k of kids){
+    if (k == null) continue;
+    e.append(k.nodeType ? k : document.createTextNode(k));
+  }
+  return e;
+}
+function toast(msg){
+  const t = el('div', { class: 'toast' }, msg);
+  document.body.appendChild(t);
+  setTimeout(()=> t.remove(), 2500);
+}
+
+// Tiny audio cue (no external sounds)
+const audioCtx = (typeof AudioContext !== 'undefined') ? new AudioContext() : null;
+function beep(freq, dur=0.08, type='sine', vol=0.15){
+  if (!audioCtx || audioCtx.state === 'suspended') {
+    try { audioCtx && audioCtx.resume(); } catch(e){}
+  }
+  if (!audioCtx) return;
+  try {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.stop(audioCtx.currentTime + dur);
+  } catch(e){}
+}
+function sndReveal(){ beep(523, 0.1, 'triangle', 0.2); setTimeout(()=> beep(659, 0.12, 'triangle', 0.2), 80); }
+function sndAward(){ beep(659, 0.08, 'sine', 0.2); setTimeout(()=> beep(880, 0.12, 'sine', 0.2), 60); setTimeout(()=> beep(1046, 0.15, 'sine', 0.2), 140); }
+function sndClick(){ beep(440, 0.04, 'square', 0.05); }
+
+// ============================================================
+// TABS
+// ============================================================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    sndClick();
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    $('v-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'scores') renderScores();
+    if (tab.dataset.tab === 'attend') renderAttendance();
+    if (tab.dataset.tab === 'roster') renderRoster();
+  });
+});
+
+// ============================================================
+// PLAY — LOBBY
+// ============================================================
+let selectedLesson = null;
+
+function renderLessonGrid(){
+  const grid = $('lessonGrid');
+  grid.innerHTML = '';
+  for (const [lesson, content] of Object.entries(QUESTIONS)){
+    const total = content.topic.length + content.general.length;
+    const chip = el('button', {
+      class: 'lesson-chip' + (selectedLesson === lesson ? ' selected' : ''),
+      onclick: () => { sndClick(); selectedLesson = lesson; renderLessonGrid(); updateStartBtn(); }
+    },
+      el('span', {}, lesson),
+      el('span', { class: 'chip-count' }, `${total} Q`)
+    );
+    grid.appendChild(chip);
+  }
+}
+function updateStartBtn(){
+  $('startGameBtn').disabled = !selectedLesson;
+}
+
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', async () => {
+    sndClick();
+    const s = t.dataset.setting;
+    document.querySelectorAll(`[data-setting="${s}"]`).forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    state.settings[s] = s === 'length' ? parseInt(t.dataset.val) : t.dataset.val;
+    await saveSettings();
+  });
+});
+
+function applySettingsToToggles(){
+  document.querySelectorAll('.toggle').forEach(t => {
+    const s = t.dataset.setting;
+    const v = String(state.settings[s]);
+    t.classList.toggle('on', t.dataset.val === v);
+  });
+}
+
+$('startGameBtn').addEventListener('click', startGame);
+
+// ============================================================
+// PLAY — GAME
+// ============================================================
+function startGame(){
+  if (!selectedLesson) return;
+  sndClick();
+  const lesson = QUESTIONS[selectedLesson];
+  let pool = [
+    ...lesson.topic.map(q => ({...q, type:'topic'})),
+    ...lesson.general.map(q => ({...q, type:'general'}))
+  ];
+  if (state.settings.order === 'shuffle'){
+    for (let i = pool.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+  }
+  const len = Math.min(state.settings.length, pool.length);
+  pool = pool.slice(0, len);
+  state.game = {
+    lesson: selectedLesson,
+    pool, idx: 0, revealed: false, awarded: false
+  };
+  $('lobby').style.display = 'none';
+  $('game').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  if (!state.game) return;
+  const { pool, idx } = state.game;
+  const q = pool[idx];
+  $('gameLesson').textContent = state.game.lesson;
+  $('gameProgress').textContent = `${idx+1}/${pool.length}`;
+  const pill = $('gameTypePill');
+  pill.textContent = q.type === 'topic' ? 'Topic' : 'General Knowledge';
+  pill.className = 'game-pill' + (q.type === 'general' ? ' general' : '');
+  $('questionText').textContent = q.q;
+  const grid = $('optionsGrid');
+  grid.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = el('button', {
+      class: 'option',
+      onclick: () => revealAt(i)
+    },
+      el('span', { class: 'option-letter' }, ['A','B','C','D'][i]),
+      el('span', {}, opt)
+    );
+    grid.appendChild(btn);
+  });
+  $('revealBtn').textContent = 'Reveal answer';
+  $('revealBtn').disabled = false;
+  $('awardPanel').innerHTML = '';
+  state.game.revealed = false;
+  state.game.awarded = false;
+}
+
+function revealAt(pickedIdx){
+  if (!state.game || state.game.revealed) return;
+  const q = state.game.pool[state.game.idx];
+  const opts = document.querySelectorAll('#optionsGrid .option');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === q.correct) o.classList.add('correct');
+    else if (i === pickedIdx) o.classList.add('wrong');
+  });
+  state.game.revealed = true;
+  sndReveal();
+  showAwardPanel();
+}
+
+$('revealBtn').addEventListener('click', () => {
+  if (!state.game) return;
+  if (!state.game.revealed) revealAt(-1);
+  else nextQuestion();
+});
+
+function showAwardPanel(){
+  const panel = $('awardPanel');
+  panel.innerHTML = '';
+  const wrap = el('div', { class: 'award-panel' });
+  wrap.appendChild(el('h3', { class: 'award-title' }, 'Who got it? Tap to award +1'));
+  const grid = el('div', { class: 'award-grid' });
+  state.roster.forEach(name => {
+    const btn = el('button', {
+      class: 'award-btn',
+      onclick: () => awardPoint(name, btn)
+    }, name);
+    grid.appendChild(btn);
+  });
+  wrap.appendChild(grid);
+  const skip = el('div', { class: 'award-skip' },
+    el('button', { class: 'btn btn-ghost btn-sm', onclick: nextQuestion }, 'Nobody got it · Next →')
+  );
+  wrap.appendChild(skip);
+  panel.appendChild(wrap);
+  $('revealBtn').textContent = 'Next question →';
+}
+
+async function awardPoint(name, btn){
+  if (!state.points[name]) state.points[name] = { trivia: 0, bonus: 0 };
+  state.points[name].trivia += 1;
+  await savePoints();
+  btn.classList.add('awarded');
+  btn.textContent = name + ' +1';
+  sndAward();
+  toast(`+1 point → ${name}`);
+  setTimeout(nextQuestion, 700);
+}
+
+function nextQuestion(){
+  if (!state.game) return;
+  state.game.idx += 1;
+  if (state.game.idx >= state.game.pool.length){
+    endGame();
+    return;
+  }
+  renderQuestion();
+}
+
+function endGame(){
+  const lesson = state.game.lesson;
+  state.game = null;
+  $('game').style.display = 'none';
+  $('lobby').style.display = 'block';
+  selectedLesson = null;
+  renderLessonGrid();
+  updateStartBtn();
+  toast(`Round done · ${lesson} ✓`);
+  // jump to scores
+  setTimeout(() => {
+    document.querySelector('[data-tab="scores"]').click();
+  }, 600);
+}
+
+$('skipBtn').addEventListener('click', () => { sndClick(); nextQuestion(); });
+$('quitBtn').addEventListener('click', () => {
+  sndClick();
+  if (confirm('Quit this round?')){
+    state.game = null;
+    $('game').style.display = 'none';
+    $('lobby').style.display = 'block';
+    selectedLesson = null;
+    renderLessonGrid();
+    updateStartBtn();
+  }
+});
+
+// ============================================================
+// SCORES
+// ============================================================
+function renderScores(){
+  const sorted = state.roster
+    .map(n => {
+      const p = state.points[n] || { trivia: 0, bonus: 0 };
+      return { name: n, trivia: p.trivia, bonus: p.bonus, total: p.trivia + p.bonus };
+    })
+    .sort((a, b) => b.total - a.total);
+
+  const podium = $('podium');
+  podium.innerHTML = '';
+  const top3 = sorted.slice(0, 3);
+  if (top3.length && top3[0].total > 0){
+    const order = [top3[1], top3[0], top3[2]]; // visual: silver, gold, bronze
+    const classes = ['silver', 'gold', 'bronze'];
+    const ranks = ['2', '1', '3'];
+    order.forEach((p, i) => {
+      if (!p) { podium.appendChild(el('div')); return; }
+      podium.appendChild(el('div', { class: 'podium-step ' + classes[i] },
+        el('div', { class: 'podium-rank' }, ranks[i]),
+        el('div', { class: 'podium-name' }, p.name),
+        el('div', { class: 'podium-pts' }, p.total + ' pts')
+      ));
+    });
+  }
+
+  const lb = $('leaderboard');
+  lb.innerHTML = '';
+  if (sorted.every(s => s.total === 0)){
+    lb.appendChild(el('div', { class: 'empty' }, 'No points yet. Play a round!'));
+    return;
+  }
+  sorted.forEach((s, i) => {
+    const row = el('div', { class: 'lb-row' + (i < 3 ? ' top' : '') },
+      el('div', { class: 'lb-rank' }, '#' + (i+1)),
+      el('div', {},
+        el('div', { class: 'lb-name' }, s.name),
+        el('div', { class: 'lb-trivia' }, `${s.trivia} trivia + ${s.bonus} bonus`)
+      ),
+      el('div', {}, ''),
+      el('div', { class: 'lb-total' }, s.total)
+    );
+    lb.appendChild(row);
+  });
+}
+
+// ============================================================
+// ATTENDANCE BONUS
+// ============================================================
+function isoWeek(d){
+  d = new Date(d);
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return d.getFullYear() + '-W' + String(weekNo).padStart(2,'0');
+}
+
+function renderAttendance(){
+  if (!state.weekDraft.week) state.weekDraft.week = isoWeek(new Date());
+  $('weekInput').value = state.weekDraft.week;
+  ['slot1','slot2','slot3'].forEach((id, i) => {
+    const slot = $(id);
+    const btn = slot.querySelector('.rank-name-btn');
+    const name = state.weekDraft.ranks[i];
+    if (name){
+      slot.classList.add('filled');
+      btn.innerHTML = '';
+      btn.append(name);
+      if (!slot.querySelector('.rank-clear')){
+        const x = el('button', { class: 'rank-clear', onclick: (e) => {
+          e.stopPropagation();
+          state.weekDraft.ranks[i] = null;
+          renderAttendance();
+        }}, 'clear');
+        btn.appendChild(x);
+      }
+    } else {
+      slot.classList.remove('filled');
+      btn.innerHTML = 'Tap to pick…';
+    }
+    btn.onclick = () => openWeekPicker(i + 1);
+  });
+  $('saveWeekBtn').disabled = !state.weekDraft.ranks.every(r => !!r) || !state.weekDraft.week;
+  renderWeekHistory();
+}
+
+function openWeekPicker(rank){
+  state.pickingRank = rank;
+  $('pickRank').textContent = rank;
+  $('weekPicker').style.display = 'block';
+  const wrap = $('weekStudents');
+  wrap.innerHTML = '';
+  state.roster.forEach(n => {
+    const used = state.weekDraft.ranks.includes(n);
+    const btn = el('button', {
+      class: 'picker-btn',
+      onclick: () => {
+        state.weekDraft.ranks[rank - 1] = n;
+        $('weekPicker').style.display = 'none';
+        renderAttendance();
+      }
+    }, n);
+    if (used) btn.disabled = true;
+    wrap.appendChild(btn);
+  });
+}
+
+$('cancelPickBtn').addEventListener('click', () => {
+  $('weekPicker').style.display = 'none';
+});
+
+$('weekInput').addEventListener('input', (e) => {
+  state.weekDraft.week = e.target.value.trim();
+  $('saveWeekBtn').disabled = !state.weekDraft.ranks.every(r => !!r) || !state.weekDraft.week;
+});
+
+$('saveWeekBtn').addEventListener('click', async () => {
+  const w = state.weekDraft.week;
+  if (!w) return;
+  const prev = state.weeks[w];
+  if (prev){
+    // Roll back previous bonuses for this week first
+    [10, 5, 2].forEach((pts, i) => {
+      const n = prev[i];
+      if (n && state.points[n]){
+        state.points[n].bonus = Math.max(0, state.points[n].bonus - pts);
+      }
+    });
+  }
+  state.weeks[w] = state.weekDraft.ranks.slice();
+  [10, 5, 2].forEach((pts, i) => {
+    const n = state.weekDraft.ranks[i];
+    if (!state.points[n]) state.points[n] = { trivia: 0, bonus: 0 };
+    state.points[n].bonus += pts;
+  });
+  await saveWeeks();
+  await savePoints();
+  state.weekDraft = { week: isoWeek(new Date()), ranks: [null, null, null] };
+  sndAward();
+  toast(`Week ${w} bonuses awarded`);
+  renderAttendance();
+});
+
+function renderWeekHistory(){
+  const wrap = $('weekHistory');
+  wrap.innerHTML = '';
+  const keys = Object.keys(state.weeks).sort().reverse();
+  if (keys.length === 0){
+    wrap.appendChild(el('div', { class: 'empty' }, 'No weeks saved yet.'));
+    return;
+  }
+  keys.forEach(w => {
+    const ranks = state.weeks[w];
+    const row = el('div', { class: 'history-row' },
+      el('div', { class: 'history-week' }, w),
+      el('div', { class: 'history-podium' },
+        ranks[0] ? el('span', { class: 'history-name r1' }, '🥇 ' + ranks[0]) : null,
+        ranks[1] ? el('span', { class: 'history-name r2' }, '🥈 ' + ranks[1]) : null,
+        ranks[2] ? el('span', { class: 'history-name r3' }, '🥉 ' + ranks[2]) : null,
+      )
+    );
+    wrap.appendChild(row);
+  });
+}
+
+// ============================================================
+// ROSTER
+// ============================================================
+function renderRoster(){
+  const wrap = $('rosterList');
+  wrap.innerHTML = '';
+  state.roster.forEach((name, idx) => {
+    const p = state.points[name] || { trivia: 0, bonus: 0 };
+    const row = el('div', { class: 'roster-row' },
+      el('input', {
+        value: name,
+        onchange: async (e) => {
+          const newName = e.target.value.trim();
+          if (!newName){ e.target.value = name; return; }
+          if (newName === name) return;
+          state.roster[idx] = newName;
+          state.points[newName] = state.points[name];
+          delete state.points[name];
+          await saveRoster();
+          await savePoints();
+          renderRoster();
+        }
+      }),
+      el('span', { class: 'roster-pts' }, `${p.trivia + p.bonus} pts`),
+      el('button', {
+        class: 'roster-del',
+        title: 'Remove',
+        onclick: async () => {
+          if (confirm(`Remove ${name} from the roster?`)){
+            state.roster.splice(idx, 1);
+            delete state.points[name];
+            await saveRoster();
+            await savePoints();
+            renderRoster();
+          }
+        }
+      }, '×')
+    );
+    wrap.appendChild(row);
+  });
+}
+
+$('addStudentBtn').addEventListener('click', async () => {
+  const inp = $('newStudent');
+  const name = inp.value.trim();
+  if (!name) return;
+  if (state.roster.includes(name)) { toast('Already on the list'); return; }
+  state.roster.push(name);
+  state.points[name] = { trivia: 0, bonus: 0 };
+  inp.value = '';
+  await saveRoster();
+  renderRoster();
+  toast(name + ' added');
+});
+$('newStudent').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') $('addStudentBtn').click();
+});
+
+$('resetPointsBtn').addEventListener('click', async () => {
+  if (!confirm('Reset all trivia + bonus points? Roster stays.')) return;
+  state.points = {};
+  state.weeks = {};
+  ensurePoints();
+  await savePoints();
+  await saveWeeks();
+  toast('Points reset');
+  renderRoster();
+});
+
+$('resetAllBtn').addEventListener('click', async () => {
+  if (!confirm('Reset roster, points and weeks back to defaults?')) return;
+  state.roster = DEFAULT_ROSTER.slice();
+  state.points = {};
+  state.weeks = {};
+  state.weekDraft = { week: isoWeek(new Date()), ranks: [null, null, null] };
+  ensurePoints();
+  await saveRoster();
+  await savePoints();
+  await saveWeeks();
+  toast('Reset complete');
+  renderRoster();
+});
+
+// ============================================================
+// BOOT
+// ============================================================
+(async function init(){
+  await loadState();
+  applySettingsToToggles();
+  renderLessonGrid();
+  updateStartBtn();
+  flashSync();
+})();
+</script>
+</body>
+</html>

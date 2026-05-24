@@ -1,0 +1,2205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>#welcome · TDC Class · Wed 20 May</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  /* discord palette */
+  --bg-app: #1e1f22;
+  --bg-serverlist: #1e1f22;
+  --bg-channels: #2b2d31;
+  --bg-chat: #313338;
+  --bg-members: #2b2d31;
+  --bg-input: #383a40;
+  --bg-hover: #35373c;
+  --bg-active: #404249;
+  --bg-mention: rgba(255,138,61,0.10);
+  --bg-embed: #2b2d31;
+  --bg-card: #232428;
+
+  --text: #f2f3f5;
+  --text-muted: #b5bac1;
+  --text-dim: #80848e;
+  --text-link: #00a8fc;
+  --text-channel: #949ba4;
+  --text-channel-active: #ffffff;
+
+  /* TDC accents */
+  --orange: #ff8a3d;
+  --teal: #2f9ea0;
+  --paper: #fafaf7;
+  --ink: #1a1a1a;
+
+  /* status */
+  --online: #23a55a;
+  --idle: #f0b232;
+  --dnd: #f23f43;
+  --offline: #80848e;
+
+  --hairline: rgba(255,255,255,0.06);
+  --hairline-strong: rgba(255,255,255,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-app);
+  color: var(--text);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+button { font-family: inherit; }
+
+/* APP LAYOUT */
+.app {
+  display: grid;
+  grid-template-columns: 72px 240px 1fr 240px;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* === SERVER LIST === */
+.serverlist {
+  background: var(--bg-serverlist);
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  overflow-y: auto;
+}
+.serverlist::-webkit-scrollbar { display: none; }
+
+.server {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-channels);
+  display: grid;
+  place-items: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-radius 180ms ease, background 180ms ease;
+  position: relative;
+  flex-shrink: 0;
+}
+.server:hover { border-radius: 16px; background: var(--orange); color: var(--ink); }
+.server.active {
+  border-radius: 16px;
+  background: var(--orange);
+  color: var(--ink);
+}
+.server.active::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 8px; bottom: 8px;
+  width: 4px;
+  background: var(--text);
+  border-radius: 0 4px 4px 0;
+}
+.server-divider {
+  width: 32px;
+  height: 2px;
+  background: var(--hairline-strong);
+  border-radius: 1px;
+  margin: 2px 0;
+}
+
+/* === CHANNEL PANEL === */
+.channels {
+  background: var(--bg-channels);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.server-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--hairline);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.server-header .chev { color: var(--text-muted); font-size: 12px; }
+.server-header .name { letter-spacing: 0.01em; }
+.server-header .sub {
+  display: block;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.channel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0 24px;
+}
+.channel-list::-webkit-scrollbar { width: 4px; }
+.channel-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+.category {
+  padding: 16px 8px 4px 18px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-channel);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.category .chev { font-size: 10px; }
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 1px 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--text-channel);
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 80ms ease, color 80ms ease;
+}
+.channel:hover { background: var(--bg-hover); color: var(--text); }
+.channel.active {
+  background: var(--bg-active);
+  color: var(--text-channel-active);
+}
+.channel .hash {
+  color: var(--text-channel);
+  font-weight: 400;
+  font-size: 18px;
+  margin-right: 2px;
+}
+.channel.active .hash { color: var(--text-channel-active); }
+.channel .badge {
+  margin-left: auto;
+  background: var(--dnd);
+  color: var(--text);
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.channel .pin { margin-left: 2px; font-size: 12px; }
+
+.user-panel {
+  background: var(--bg-card);
+  padding: 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--hairline);
+}
+.user-panel .av {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: grid; place-items: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14px;
+  position: relative;
+  flex-shrink: 0;
+}
+.user-panel .av::after {
+  content: '';
+  position: absolute;
+  right: -2px; bottom: -2px;
+  width: 12px; height: 12px;
+  background: var(--online);
+  border: 3px solid var(--bg-card);
+  border-radius: 50%;
+}
+.user-panel .who { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1; }
+.user-panel .status { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* === MAIN CHAT === */
+.main {
+  background: var(--bg-chat);
+  display: grid;
+  grid-template-rows: 48px 1fr 68px;
+  overflow: hidden;
+}
+
+.channel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--hairline);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+  z-index: 5;
+}
+.channel-header .hash { color: var(--text-channel); font-size: 22px; font-weight: 400; }
+.channel-header .ch-name { font-weight: 600; color: var(--text); font-size: 16px; }
+.channel-header .divider { width: 1px; height: 24px; background: var(--hairline-strong); }
+.channel-header .topic {
+  color: var(--text-muted);
+  font-size: 13px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.channel-header .ch-icons {
+  display: flex;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 18px;
+}
+.channel-header .ch-icons span { cursor: pointer; }
+.channel-header .ch-icons span:hover { color: var(--text); }
+
+.messages-area {
+  position: relative;
+  overflow-y: auto;
+  padding: 24px 0 12px;
+}
+.messages-area::-webkit-scrollbar { width: 8px; }
+.messages-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 4px; }
+.messages-area::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+
+.slide {
+  display: none;
+  padding: 0 24px;
+  animation: slidein 220ms ease both;
+}
+.slide.active { display: block; }
+@keyframes slidein {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === MESSAGE === */
+.msg {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0;
+  padding: 4px 0;
+  margin: 12px 0 0;
+  position: relative;
+}
+.msg.with-header { margin-top: 18px; }
+.msg.first { margin-top: 0; }
+.msg-av {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: grid; place-items: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 17px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.msg-av.bot { background: var(--teal); color: var(--ink); }
+.msg-av.system { background: var(--bg-card); color: var(--text-muted); font-size: 18px; }
+.msg-body { min-width: 0; }
+.msg-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+.msg-header .name { font-weight: 600; color: var(--orange); }
+.msg-header .name.bot { color: var(--teal); }
+.msg-header .name.system { color: var(--text-muted); }
+.msg-header .bot-tag {
+  background: var(--teal);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+.msg-header .tim-tag {
+  background: var(--orange);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+.msg-header .time { color: var(--text-dim); font-size: 12px; }
+.msg-content {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.msg-content p + p { margin-top: 8px; }
+.msg-content strong { font-weight: 700; color: var(--text); }
+.msg-content em {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--text);
+  font-size: 1.04em;
+}
+.msg-content code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg-card);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: #ddd;
+}
+.msg-content a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+.msg-content a:hover { text-decoration: underline; }
+.msg-content .mention {
+  color: var(--orange);
+  background: var(--bg-mention);
+  padding: 0 2px;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.msg-content .channel-link {
+  color: var(--text-link);
+  background: rgba(0,168,252,0.08);
+  padding: 0 4px;
+  border-radius: 3px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* compact follow-on message (same sender) */
+.msg.compact { margin-top: 0; padding: 2px 0; }
+.msg.compact .msg-av { visibility: hidden; height: 0; }
+
+/* PINNED indicator */
+.pinned-banner {
+  background: var(--bg-card);
+  border-left: 3px solid var(--orange);
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pinned-banner .icon { color: var(--orange); font-size: 14px; }
+
+/* EMBEDS (the colored side-bar cards) */
+.embed {
+  margin-top: 8px;
+  background: var(--bg-embed);
+  border-left: 4px solid var(--orange);
+  border-radius: 4px;
+  padding: 12px 16px 14px;
+  max-width: 640px;
+  display: grid;
+  gap: 8px;
+}
+.embed.teal { border-left-color: var(--teal); }
+.embed.red { border-left-color: var(--dnd); }
+.embed.green { border-left-color: var(--online); }
+.embed.grey { border-left-color: #5a5d65; }
+.embed-author {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.embed-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+.embed-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+.embed-desc strong { color: var(--text); }
+.embed-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 18px;
+  margin-top: 4px;
+}
+.embed-fields.three { grid-template-columns: 1fr 1fr 1fr; }
+.embed-field-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.embed-field-value { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+.embed-footer {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  margin-top: 4px;
+}
+.embed-image { margin-top: 8px; border-radius: 4px; overflow: hidden; }
+.embed-image img { max-width: 100%; display: block; }
+
+/* code block (Discord style) */
+.codeblock {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #ddd;
+  margin-top: 6px;
+  max-width: 680px;
+  white-space: pre-wrap;
+}
+.codeblock .tag { color: var(--orange); }
+.codeblock .key { color: var(--teal); font-weight: 500; }
+.codeblock .comment { color: var(--text-dim); font-style: italic; }
+.codeblock .strike { text-decoration: line-through; color: var(--text-dim); }
+
+/* reactions */
+.reactions {
+  margin-top: 6px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.react {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  padding: 2px 7px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.react:hover { background: var(--bg-active); }
+.react .count { font-weight: 600; font-size: 12px; }
+.react.mine { background: rgba(255,138,61,0.12); border-color: var(--orange); color: var(--orange); }
+
+/* QR / attendance card */
+.qr-card {
+  margin-top: 12px;
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 360px;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+  color: var(--ink);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.qr-card .qr-img {
+  width: 220px;
+  height: 220px;
+  background: var(--paper);
+  padding: 10px;
+}
+.qr-card .qr-img img { width: 100%; height: 100%; display: block; }
+.qr-card .qr-label {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #6b6b66;
+}
+.qr-card .qr-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* lists in messages */
+.msg-content ul { list-style: none; padding: 0; margin: 8px 0; }
+.msg-content ul li {
+  padding-left: 22px;
+  position: relative;
+  margin: 4px 0;
+  line-height: 1.5;
+}
+.msg-content ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-weight: 600;
+}
+.msg-content ul.teal li::before { color: var(--teal); }
+.msg-content ul.check li::before { content: '✓'; color: var(--online); }
+.msg-content ul.cross li::before { content: '✗'; color: var(--dnd); }
+.msg-content ol { padding-left: 22px; margin: 8px 0; color: var(--text); }
+.msg-content ol li { margin: 4px 0; line-height: 1.5; padding-left: 6px; }
+
+/* big channel intro (Discord first-message-in-channel banner) */
+.channel-intro {
+  padding: 16px 16px 16px 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+.channel-intro .hash-large {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  display: grid; place-items: center;
+  font-size: 36px;
+  color: var(--text);
+  font-weight: 400;
+  margin-bottom: 14px;
+}
+.channel-intro h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+  line-height: 1.15;
+}
+.channel-intro h1 .accent { color: var(--orange); font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+.channel-intro h1 .accent-teal { color: var(--teal); font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+.channel-intro .ch-desc {
+  color: var(--text-muted);
+  font-size: 16px;
+  max-width: 720px;
+  line-height: 1.45;
+}
+
+/* === MESSAGE INPUT (locked) === */
+.input-area {
+  padding: 0 16px 24px;
+  display: flex;
+  align-items: center;
+}
+.input-bar {
+  flex: 1;
+  background: var(--bg-input);
+  border-radius: 8px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+.input-bar .plus {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--text-channel);
+  color: var(--bg-input);
+  display: grid; place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.input-bar kbd {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-strong);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text);
+}
+
+/* === MEMBERS LIST === */
+.members {
+  background: var(--bg-members);
+  padding: 16px 8px;
+  overflow-y: auto;
+}
+.members::-webkit-scrollbar { width: 4px; }
+.members::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+.member-cat {
+  padding: 16px 8px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-channel);
+}
+.member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  margin: 1px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.member:hover { background: var(--bg-hover); }
+.member-av {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  display: grid; place-items: center;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Fraunces', serif;
+  position: relative;
+  flex-shrink: 0;
+}
+.member-av.orange { background: var(--orange); color: var(--ink); }
+.member-av.teal { background: var(--teal); color: var(--ink); }
+.member-av.purple { background: #8b5cf6; color: var(--ink); }
+.member-av.pink { background: #ec4899; color: var(--ink); }
+.member-av.green { background: #10b981; color: var(--ink); }
+.member-av.yellow { background: #eab308; color: var(--ink); }
+.member-av.indigo { background: #6366f1; color: var(--ink); }
+.member-av .dot {
+  position: absolute;
+  right: -2px; bottom: -2px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--online);
+  border: 2px solid var(--bg-members);
+}
+.member-av .dot.idle { background: var(--idle); }
+.member-av .dot.dnd { background: var(--dnd); }
+.member-av .dot.offline { background: var(--offline); }
+.member-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.member-name.orange { color: var(--orange); font-weight: 600; }
+.member-name.teal { color: var(--teal); font-weight: 600; }
+.member.has-game { gap: 8px; }
+.member .game {
+  font-size: 11px;
+  color: var(--text-dim);
+  display: block;
+}
+
+/* QUIZ specific */
+.quiz-scoreboard {
+  background: var(--bg-embed);
+  border-left: 4px solid var(--orange);
+  border-radius: 4px;
+  padding: 14px 16px;
+  max-width: 680px;
+  margin-top: 6px;
+}
+.quiz-scoreboard .sb-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.sb-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--hairline);
+}
+.sb-row:first-of-type { border-top: none; }
+.sb-row .rank {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--text-dim);
+  font-size: 16px;
+}
+.sb-row .tname {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  font-family: inherit;
+  padding: 2px 4px;
+  border-bottom: 1px dashed transparent;
+  width: 100%;
+}
+.sb-row .tname:focus { border-bottom-color: var(--orange); }
+.sb-row .sbscore {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text);
+  min-width: 32px;
+  text-align: right;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), color 220ms;
+}
+.sb-row .sbscore.bumped { transform: scale(1.25); color: var(--orange); }
+.sb-row .sb-ctrls { display: flex; gap: 4px; }
+.sb-row .sb-ctrls button {
+  background: var(--bg-input);
+  border: none;
+  color: var(--text);
+  width: 28px; height: 28px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sb-row .sb-ctrls button.plus { background: var(--orange); color: var(--ink); }
+.sb-row .sb-ctrls button:hover { filter: brightness(1.1); }
+.sb-row .sb-ctrls button:active { transform: scale(0.94); }
+
+.quiz-card {
+  background: var(--bg-embed);
+  border-left: 4px solid var(--teal);
+  border-radius: 4px;
+  padding: 18px 20px;
+  max-width: 680px;
+  margin-top: 8px;
+}
+.quiz-card .qmeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.quiz-card .qpill {
+  background: var(--orange);
+  color: var(--ink);
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.quiz-card .qpill.client { background: var(--teal); }
+.quiz-card .qpill.gk { background: var(--text); color: var(--bg-app); }
+.quiz-card .qcount { color: var(--text-dim); }
+.quiz-card .qbody {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.quiz-card .qans {
+  background: var(--bg-card);
+  border-left: 3px solid var(--online);
+  padding: 0 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease, opacity 300ms ease, padding 300ms ease;
+}
+.quiz-card .qans.show {
+  max-height: 400px;
+  opacity: 1;
+  padding: 12px 14px;
+}
+.quiz-card .qans strong { color: var(--text); }
+.quiz-card .qans em { font-family: 'Fraunces', serif; font-style: italic; color: var(--text); }
+.quiz-card .qctrls {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.btn {
+  background: var(--orange);
+  color: var(--ink);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: filter 80ms ease, transform 80ms ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.btn.secondary {
+  background: var(--bg-input);
+  color: var(--text);
+}
+.btn.teal { background: var(--teal); color: var(--ink); }
+.btn.danger { background: var(--dnd); color: var(--text); }
+
+/* quiz finale */
+.quiz-finale {
+  background: var(--bg-embed);
+  border-left: 4px solid var(--orange);
+  border-radius: 4px;
+  padding: 28px 24px;
+  max-width: 680px;
+  margin-top: 8px;
+  text-align: center;
+  display: none;
+}
+.quiz-finale.show { display: block; }
+.quiz-finale .winner-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.quiz-finale .winner-name {
+  font-family: 'Fraunces', serif;
+  font-size: 64px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.05;
+  margin: 4px 0 10px;
+}
+.quiz-finale .winner-score {
+  color: var(--text-muted);
+  font-size: 16px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+}
+.quiz-finale .restart-btn {
+  margin-top: 20px;
+  background: var(--bg-input);
+  color: var(--text);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* fidelity diagram */
+.fidelity-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+  max-width: 680px;
+}
+.fid-step {
+  background: var(--bg-card);
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  display: grid;
+  gap: 6px;
+}
+.fid-step svg { width: 100%; height: 60px; }
+.fid-step .fname { font-weight: 600; font-size: 13px; color: var(--text); }
+.fid-step .fcost { font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+
+/* compare table */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0;
+  max-width: 720px;
+  margin-top: 8px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.compare-grid > div {
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-top: 1px solid var(--hairline);
+}
+.compare-grid > div:nth-child(-n+3) { border-top: none; }
+.compare-grid > div:nth-child(3n+2),
+.compare-grid > div:nth-child(3n+3) {
+  border-left: 1px solid var(--hairline);
+}
+.compare-grid .ch {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  background: var(--bg-card);
+  font-weight: 500;
+  color: var(--text);
+}
+.compare-grid .ch.teal { background: rgba(47,158,160,0.18); color: var(--teal); }
+.compare-grid .ch.orange { background: rgba(255,138,61,0.16); color: var(--orange); }
+.compare-grid .star { color: var(--orange); font-weight: 700; }
+.compare-grid .star.teal { color: var(--teal); }
+.compare-grid .row-head { font-weight: 600; color: var(--text); }
+
+/* progress bar at top */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.04);
+  z-index: 100;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--orange);
+  transition: width 280ms ease;
+  width: 0%;
+}
+
+/* big content slides */
+.big-title {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--text);
+  margin: 4px 0 8px;
+}
+.big-title .accent { color: var(--orange); font-style: italic; }
+.big-title .accent-teal { color: var(--teal); font-style: italic; }
+
+/* media queries — collapse members & channels on narrow */
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 72px 240px 1fr; }
+  .members { display: none; }
+}
+@media (max-width: 760px) {
+  .app { grid-template-columns: 60px 1fr; }
+  .channels { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- ============ SERVER LIST ============ -->
+  <aside class="serverlist">
+    <div class="server active" title="TDC Class">TDC</div>
+    <div class="server-divider"></div>
+    <div class="server" title="EQC" style="font-size: 13px;">EQC</div>
+    <div class="server" title="Web Dev WA" style="font-size: 12px;">WDW</div>
+    <div class="server" title="Add server" style="color: var(--online); border: 2px dashed var(--online); background: transparent;">+</div>
+  </aside>
+
+  <!-- ============ CHANNEL PANEL ============ -->
+  <aside class="channels">
+    <div class="server-header">
+      <div>
+        <span class="name">TDC · 26B Class</span>
+        <span class="sub">Wed 20 May · Term Session</span>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+
+    <div class="channel-list" id="channelList">
+      <div class="category"><span class="chev">▾</span> INTRO</div>
+      <div class="channel active" data-slide="0"><span class="hash">#</span>welcome <span class="pin">📌</span></div>
+      <div class="channel" data-slide="1"><span class="hash">#</span>agenda</div>
+
+      <div class="category"><span class="chev">▾</span> THE FUN PART</div>
+      <div class="channel" data-slide="2"><span class="hash">#</span>icebreaker-quiz</div>
+      <div class="channel" data-slide="3"><span class="hash">#</span>typing-warmup</div>
+
+      <div class="category"><span class="chev">▾</span> WIREFRAMES</div>
+      <div class="channel" data-slide="4"><span class="hash">#</span>planning-101</div>
+      <div class="channel" data-slide="5"><span class="hash">#</span>what-is-a-wireframe</div>
+      <div class="channel" data-slide="6"><span class="hash">#</span>why-plan</div>
+      <div class="channel" data-slide="7"><span class="hash">#</span>fidelity-spectrum</div>
+      <div class="channel" data-slide="8"><span class="hash">#</span>the-process</div>
+      <div class="channel" data-slide="9"><span class="hash">#</span>free-tools</div>
+
+      <div class="category"><span class="chev">▾</span> AI VIBES</div>
+      <div class="channel" data-slide="10"><span class="hash">#</span>ai-intro</div>
+      <div class="channel" data-slide="11"><span class="hash">#</span>the-dirt <span class="badge">!</span></div>
+      <div class="channel" data-slide="12"><span class="hash">#</span>claude</div>
+      <div class="channel" data-slide="13"><span class="hash">#</span>gemini</div>
+      <div class="channel" data-slide="14"><span class="hash">#</span>use-cases</div>
+      <div class="channel" data-slide="15"><span class="hash">#</span>prompt-craft</div>
+      <div class="channel" data-slide="16"><span class="hash">#</span>bonus-tools</div>
+
+      <div class="category"><span class="chev">▾</span> WRAP-UP</div>
+      <div class="channel" data-slide="17"><span class="hash">#</span>your-mission</div>
+      <div class="channel" data-slide="18"><span class="hash">#</span>links-to-keep</div>
+    </div>
+
+    <div class="user-panel">
+      <div class="av">T</div>
+      <div>
+        <div class="who">tim_daly</div>
+        <div class="status">also building this slideshow ✨</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CHAT ============ -->
+  <main class="main">
+
+    <header class="channel-header">
+      <span class="hash">#</span>
+      <span class="ch-name" id="chName">welcome</span>
+      <span class="divider"></span>
+      <span class="topic" id="chTopic">prove you exist · scan the code · stay caffeinated</span>
+      <div class="ch-icons">
+        <span title="prev (←)" id="hdrPrev">◂</span>
+        <span title="next (→)" id="hdrNext">▸</span>
+        <span title="fullscreen (F)" id="hdrFull">⛶</span>
+      </div>
+    </header>
+
+    <div class="messages-area" id="messagesArea">
+
+      <!-- ===== SLIDE 0: #welcome ===== -->
+      <section class="slide active" data-name="welcome" data-topic="prove you exist · scan the code · stay caffeinated">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Welcome to <span class="accent">#welcome</span>.</h1>
+          <div class="ch-desc">This is the start of <strong>#welcome</strong>. You'll never sleep through Tuesday again. Wait — wrong day. Anyway.</div>
+        </div>
+
+        <div class="pinned-banner"><span class="icon">📌</span> Pinned by tim_daly — <em>roll call below. don't make me chase you</em></div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 9:02 AM</span>
+            </div>
+            <div class="msg-content">good morning legends 👋
+
+it's wednesday, the worst-named day of the week. let's get on with it.
+
+<strong>step one of being a professional:</strong> show up. <strong>step two:</strong> prove it.
+
+scan the code or get marked absent — and yes, i'll be checking. i didn't get up at 7am to be ghosted.</div>
+            <div class="reactions">
+              <div class="react mine">☕ <span class="count">3</span></div>
+              <div class="react">👋 <span class="count">7</span></div>
+              <div class="react">😴 <span class="count">2</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg compact">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-content">attendance ↓</div>
+            <div class="qr-card">
+              <div class="qr-label">SCAN TO PROVE YOU EXIST</div>
+              <div class="qr-img"><img id="qrImg" alt="Attendance QR code" /></div>
+              <div class="qr-title">Wed 20 May 2026</div>
+              <div class="qr-label">No scan = no attendance · i don't make the rules · (i make the rules)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 9:03 AM</span>
+            </div>
+            <div class="msg-content">when you're in: head to <span class="channel-link">#agenda</span> →
+
+<em>"i'll be there for you" — me, contractually, until 3pm.</em></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 1: #agenda ===== -->
+      <section class="slide" data-name="agenda" data-topic="what we're doing today · approximate times · subject to chaos">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Today's <span class="accent-teal">run sheet</span>.</h1>
+          <div class="ch-desc">In which Tim makes promises about timing that he will partially keep.</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 9:05 AM</span>
+            </div>
+            <div class="msg-content">here's the deal. think of it as a sitcom episode — 22 minutes of plot, 8 minutes of ads, one emotional moment near the end.</div>
+            <div class="embed teal">
+              <div class="embed-author">SCHEDULE · 20 MAY 2026</div>
+              <div class="embed-title">The plan, more or less.</div>
+              <ol style="color: var(--text); padding-left: 22px; margin-top: 6px; font-size: 14px; line-height: 1.7;">
+                <li><strong>Icebreaker quiz</strong> — 10 questions, 3 teams, mild humiliation <span style="color: var(--text-dim)">~20 min</span></li>
+                <li><strong>Monkeytype warm-up</strong> — see if your fingers still work <span style="color: var(--text-dim)">~10 min</span></li>
+                <li><strong>Break</strong> — touch grass / vape / whatever <span style="color: var(--text-dim)">~15 min</span></li>
+                <li><strong>Wireframes &amp; prototypes</strong> — why we don't just start coding <span style="color: var(--text-dim)">~30 min</span></li>
+                <li><strong>AI platforms</strong> — the good, the bad, the Sam Altman <span style="color: var(--text-dim)">~30 min</span></li>
+                <li><strong>Bonus tools</strong> — ElevenLabs, Suno, things to play with at home <span style="color: var(--text-dim)">~10 min</span></li>
+                <li><strong>Build mode</strong> — start planning your original site, due Monday <span style="color: var(--text-dim)">rest of day</span></li>
+              </ol>
+              <div class="embed-footer">timing approximate. blame me, not the schedule.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 2: #icebreaker-quiz ===== -->
+      <section class="slide" data-name="icebreaker-quiz" data-topic="10 questions · 3 teams · no judgement (lots of judgement)">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Quiz time, <span class="accent">losers winners</span>.</h1>
+          <div class="ch-desc">It's not Jeopardy. It's not Family Feud. It's <em>Tim sees how much you remember</em>.</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av bot">Q</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name bot">QuizBot</span>
+              <span class="bot-tag">bot</span>
+              <span class="time">Today at 9:08 AM</span>
+            </div>
+            <div class="msg-content">Wednesday Trivia Showdown™ — initialising scoreboard. Type team names below. The board updates live.</div>
+            <div class="quiz-scoreboard">
+              <div class="sb-title">📊 Scoreboard</div>
+              <div class="sb-row">
+                <span class="rank">#1</span>
+                <input class="tname" data-team="0" value="Team Orange" maxlength="20" />
+                <span class="sbscore" data-score="0">0</span>
+                <span class="sb-ctrls">
+                  <button class="plus" data-action="plus" data-team="0">+</button>
+                  <button data-action="minus" data-team="0">−</button>
+                </span>
+              </div>
+              <div class="sb-row">
+                <span class="rank">#2</span>
+                <input class="tname" data-team="1" value="Team Teal" maxlength="20" />
+                <span class="sbscore" data-score="0">0</span>
+                <span class="sb-ctrls">
+                  <button class="plus" data-action="plus" data-team="1">+</button>
+                  <button data-action="minus" data-team="1">−</button>
+                </span>
+              </div>
+              <div class="sb-row">
+                <span class="rank">#3</span>
+                <input class="tname" data-team="2" value="Team Ink" maxlength="20" />
+                <span class="sbscore" data-score="0">0</span>
+                <span class="sb-ctrls">
+                  <button class="plus" data-action="plus" data-team="2">+</button>
+                  <button data-action="minus" data-team="2">−</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg with-header" id="quizMsgWrap">
+          <div class="msg-av bot">Q</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name bot">QuizBot</span>
+              <span class="bot-tag">bot</span>
+              <span class="time" id="quizTime">Today at 9:09 AM</span>
+            </div>
+            <div class="msg-content" id="quizContent">
+              <div class="quiz-card">
+                <div class="qmeta">
+                  <span class="qpill" id="qPill">CODE</span>
+                  <span class="qcount" id="qCount">Q1 of 10</span>
+                </div>
+                <div class="qbody" id="qText">Loading…</div>
+                <div class="qans" id="qAnswer"></div>
+                <div class="qctrls">
+                  <button class="btn secondary" id="revealBtn">Reveal answer</button>
+                  <button class="btn" id="nextQBtn">Next question →</button>
+                </div>
+              </div>
+              <div class="quiz-finale" id="quizFinale">
+                <div class="winner-label">Final Score</div>
+                <div class="winner-name" id="winnerName">—</div>
+                <div class="winner-score" id="winnerScore">—</div>
+                <button class="restart-btn" id="restartQuiz">Reset quiz</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 3: #typing-warmup ===== -->
+      <section class="slide" data-name="typing-warmup" data-topic="monkeytype.com · 10 minutes · then we break">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Warm up <span class="accent">those fingers</span>.</h1>
+          <div class="ch-desc">Before we plan websites, let's confirm your hands still work.</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 9:32 AM</span>
+            </div>
+            <div class="msg-content">monkeytype, ten minutes. find your wpm. shame your friends. then go on break.
+
+if you're under 40wpm, that's fine — we're learning. if you're over 100, stop showing off.
+
+<a href="https://monkeytype.com" target="_blank" rel="noopener">https://monkeytype.com</a></div>
+            <div class="embed">
+              <div class="embed-author">SUGGESTED · 10 MINUTES</div>
+              <div class="embed-title">monkeytype.com</div>
+              <div class="embed-desc">Free, minimal, customisable typing test. No login needed. Pick a 60-second english test and go.</div>
+              <div class="embed-footer">then break · then we plan</div>
+            </div>
+            <div class="reactions">
+              <div class="react">⌨️ <span class="count">4</span></div>
+              <div class="react">🐒 <span class="count">3</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 4: #planning-101 ===== -->
+      <section class="slide" data-name="planning-101" data-topic="part two · wireframes &amp; prototypes · the boring part that saves your weekend">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Wireframes <span class="accent">&amp;</span> <span class="accent-teal">prototypes</span>.</h1>
+          <div class="ch-desc">The part that feels boring until you've shipped a site and the client says "actually, can the contact form be on the homepage?"</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:05 AM</span>
+            </div>
+            <div class="msg-content">i've rebuilt the same homepage four times for one client.
+
+it's because i didn't wireframe.
+
+now i wireframe. and i sleep better. <em>this is the lesson.</em>
+
+let's get into it →</div>
+          </div>
+        </div>
+
+        <div class="msg with-header">
+          <div class="msg-av system">i</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name system">system</span>
+              <span class="time">Today at 10:05 AM</span>
+            </div>
+            <div class="msg-content" style="color: var(--text-muted); font-style: italic;">tim_daly was rate-limited for sighing too loudly.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 5: #what-is-a-wireframe ===== -->
+      <section class="slide" data-name="what-is-a-wireframe" data-topic="definition · the blueprint, not the building">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:06 AM</span>
+            </div>
+            <div class="msg-content"><strong>wireframe</strong> — a low-fidelity visual plan that answers <em>what goes where</em>.
+
+not what colour. not what font. not what the hero image looks like. just: <strong>here's the shape of the thing.</strong>
+
+grey boxes for images. placeholder text. no styling. the point is structure, hierarchy, and flow — agreed <em>before</em> the expensive work starts.
+
+it's the blueprint, not the building. you don't paint a house before the walls are up. same energy.</div>
+            <div class="embed">
+              <div class="embed-author">EXAMPLE · LOW-FI WIREFRAME</div>
+              <div class="embed-image">
+                <svg viewBox="0 0 400 240" style="background: var(--paper); padding: 16px; width: 100%;" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                    <rect x="14" y="14" width="372" height="212" rx="2" />
+                    <line x1="14" y1="50" x2="386" y2="50" />
+                    <rect x="28" y="24" width="60" height="16" rx="2" />
+                    <line x1="240" y1="32" x2="266" y2="32" />
+                    <line x1="278" y1="32" x2="304" y2="32" />
+                    <line x1="316" y1="32" x2="342" y2="32" />
+                    <line x1="28" y1="78" x2="220" y2="78" stroke-width="3"/>
+                    <line x1="28" y1="92" x2="200" y2="92" />
+                    <line x1="28" y1="104" x2="180" y2="104" />
+                    <rect x="28" y="120" width="84" height="22" rx="2" fill="#ff8a3d" stroke="none"/>
+                    <rect x="260" y="68" width="112" height="80" rx="2" />
+                    <line x1="260" y1="68" x2="372" y2="148" />
+                    <line x1="372" y1="68" x2="260" y2="148" />
+                    <line x1="14" y1="170" x2="386" y2="170" stroke-dasharray="3 4" stroke="#6b6b66"/>
+                    <rect x="28" y="184" width="108" height="32" rx="2" />
+                    <rect x="146" y="184" width="108" height="32" rx="2" />
+                    <rect x="264" y="184" width="108" height="32" rx="2" />
+                  </g>
+                  <text x="56" y="135" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700" fill="#1a1a1a">CTA</text>
+                </svg>
+              </div>
+              <div class="embed-footer">grey boxes &amp; promises</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 6: #why-plan ===== -->
+      <section class="slide" data-name="why-plan" data-topic="the case for planning · cheap now beats expensive later">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:10 AM</span>
+            </div>
+            <div class="msg-content"><strong>why plan?</strong> three reasons, ranked by how much they'll save your sanity ↓</div>
+            <div class="embed">
+              <div class="embed-author">REASON 01</div>
+              <div class="embed-title">Catch the gaps</div>
+              <div class="embed-desc">You'll find missing pages, missing copy, missing flows — while it costs minutes to fix, not days. Better to discover "wait, where does the contact form live?" on paper than three days into the build.</div>
+            </div>
+            <div class="embed teal">
+              <div class="embed-author">REASON 02</div>
+              <div class="embed-title">Align with the client</div>
+              <div class="embed-desc">Show structure before style. Disagreements about layout are easier to settle on a sketch than on built code. "Can we move that?" is fine on a wireframe. It's a refactor in production.</div>
+            </div>
+            <div class="embed">
+              <div class="embed-author">REASON 03</div>
+              <div class="embed-title">Protect your time</div>
+              <div class="embed-desc">The number of times a wireframe has saved me from rebuilding a whole page from scratch — I've stopped counting. The 10 minutes spent planning are the 2 hours you didn't lose to a rebuild.</div>
+              <div class="embed-footer">10 min planning ≈ 1 hour building ≈ a weekend of rebuilding</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 7: #fidelity-spectrum ===== -->
+      <section class="slide" data-name="fidelity-spectrum" data-topic="from sketch to ship · catch problems early in the cheap stuff">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:14 AM</span>
+            </div>
+            <div class="msg-content">there's a whole spectrum from <em>napkin sketch</em> to <em>built and live</em>. each step costs more to change than the one before.
+
+catch problems on the left. the right gets expensive fast.</div>
+            <div class="embed grey">
+              <div class="embed-author">THE FIDELITY SPECTRUM</div>
+              <div class="embed-title">cost to change increases →</div>
+              <div class="fidelity-row">
+                <div class="fid-step">
+                  <svg viewBox="0 0 80 60"><g fill="none" stroke="#f2f3f5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M8 12 L72 12 M8 22 L60 22 M8 32 L72 32 M8 42 L48 42 M8 52 L40 52" stroke-dasharray="2 3"/></g></svg>
+                  <div class="fname">Sketch</div>
+                  <div class="fcost">5 min · paper</div>
+                </div>
+                <div class="fid-step">
+                  <svg viewBox="0 0 80 60"><g fill="none" stroke="#f2f3f5" stroke-width="2"><rect x="6" y="6" width="68" height="10"/><rect x="6" y="22" width="40" height="32"/><rect x="50" y="22" width="24" height="14"/><rect x="50" y="40" width="24" height="14"/></g></svg>
+                  <div class="fname">Wireframe</div>
+                  <div class="fcost">30 min · Figma</div>
+                </div>
+                <div class="fid-step">
+                  <svg viewBox="0 0 80 60"><g><rect x="6" y="6" width="68" height="10" fill="#f2f3f5"/><rect x="6" y="22" width="40" height="32" fill="#ff8a3d"/><rect x="50" y="22" width="24" height="14" fill="#2f9ea0"/><rect x="50" y="40" width="24" height="14" fill="#f2f3f5"/></g></svg>
+                  <div class="fname">Mockup</div>
+                  <div class="fcost">2–4 hrs · Figma</div>
+                </div>
+                <div class="fid-step">
+                  <svg viewBox="0 0 80 60"><g><rect x="6" y="6" width="68" height="10" fill="#f2f3f5"/><rect x="6" y="22" width="40" height="32" fill="#ff8a3d"/><rect x="50" y="22" width="24" height="14" fill="#2f9ea0"/><rect x="50" y="40" width="24" height="14" fill="#f2f3f5"/></g><circle cx="62" cy="48" r="3" fill="none" stroke="#ff8a3d" stroke-width="2"><animate attributeName="r" values="2;6;2" dur="1.6s" repeatCount="indefinite"/></circle></svg>
+                  <div class="fname">Prototype</div>
+                  <div class="fcost">½ day · clickable</div>
+                </div>
+                <div class="fid-step">
+                  <svg viewBox="0 0 80 60"><g font-family="'JetBrains Mono', monospace" font-size="6" fill="#2f9ea0"><text x="4" y="14">&lt;div class=</text><text x="4" y="24">  "hero"&gt;</text><text x="4" y="34" fill="#f2f3f5">  Hello</text><text x="4" y="44">&lt;/div&gt;</text></g></svg>
+                  <div class="fname">Built</div>
+                  <div class="fcost">days+ · code</div>
+                </div>
+              </div>
+              <div class="embed-footer">discovering a problem at "built" costs days. discovering it at "sketch" costs nothing.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 8: #the-process ===== -->
+      <section class="slide" data-name="the-process" data-topic="same order · every project · works for 1 page or 50">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:18 AM</span>
+            </div>
+            <div class="msg-content">this is the order. memorise it, tattoo it, whatever. it works for a 1-page portfolio and a 50-page e-commerce site.
+
+skip steps and you'll pay for it in rebuilds.</div>
+            <div class="embed teal">
+              <div class="embed-author">THE PROCESS</div>
+              <div class="embed-title">Same order. Every project.</div>
+              <ol style="color: var(--text); padding-left: 22px; margin-top: 8px; font-size: 14px; line-height: 1.85;">
+                <li><strong>Discover</strong> — who's the audience? what's the goal? what does "done" mean?</li>
+                <li><strong>Sitemap</strong> — what pages exist and how do they connect?</li>
+                <li><strong>User flows</strong> — what's the path through a task ("buy a thing", "book a class")?</li>
+                <li><strong>Wireframes</strong> — page-by-page structure, no style.</li>
+                <li><strong>Content</strong> — real words. lorem ipsum is a cope.</li>
+                <li><strong>Mockups</strong> — apply the visual design.</li>
+                <li><strong>Prototype</strong> — click through to test the flows.</li>
+                <li><strong>Build</strong> — code it. finally.</li>
+                <li><strong>Test &amp; ship</strong> — watch someone actually use it.</li>
+              </ol>
+              <div class="embed-footer">do them in order. all of them. yes, even the boring ones.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 9: #free-tools ===== -->
+      <section class="slide" data-name="free-tools" data-topic="free planning tools · figma · excalidraw · pen and paper · etc">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 10:22 AM</span>
+            </div>
+            <div class="msg-content">everything you need to plan a site — none of it costs a cent. pick one, don't get precious about it.
+
+<ul>
+<li><strong><a href="https://excalidraw.com" target="_blank" rel="noopener">excalidraw.com</a></strong> — hand-drawn wireframes in the browser. start here.</li>
+<li><strong><a href="https://figma.com" target="_blank" rel="noopener">figma.com</a></strong> — industry standard. free tier covers everything you need.</li>
+<li><strong><a href="https://penpot.app" target="_blank" rel="noopener">penpot.app</a></strong> — open-source Figma alternative. no paywall, ever.</li>
+<li><strong><a href="https://whimsical.com" target="_blank" rel="noopener">whimsical.com</a></strong> — wireframes + flowcharts + sitemaps in one tool.</li>
+<li><strong><a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a></strong> — flowcharts, sitemaps, user flows. no login.</li>
+<li><strong>pen &amp; paper</strong> — genuinely the fastest tool for a first pass. you have it on you right now.</li>
+</ul></div>
+            <div class="reactions">
+              <div class="react">🖊️ <span class="count">5</span></div>
+              <div class="react">📐 <span class="count">3</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 10: #ai-intro ===== -->
+      <section class="slide" data-name="ai-intro" data-topic="part three · the AI tools worth using · and the ones to side-eye">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>AI tools — <span class="accent">what to use</span>, what to <span class="accent-teal">side-eye</span>.</h1>
+          <div class="ch-desc">Where Tim has opinions and is going to share them. Strap in.</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:00 AM</span>
+            </div>
+            <div class="msg-content">some of these tools are extraordinary. some of them have track records you should know about <em>before</em> you paste a client brief into them.
+
+the goal isn't to ban tools. it's to <strong>choose them with your eyes open</strong>.
+
+next channel — the dirt. you might not like it. you should know it anyway. <span class="channel-link">#the-dirt</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 11: #the-dirt ===== -->
+      <section class="slide" data-name="the-dirt" data-topic="things they don't put on the homepage · openai · chatgpt · copilot">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:02 AM</span>
+            </div>
+            <div class="msg-content">before we talk about which AI to use, four things about ChatGPT and Copilot that didn't make it onto their landing pages ↓</div>
+
+            <div class="embed red">
+              <div class="embed-author">APRIL 2023 · SAMSUNG</div>
+              <div class="embed-title">Samsung banned ChatGPT company-wide.</div>
+              <div class="embed-desc">In <strong>20 days</strong>, Samsung engineers leaked source code into ChatGPT <strong>three times</strong>. Once it's in OpenAI's servers, you can't pull it back. The lesson isn't "Samsung engineers bad" — it's "this happens fast and the data is gone."</div>
+            </div>
+
+            <div class="embed red">
+              <div class="embed-author">DECEMBER 2024 · ITALY</div>
+              <div class="embed-title">€15M fine for training on personal data.</div>
+              <div class="embed-desc">Italy's data protection authority hit OpenAI with the first GDPR fine ever issued against a generative AI company — for using personal data to train ChatGPT without legal basis. (Overturned on appeal March 2026, but the case still reshaped EU law and policy.)</div>
+            </div>
+
+            <div class="embed red">
+              <div class="embed-author">ONGOING · GITHUB COPILOT</div>
+              <div class="embed-title">Class action over open source code.</div>
+              <div class="embed-desc">Copilot was trained on public GitHub repos — much of it open source code with licenses Microsoft didn't honour. Copilot has been caught suggesting near-verbatim copies of training code, including comments and variable names. <em>Imagine LimeWire 2003 but for git repos.</em></div>
+            </div>
+
+            <div class="embed red">
+              <div class="embed-author">RIGHT NOW · DEFAULT SETTINGS</div>
+              <div class="embed-title">Your conversations train the model.</div>
+              <div class="embed-desc">On free / personal tiers, by default, every prompt feeds back into training. Including anything you paste in. Read the terms before you paste a client brief, a contract, or someone's medical record (real things people have done).</div>
+              <div class="embed-footer">none of this means "never use them". it means "know what you're using."</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 12: #claude ===== -->
+      <section class="slide" data-name="claude" data-topic="anthropic · constitutional AI · long context · strong at writing &amp; code">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:08 AM</span>
+            </div>
+            <div class="msg-content">first up: the one i actually use most.
+
+made by <strong>Anthropic</strong>, founded by ex-OpenAI safety researchers who left because they thought OpenAI was moving too fast on safety. they built Claude with <em>"Constitutional AI"</em> — principles baked into training, not bolted on after.
+
+it's also what i used to build this slideshow you're sitting in.</div>
+
+            <div class="embed teal">
+              <div class="embed-author">PLATFORM · CLAUDE</div>
+              <div class="embed-title">Strong at</div>
+              <ul style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Long-form writing &amp; editing — tone, voice, polish</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Reasoning over big documents (200k token context ≈ 150k words)</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Code review, refactoring, debugging</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Live HTML / code artifacts in the chat (like this one)</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Projects with persistent context &amp; reusable Skills</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> Computer Use — driving a browser to actually do tasks</li>
+              </ul>
+              <div class="embed-footer">→ <a href="https://claude.ai" target="_blank" rel="noopener" style="color: var(--text-link)">claude.ai</a>  ·  <a href="https://docs.claude.com" target="_blank" rel="noopener" style="color: var(--text-link)">docs.claude.com</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 13: #gemini ===== -->
+      <section class="slide" data-name="gemini" data-topic="google deepmind · native multimodal · 1M+ context · deep research · notebooklm">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:13 AM</span>
+            </div>
+            <div class="msg-content">second up: Google's family of models.
+
+natively multimodal — it can read images, audio, video and text all at once. context window goes past a million tokens, which means it'll read entire textbooks or codebases without breaking a sweat.
+
+plays well with the Workspace tools you already use (Docs, Sheets, Gmail).</div>
+
+            <div class="embed">
+              <div class="embed-author">PLATFORM · GEMINI</div>
+              <div class="embed-title">Strong at</div>
+              <ul style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> Deep Research — multi-source web research with citations</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> NotebookLM — turn your own PDFs &amp; notes into a podcast-style audio overview <em>(legitimately impressive)</em></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> Native image understanding &amp; generation (Imagen)</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> Native video generation (Veo)</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> Massive context — feed it the whole textbook</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> Built into Google Workspace if your work lives there</li>
+              </ul>
+              <div class="embed-footer">→ <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color: var(--text-link)">gemini.google.com</a>  ·  <a href="https://notebooklm.google" target="_blank" rel="noopener" style="color: var(--text-link)">notebooklm.google</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 14: #use-cases ===== -->
+      <section class="slide" data-name="use-cases" data-topic="what to reach for, and when · claude vs gemini · honest comparison">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:18 AM</span>
+            </div>
+            <div class="msg-content"><strong>which one when?</strong>
+
+these aren't religious wars. they're tools. use the one that fits the job. here's my honest read ↓</div>
+
+            <div class="compare-grid">
+              <div class="ch">Task</div>
+              <div class="ch teal">Claude</div>
+              <div class="ch orange">Gemini</div>
+
+              <div class="row-head">Writing &amp; editing — tone, voice, polish</div>
+              <div><span class="star teal">★★★</span> Holds a voice well, reaches for nuance.</div>
+              <div><span class="star">★★</span> Solid, sometimes generic.</div>
+
+              <div class="row-head">Long docs — read, summarise, analyse</div>
+              <div><span class="star teal">★★★</span> Excellent over 100s of pages.</div>
+              <div><span class="star">★★★</span> Best for truly massive context.</div>
+
+              <div class="row-head">Web research with sources</div>
+              <div><span class="star teal">★★</span> Good with search enabled.</div>
+              <div><span class="star">★★★</span> Deep Research is genuinely impressive.</div>
+
+              <div class="row-head">Code review / debug / refactor</div>
+              <div><span class="star teal">★★★</span> Best in class for reasoning over a repo.</div>
+              <div><span class="star">★★</span> Capable, esp. in IDE integration.</div>
+
+              <div class="row-head">Image generation</div>
+              <div><span class="star teal">★</span> Not its strength.</div>
+              <div><span class="star">★★★</span> Imagen — fast, controllable.</div>
+
+              <div class="row-head">Audio overview of your own notes</div>
+              <div>—</div>
+              <div><span class="star">★★★</span> NotebookLM. Unique &amp; weirdly useful.</div>
+
+              <div class="row-head">Live artifacts (HTML, slides, apps)</div>
+              <div><span class="star teal">★★★</span> Native to the product.</div>
+              <div><span class="star">★★</span> Possible, less seamless.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 15: #prompt-craft ===== -->
+      <section class="slide" data-name="prompt-craft" data-topic="better prompts, better results · role · context · examples · format">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:22 AM</span>
+            </div>
+            <div class="msg-content"><strong>prompt craft</strong> isn't a special skill. it's just: <em>give the AI what a thoughtful human would need to do the job</em>.
+
+— set the role
+— give the context (audience, goal, tone, constraints)
+— show an example if you can
+— specify the output format
+— iterate. the first answer is a draft. tell it what to fix.</div>
+
+            <div class="codeblock"><span class="strike">write me a homepage for a coffee shop</span>
+<span class="comment">// ↑ this is a wish, not a prompt</span></div>
+
+            <div class="codeblock"><span class="tag">You are</span> a copywriter for small Perth hospitality businesses.
+
+<span class="tag">Write</span> a homepage for <span class="key">Pulse Coffee</span>, a Mt Lawley specialty cafe.
+
+<span class="tag">Audience:</span> locals 25–40, want good coffee without pretension.
+<span class="tag">Tone:</span> warm, plain-spoken, lightly witty.
+                <span class="comment">// no "elevated" or "passionate" — those are tired.</span>
+
+<span class="tag">Format:</span>
+  — Hero headline (max 8 words)
+  — Sub-headline (one sentence)
+  — 3 short paragraphs: beans, brunch, the room
+  — One short call to action
+
+<span class="tag">Don't use:</span> "passionate", "artisanal", "journey".</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 16: #bonus-tools ===== -->
+      <section class="slide" data-name="bonus-tools" data-topic="for fun · elevenlabs · suno · sound &amp; music">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:30 AM</span>
+            </div>
+            <div class="msg-content">two more tools worth knowing. play with them at home — both have generous free tiers.</div>
+
+            <div class="embed">
+              <div class="embed-author">SOUND · TEXT-TO-SPEECH</div>
+              <div class="embed-title">ElevenLabs</div>
+              <div class="embed-desc">Near-human voice generation. Voice cloning if you want. Use it for site walkthroughs, demo voiceovers, accessibility audio, or hold music alternatives that aren't from 2004.</div>
+              <div class="embed-footer">→ <a href="https://elevenlabs.io" target="_blank" rel="noopener" style="color: var(--text-link)">elevenlabs.io</a></div>
+            </div>
+
+            <div class="embed teal">
+              <div class="embed-author">MUSIC · AI SONG GENERATION</div>
+              <div class="embed-title">Suno</div>
+              <div class="embed-desc">Full songs from a prompt, with lyrics and vocals. Background tracks for project demos in minutes. Type "lo-fi study beats but for a Perth cafe" and see what happens.</div>
+              <div class="embed-footer">→ <a href="https://suno.com" target="_blank" rel="noopener" style="color: var(--text-link)">suno.com</a></div>
+            </div>
+
+            <div class="msg-content" style="margin-top: 14px; color: var(--text-muted); font-size: 13px; font-style: italic; font-family: 'Fraunces', serif;">a note on rights: free-tier output usually isn't licensed for commercial use. check each platform's terms before you sell it or hand it to a client.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 17: #your-mission ===== -->
+      <section class="slide" data-name="your-mission" data-topic="due monday · plan your original site · don't open vs code yet">
+        <div class="channel-intro">
+          <div class="hash-large">#</div>
+          <h1>Your <span class="accent">mission</span>, should you choose to accept it.</h1>
+          <div class="ch-desc">(You don't have a choice. It's worth marks.)</div>
+        </div>
+
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:40 AM</span>
+            </div>
+            <div class="msg-content"><strong>Original website. Due Monday 25 May.</strong>
+
+spend the rest of today setting yourself up properly. the build will be much smoother for it.
+
+<em>"i'll plan it tonight" is a lie you tell yourself. plan now.</em></div>
+
+            <div class="embed green">
+              <div class="embed-author">DO TODAY · IN THIS ROOM</div>
+              <div class="embed-title">The actually useful stuff.</div>
+              <ul class="check" style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--online); font-weight: 600;">✓</span> Pick what the site is &amp; who it's for</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--online); font-weight: 600;">✓</span> Sketch a sitemap — what pages, in what order</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--online); font-weight: 600;">✓</span> Wireframe the homepage at minimum</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--online); font-weight: 600;">✓</span> Gather any content you've got — copy, images, brand stuff</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--online); font-weight: 600;">✓</span> Write down questions you'll need answered by Friday</li>
+              </ul>
+            </div>
+
+            <div class="embed red">
+              <div class="embed-author">DON'T YET · I'M BEGGING YOU</div>
+              <div class="embed-title">The traps you'll fall into anyway.</div>
+              <ul class="cross" style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--dnd); font-weight: 600;">✗</span> Don't open a code editor</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--dnd); font-weight: 600;">✗</span> Don't pick fonts or colours yet</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--dnd); font-weight: 600;">✗</span> Don't ask Claude or Gemini to "just build it"</li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--dnd); font-weight: 600;">✗</span> Don't lorem-ipsum your way through it — plan real content</li>
+              </ul>
+              <div class="embed-footer">asking AI to "just build it" is like asking your housemate to do your homework. tempting. wrong. and you can always tell.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SLIDE 18: #links-to-keep ===== -->
+      <section class="slide" data-name="links-to-keep" data-topic="everything in one place · save this · screenshot it · whatever">
+        <div class="msg first with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:55 AM</span>
+            </div>
+            <div class="msg-content"><strong>every link from today, in one place.</strong>
+
+screenshot it, bookmark it, send it to yourself — whatever you do, don't lose it.</div>
+
+            <div class="embed teal">
+              <div class="embed-author">PLANNING TOOLS</div>
+              <ul style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> <strong>Excalidraw</strong> · <a href="https://excalidraw.com" target="_blank" rel="noopener">excalidraw.com</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> <strong>Figma</strong> · <a href="https://figma.com" target="_blank" rel="noopener">figma.com</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> <strong>Penpot</strong> · <a href="https://penpot.app" target="_blank" rel="noopener">penpot.app</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> <strong>Whimsical</strong> · <a href="https://whimsical.com" target="_blank" rel="noopener">whimsical.com</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--teal); font-weight: 600;">→</span> <strong>draw.io</strong> · <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a></li>
+              </ul>
+            </div>
+
+            <div class="embed">
+              <div class="embed-author">AI PLATFORMS</div>
+              <ul style="margin: 8px 0; padding: 0; list-style: none; color: var(--text); font-size: 14px;">
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>Claude</strong> · <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>Gemini</strong> · <a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>NotebookLM</strong> · <a href="https://notebooklm.google" target="_blank" rel="noopener">notebooklm.google</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>ElevenLabs</strong> · <a href="https://elevenlabs.io" target="_blank" rel="noopener">elevenlabs.io</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>Suno</strong> · <a href="https://suno.com" target="_blank" rel="noopener">suno.com</a></li>
+                <li style="padding-left: 22px; position: relative; margin: 6px 0;"><span style="position: absolute; left: 0; color: var(--orange); font-weight: 600;">→</span> <strong>Monkeytype</strong> · <a href="https://monkeytype.com" target="_blank" rel="noopener">monkeytype.com</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg with-header">
+          <div class="msg-av">T</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name">tim_daly</span>
+              <span class="tim-tag">trainer</span>
+              <span class="time">Today at 11:56 AM</span>
+            </div>
+            <div class="msg-content"><em>now stop reading slides. go plan a website. i believe in you. sort of.</em>
+
+see you friday 🫡</div>
+            <div class="reactions">
+              <div class="react mine">🫡 <span class="count">1</span></div>
+              <div class="react">👋 <span class="count">6</span></div>
+              <div class="react">📝 <span class="count">4</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg with-header">
+          <div class="msg-av system">i</div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="name system">system</span>
+              <span class="time">Today at 11:56 AM</span>
+            </div>
+            <div class="msg-content" style="color: var(--text-muted); font-style: italic;">end of slideshow. press ← to go back. or close the tab. live your life.</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="input-area">
+      <div class="input-bar">
+        <span class="plus">+</span>
+        <span>slideshow mode — use <kbd>←</kbd> <kbd>→</kbd> to navigate · <kbd>F</kbd> for fullscreen · or click a <span style="color: var(--text-link)">#channel</span> on the left</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============ MEMBERS LIST ============ -->
+  <aside class="members">
+    <div class="member-cat">Trainers — 1</div>
+    <div class="member">
+      <div class="member-av orange">T<span class="dot"></span></div>
+      <div>
+        <div class="member-name orange">tim_daly</div>
+        <span class="game">📊 Running slideshow</span>
+      </div>
+    </div>
+
+    <div class="member-cat">Bots — 1</div>
+    <div class="member">
+      <div class="member-av teal">Q<span class="dot"></span></div>
+      <div class="member-name teal">QuizBot</div>
+    </div>
+
+    <div class="member-cat">Students — 12</div>
+    <div class="member">
+      <div class="member-av purple">A<span class="dot"></span></div>
+      <div class="member-name">alex_w</div>
+    </div>
+    <div class="member">
+      <div class="member-av pink">B<span class="dot"></span></div>
+      <div class="member-name">brodie</div>
+    </div>
+    <div class="member">
+      <div class="member-av green">C<span class="dot idle"></span></div>
+      <div class="member-name">caitlyn</div>
+    </div>
+    <div class="member">
+      <div class="member-av yellow">D<span class="dot"></span></div>
+      <div class="member-name">daniel.k</div>
+    </div>
+    <div class="member">
+      <div class="member-av indigo">E<span class="dot"></span></div>
+      <div class="member-name">ellie_r</div>
+    </div>
+    <div class="member">
+      <div class="member-av orange">F<span class="dot dnd"></span></div>
+      <div class="member-name">finn</div>
+    </div>
+    <div class="member">
+      <div class="member-av teal">G<span class="dot"></span></div>
+      <div class="member-name">grace_m</div>
+    </div>
+    <div class="member">
+      <div class="member-av purple">H<span class="dot"></span></div>
+      <div class="member-name">harvey</div>
+    </div>
+    <div class="member">
+      <div class="member-av pink">J<span class="dot idle"></span></div>
+      <div class="member-name">jordan</div>
+    </div>
+    <div class="member">
+      <div class="member-av green">K<span class="dot"></span></div>
+      <div class="member-name">kai_t</div>
+    </div>
+    <div class="member">
+      <div class="member-av yellow">L<span class="dot"></span></div>
+      <div class="member-name">liam_b</div>
+    </div>
+    <div class="member">
+      <div class="member-av indigo">M<span class="dot offline"></span></div>
+      <div class="member-name" style="opacity: 0.5;">mads</div>
+    </div>
+
+    <div class="member-cat">Honorary — 1</div>
+    <div class="member">
+      <div class="member-av orange">D<span class="dot dnd"></span></div>
+      <div>
+        <div class="member-name">Duke</div>
+        <span class="game">🦴 chewing something</span>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  // QR code (base64-embedded)
+  const QR_DATA = "/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAExATMDASIAAhEBAxEB/8QAHQAAAgIDAQEBAAAAAAAAAAAAAAgHCQEFBgQDAv/EAF4QAAEDAwIDAgYJDgkLAgYDAQECAwQABQYHEQgSIRMxGEFRVrPSFCI4YXR1lJXTFRYXMjdXcXOBk7Gy0fAjJDU2VGWRorQzQlJTVXKSoaPB4iU0JkNFRmJjRGZ2gv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBy6KKKAooJ2rHMP3FBmiscw/cUcw/cUGaKxzD9xRzD9xQZorHMP3FHMP3FBmig9KxzD9xQZorHMP3FZoCiscw/cVmgKKxzD9xRzD9xQZorHMP3FZoCiscw/cVmgKKxzD9xRzD9xQZoorHMP3FBmiiscw/cUGaKKxzD9xQZorHMP3FHMP3FBmiscw/cUcw/cUGaKxzD9xRzD9xQZooB3ooCiiigKKKKCBeO6bMgaDPSIMp+K8LnFHaMuFCtt1dNx1qvn66sm84rv8td9an+4/Pc/v8AxpF/SqlW4JLdb7rxAWuHc4MWdGVEklTMhpLiCQ0diUqBFBFX11ZN5xXf5a761H11ZN5xXf5a761WvHBMH8zse+bWfVrH1i4P5nY982s+rQVRfXVk3nFd/lrvrUfXVk3nFd/lrvrVa79YuD+Z2PfNrPq0fWLg/mdj3zaz6tBVF9dWTecV3+Wu+tUjcM+RX+Vrzh0eTe7m+yu5thbbktxSVDY9CCdjTk8VmIYnbuHzLpkDGLLEktRWy28zBaQtB7ZsdFBO4pI+F33QOF/Gjf8A3oLB+Jd9+NoNlz8Z5xl5FuUUuNqKVJO46gjqKrGVlOTcx/8AiK79/wDTXfWq3ibEizobkSbGZkx3U8rjTyAtCx5CD0NaP6xcH8zse+bWfVoK2dBsjyCRrJibEi+3N1pd0YCkLluKSocw6EE9asd1idcZ0fzF5lxbbqLBOUhaVEKSRHWQQR3GvdEw3D4kluTExWxsPtKCm3G7e0lSSO4ghO4NbqQyxJjuRpDTbzDqChxtxIUlaSNikg9CCOm1BVXpLkuRPan4w09fro42u6xgpKpjhBHaJ6EE1ZtqW4trTfJHW1qQtFolKSpJ2IIZXsQa5zVDEMTt2nORT7fjFliS49tfcZfYgtIcbWGyQpKgncEHqCKrt09zHLZ2f4/Cm5Re5MV+6xmnmXZ7q0OIU8kKSpJVsQQSCD3g0HLnKcmHT64bv8tc9asfXVk3nFd/lrvrVaHneE4W1g9+daxKwtuot0hSVptzQKSG1bEHl6GqpdjQdRjGT5IvJLYheQXZSVS2gQZrhBHOP/yq2OSSLM6oE7+x1Hf/AP5qnVC1NrStCilaTulQOxB8tb851mxTynMMgKdttvqi9tt/xUGbTlGSKukRJyC7FJdQCDNc27x/+VW12glVoiEkklhBJP8AuiqfbP8AytE/HI/SKuCs38kQ/wAQj9UUFR8rKcmEp0DIbv8Abq//AJrnl/3q+YynJidvrhu/y1z1qtdOCYQTucOx8k/1az6tYOCYQBuMOx75tZ9Wg2OMqUrGbYpSipRhskknck8gqrDUTJcjb1CyNpu/3VDabrKSlKZjgAHaq6Ab18sjzbMmMguTDGWX5ppuW6lCEXB0JSkLIAACugFci4648+t55xbjriipa1ndSiepJPjNBbppstbmn2POOLUtarZGKlKO5J7JPUmqy9YckyJnVrLmWb9dG2kXuYlKEzHAlIDy9gAD0FWY6ZEfY6x34rjeiTVXOs/3YMx+PJnpl0FnOi7rr2kWKvPOLccXaIylLWokqJaT1JPfVc+vuR5BH1rzJiPfbo00i8yUoQiW4lKQHDsAAegqxXRH7jmJfE0X0SarW4hfu5Zr8dyvSGg5v66sm84rv8td9aj66sm84rv8td9arJeH/DcQmaJ4dKmYrY5Eh20MKcddgNKWtRQNySU7k13H1i4P5nY982s+rQVRfXVk3nFd/lrvrUfXVk3nFd/lrvrVa79YuD+Z2PfNrPq0fWLg/mdj3zaz6tBVF9dWTecV3+Wu+tR9dWTecV3+Wu+tVr31iYP5nY982s+rVcvGLAg2ziOyqFboceHFbMTs2WGw2hO8RknZI6Dckn8tA6/BjKlTdALJImSXpDynHuZx1ZWo/wAIrxnrUy1CnBL7nmx/jH/SKqa6AooooCiiigX3j89z+/8AGkX9KqWDgQ90Zafgcr0Rpn+Pz3P7/wAaRf0qpYOBD3Rlp+ByvRGgbjjTuVxtOgF3m2ufKgykSYoS9GeU2sAvJB2Ukg9RVe/2Qs889Mj+dH/Xp/uOn3Od5+FRPToqtqg6f7IWeeemR/Oj/r1KPCnmeXXPXrF4Vxyi9zIzklQcZfuDriFDs196VKINQPUtcIPuh8U+Er9Eugefi79zfmPwRv0zdITwu+6Bwv40b/70+3F37m/Mfgjfpm6Qnhd90Dhfxo3/AN6CwniRmS4GheWTIMl6LJat6lNvMuFC0HcdQodQarUVqDnoJ/8AjPJPnR/16tmuUCFdLc7b7jFZlxH0crrLyApCx5CD0NRFrzpzgVu0WzOfBw6xRpTFllOMvNQW0rbUGyQoEDcEHx0Fen2Qs889Mj+dH/XrqtH87zWXqzh8WTl1/eYevsFDjblyeUlaTIQCkgq2II6bVF1ddor92PCv/wDQQP8AEN0FoGsH3K8p+KZPo1VUqy87HkofYdW062sLQtCilSVA7ggjqCDVtWsH3K8p+KZPo1VUkr7Y/hoO9wrOc0m5lZYczLb9Ijv3Bht5p25PLQ4hTiQpKgVbEEEgg1ZDlWAYM1jF0dbw7HkLTCeKVJtjAIPZq2IPLVXun38/cf8AjON6VNW8uttvMqadQlba0lKkqG4IPeDQU1qB37jX5q1jJNMdO2sduTreEY8haIjqkqFvb3BCDse6qq5AAkOADYBRoPvZ/wCVon45H6RVwVl/kiH+IR+qKp9s/wDK0T8cj9Iq4KzfyPE/EI/VFB6tx5RQojbvFVOytUdRxJdAznIgAs7D6ou+X8NfP7KWpHn1kXzi7+2g0OV/znuvw179dVa3Y+Q1+nHFuvKddWVrWoqUpR3JJ7yatIwDTTT2TgOPyX8Kx91521xluLXb2ypSi0kkk7dSTQVsMZ7m7DKGGcwyBtptIQhCLm8EpSBsAAFdABWgkyH5UpyTJecefdWVuOOKKlLUTuSSepJPjrc6iMMxs9v8eO0hplq5SEIQgbJSkOqAAHiG1aId9BbJoj9xzEviaL6JNVrcQv3cs1+O5XpDVlOiP3HMS+Jovok1WtxC/dyzX47lekNBY7w6/cHwv4mj/qCkR4lM2zG367ZhCgZVfYsZq5LS2yzcXkIQNh0CQoACnu4dvuD4X8TR/wBQVXjxSe6CzX40c/QKDm/shZ556ZH86P8Ar0fZCzzz0yP50f8AXrmKBQWi8KM6bctBcam3GZImSXGFlbz7hcWo86u9RJJpH+Nf3TeXfhh/4NinY4P/AHPOLfiF+kVST8a/um8u/DD/AMGxQORwS+55sf4x/wBIqprqFOCX3PNj/GP+kVU10BRRRQFFFFAvvH57n9/40i/pVSwcCHujLT8DleiNM/x+e5/f+NIv6VUsHAh7oy0/A5XojQNdx0deHS87f0qJ6dFVuci/9FX9lXCZLYbNktpctN+tsa4wXFJUth9HMhRSdwSPeI3rkfsK6UeYFg+SJoKqeRf+ir+ypZ4QkqHEPie6SP4yvxf/AKl0/v2FdKPMCwfJE17rDpZp3YrqxdbPh1ngzo6uZp9mOErQdiNwfwE0HNcXfub8x+CN+mbpCeF33QOF/Gjf/en34u/c4Zl8Eb9M3SEcLvugcL+NG/8AvQWGcRlwnWvQ/K7hbJj8OYxb1LafYcKFtncdQodQarWuepGotxgyIFwzbJJUOQhTT7D1xdUhxB6FKgVbEEeKrXrxbLfebU/a7rEamQpKOR5h1PMhafIRUMa6aS6a2rRrMbnbsKssWZFs0l1h5uMAttaWyQoHxEGgQ3Q6HEuOr2LQZ8ZmVFfubKHWXUBSFpKhuCD0IqzaBpjpzClR5sTBcbjyY60usvN21pK21pIKVAhO4IIBBqtHh++7XiHxsx+sKs11XmSrdpTlc+C+5HlRrHMeZdQdlNrSwspUD4iCAaDoZjESbEdhy2mZEd5BbdacAUlaSNiCD3giuT+xPph973Fvmtn1ar+0u1f1On6j45CmZxfH4z9zjtutrlEpWkuJBBHkIqzRPcKCN8x0z07t2JXifAwbHIsuNBeeYfZtrSVtOJQSlSSE7gggEEVXti2qOpr2TWtp7PMoW2uYylSVXN4hQKwCD7arTZTDMqK7FkNpdZeQW3EKG4UkjYg+9tXDMaNaWMPtvs4HYm3G1BaFJigFJB3B/toO6cbQ6ytp1CVtrBSpKhuCD3g1xx0r0uJ3OAYrv8WM+rXS5G44xj1xeZWUONxXVJUO8EJJBqrqRrTqul9xIz6/gBR2/jaqCyBOlml6VBScBxYKB3BFsZ6f3a7FHZIQEI5EpSNgB3AVVV9mrVfz/v8A8rVR9mrVfz/v/wArVQWQStLNMOxcUMBxbm2J3+pjO+//AA1VllDTbOUXRllCUNomPJQlI2CQFnYAV1p1p1XIIOfX4g+L2UquDeeckSFvvLU464orWpR6qJ6kmgtQxvSvTR3G7a67gGMLcXEaUpSrYySSUDck8tV8ZtqVqFbM2vdtt2b5FEhRLjIYjx2bi6htptDikpQlIVsEgAAAdwFWcYt/Na1/Amf1E1U3qR90fJPjeV6ZdBZVgum2nt0wuy3K5YRjsybKgMPSJD9uaW464ptKlLUop3JJJJJ7ya3X2J9MPve4t81s+rWx0y+51jnxXG9EmuioPhDiRYEBqFCjtRozDYbaaaQEoQkDYAAdAAPFVVXEL93LNfjuV6Q1a2r7U/gqqTiF+7lmvx3K9IaCx3h2+4PhfxNH/UFV5cUaVHiCzXZJP/qjni94VYbw6fcJwr4mj/qCvXedKNN7zdZN0uuGWaZNkrLj77sYKW4o+Mny0FTvIv8A0Vf2Uci/9FX9lWrfYV0o8wLB8kTR9hXSjzAsHyRNBpOD/wBzzi34hfpFUk/Gv7pvLvww/wDBsVZLYbPa7DambVZoLEGCwNmmGU8qEDffoKra41/dN5d+GH/g2KByOCX3PNj/ABj/AKRVTXUKcEvuebH+Mf8ASKqa6AooooCiiigX7j89z+/8aRf0qqvzGL/fMYu7d3x65y7XPbSpKJEZwoWkKGxAI8oq2vMsVx/MbMbNk1rYucAuJdLD2/KVJ7j0I7q4jwfdGvMC0/3/AFqCvr7Nur33xcl+XL/bR9m3V774uS/Ll/tqwXwfdGvMC0/3/Wo8H3RrzAtP9/1qCvr7Nur33xcl+XL/AG0fZt1e++Lkvy5f7asF8H3RrzAtP9/1qPB90a8wLT/f9agrsv2q2pV+tEi0XrNr7Pt8lIS/HflqUhwAggEHv6gH8lbbhdB8IDC+n/1Rv9Bp/fB90a8wLT/f9avdYNFdLLBeYl5s+GW2HPiOB2O+3z8zah3EbqoP3xD3S42XRPKbpaZr8KdGgKWzIZWUrbVuOoI7jSJaSam6g5ZqnjOMZLmN5u1lul1YiT4MqUpxmSytYSttaT0UkgkEGni4ofuAZj8XK/WTVd/Dx93nB/j6J6VNA+Oq+mGnuK6bZBkWOYbZbVd7fAdkQ5sWKlDrDiU7pWhQ6gg9xFJlpzqpqRkOomOY9fc1vlxtFyu0WHNhyJaltSGHHkocbWk9ClSVEEeME1ZVebZAvNpk2q6RkSoUpotPsr32WgjYg7Vwlr0M0ltd0i3OBg9sjzIj6H2HU8/M24hQUlQ9t3ggGg1GoOlGmtgwa+Xuy4RYrfcoMB6RElMREocZdQgqStJHUEEAg0k2nuseqs3P8ehS8/yJ6M/dYrTra5qylaC8kFJG/UEHarL7nCiXO3SLdOZS/FktqaebV3LQobEH8INR9A0I0jgT486Hg1rZkx3UvMuJ590LSQpJHtvEQDQdjm0h+Lhd7lRnVtPs299xtxJ2UlQbUQQfKDVaWMa0asSMktjD+oWRONOTGUrQqcvZQKwCD17qsp1B/mFkHxZJ9EqqmMQ/nZafhzPpE0FuGUfzXuvwN79Q1UMwgLu7aFp5kqfAII7xzVcQ801IjOMPIC2nElC0nuIPQio1ToDo6l0OjArUFhXMD7fv7/8ASoPpdNFNJW7dJdRp3jaVpaUoEQUdDsfeqru6oQ3dJLaEhKEvKAA7gNzVwd4/kmX+JX+g1T9ef5Yl/j1/rGgtDGimkn1PS59jvG+bswd/YKO/b8FVh5Ow3Hya5sMNhtpuY6hCUjYJSFkACrgIwCobSVDcFsb/ANlRxJ0E0fkyHZD+CWtbrqytajz7qUTuT9tQdzi381rX8CZ/UTVTepH3R8k+N5Xpl1bmwy1HjNx2UBDTSAhCR3AAbAVUZqV90XJfjaV6ZVBappkR9jrHeo/kuN6JNV56r6w6p2/VDKbfBz3IY8SNeJTTLLcxYS2hLqglIG/QAACtBA131cgwmIUTOrozHYbS002nk2SlIAAHtfEAKeLT/RrTHKMFsOSX/DrdPu91tzE2dKd5+d99xtK1rOyttyok9PLQSDpHNl3LSzGp8+S7JlyLVHceecVzKWstpJUT4yTVZ3EKD9nHNeh/luV6Q1alabfCtVrjWy3R0R4cVpLLLSe5CEjYAfgArhb1ohpRebvLu10wm2Sp0x1T0h5fPzOLUdyo+28ZoK5LRq5qhaLZGtlszq/xIUVsNMMNTFpQ2gdAkDxAV6vs26vffFyX5cv9tWC+D7o15gWn+/61Hg+6NeYFp/v+tQV9fZt1e++Lkvy5f7aPs26vffFyX5cv9tWC+D7o15gWn+/61Hg+6NeYFp/v+tQV9fZt1e++Lkvy5f7a43I71eMjvL95vtwlXK4yOXtpMhZW4vlSEjcnv2SkD8AqzfwfdGvMC0/3/Wo8H3RrzAtP9/1qDScEvuebH+Mf9IqprrVYpjlkxWyM2XHrczb7eySW2Gt+VO53PeT462tAUUUUBRRRQFFFFAUVE3Fpld/wzRO53/Gbiu3XJmRGQ2+ltCykKdSlQ2UCOoJHdS3cK+t+qeYa2WWwZJlr8+2yA92rCozCArlaUR1SgHvA8dA9VRtxNXy7Y3olkd5sk52DcI0dKmX2jspB7RI3H5Cakmol4vvc8ZX8GR6VFAiR4gdYt/5+3f8A40/sru+H3WnVC/60YrZ7vmVzlwJdwQ2+w4scriSDuD0qN+G/H7RlOt+M2C/wkzbZMkrRIYUtSQsBpagN0kEdQO41YRjWgmkeOX2FfbLhzEO4wnQ7HeTLkKKFjuOynCD+UUHe3+z22/2WTZ7xEbmQJbfZvsuD2q0+Q1DOqmkunWF6b5Hl2MYrb7ZfLPbX5tvmMpIcjvtoKkLTue8EA13mvt7umN6O5NfLJLVDuEOEpyO8lKVFCtx12UCD+UUj+m2tOp2eahWHCstyp654/fLgzAuUNcZlAfjurCVoKkIChukkbgg+/Qch4QOsXn7d/wDjT+yjwgdYvP27/wDGn9lN9rHw/wCj9j0syS8WrC48adEtzrzDolyFFCwncHYuEH8oqvJQ2UQPLQSf4QOsXn7d/wDjT+yt7p9rtqzcM8x+DMzi6vRpF0jNOtqWNloU6kKB6dxBIqM9NbfEuuoOP224MB+JKuLDLzZJAWhSwCNx17j4qsitnDtozbp8W4wsIjsyorqH2XBMkEoWlQUk7FzboQO+gk+ZGYmwnokptLrD7am3EK7lJUNiD+Q1FN90L0nttlnXCFhFrYlRY7jzLiUHdC0pKkqHXvBANSNmUp+BiF5mxHOykR4D7rSwAeVSW1EHr07xVa0viP1qlRnYz+cyFsvIU24kw43VKhsR/k/IaDzniA1hHT6/bv8A8af2VjwgdYvP27/8af2VHtgZalX63x30c7TsltC077bpKgCP7KsqY4a9EFMIUrA4xJSCf47J+koEVc1+1fcbU2vO7spKhsQVp6j+yo0ccW66pxxRUtSuZRPjJqzjwadD/MON8tk/SUeDVof5hxvlsn6SglVBKbalQOxDQ2/sqtDJdetXY2SXOMxnV2Q01LdQhIWNkpCyAO6s+EfrWJfsf6+pHZBfIE+wo3dvtt/k6c2zcPOjd0ssO5z8JjvzJcdD77pmSAVuLSFKV0c2G5J7qCWsdeckY/bn3llbjsVpa1HvJKASa4SfoRpLNmvzpWD2p2Q+6p11akHda1Hck9fGSaRi8cROsttusu3Qc3kMxYr62GGxDjkIQhRSkblvc7ADvry+Etrh5+SfkUb6Ogj7PokeBnF8hRGksx2Lg+202nuSlLigAPwAV1lq1z1Xtlti2yBm10jxIrKWWGkLGyEJGyUjp3AAVH9ymSrjcJE+a6XZMl1TryyAOZaiSTsOnUk1Yhpfw9aOXfTXGrrccJjvzZlpjPyHTLkArcW0lSlbBwAbknuoJX0muEy66X43c7hIXIlybXHdedX9stam0kk/hJpENatbtVLLq5ldptmaXONCiXaQywyhY5W0JWQEjp3AV8M91x1Uw/NrxieN5a/b7LaZrsKDFTFYUGWW1lCEBSkFR2SANySfKaaLTfRXTDO8CseZ5ZijFzv17gtTrjLVJeQX33EhS18qFhKdySdkgDyCgkrRC6T71o9it3uklcqdLtbLz7y/tlrKQSTSTcQetOqGP605XZrPmVziQIlxW2ww2scraQBsB0rxam60am4FqBfcKxLKnrXYLLNchW+GiMysMMoOyUBS0FR2HjJJqEsmvl1yW/TL9e5ZmXGa6XpD5QlJWs952SAB+QUFpHDzeLnf9FcWvN4mOTJ8uAlx99w7qWrc9TSe8TOsupmNa6ZPZLHmFyhW6LIbSww2sBKAWWyQOnlJP5ajPGdedWsbsUOxWTMX4duhthqOwmKwoISPFupBJ/Kab/RbSvANVdMrLqBn+OtXvJry0t64T3H3WlPLS4psHlbUlA2ShI6Ad1BIfDJfbtkmiePXm+TnZ0+SypTz7p3Us86h1/spUuKzWHUrFtfMlsVgy64wLbFMbsY7SgEo5orS1bdPGpRP5aeLE8ds2KWCNYcfhJg22KkpZYStSwgEk96iT3k95rjsx0O0ry/I5WRZHiLE+6S+Tt5CpT6CvlQEJ6JWANkpSOg8VBr+E/Ir1lOiVovN/uD1wuDy3Q4+6d1K2WQP+VStWmw3F7Dh1gZsON29MC2sFRbYS4tYSSdz1USe8+WtzQFFFFAUUUUBUScW+WX7CtFLjf8AG5yoNxakx0IeSkEgKcAI2II7qlutBn+HY9neNPY5lEFU22PLQtbIeW0SpJ3SeZBB7/foKzM31s1JzPHXrBkeROzbc8pC3GVNIAJSoKT1CQe8CuSwvJ71h+Qx7/j8xUO4x+bsnkpBKeYFJ6EEdxNN/wAVeg2luC6MXPIsYxxyFc2H46G3jPkOcoW6lKvarWR1BPipdeF/E7Dm2s9nx3JIRmWySHS6yHVt83K2pQ9sggjqB3Gg2fhLay+eD/5lv1a6/RvVTONVNR7Rgec3ty64/dXS1NiLbSkOpCVKA3SAR1SD0PiqUuJzQDSnCtEr9kuOY25DukTsOxeNwkOBPM8hJ9qtZSeiiOopNcNyW84hkkPIsflCJcoaith0tJcCSQR9qoEHoT3igfLWLSnBdLNM71qBg9kbtWRWdlL0GYhxai0tS0oJ2USD7VSh1HjqDtBNe9U8k1jxexXjJ3pMCZcENPtFpsBaSDuOid6+ek2sOoOruoln04z+9ouuMXt1TNwhphssF1CUKWB2jSUrT7ZCT0I7qnTU3RTTfS/Abzn+E2Fy25HY4qplulqmvvBl1O2yuRxakK7z0UCKCReKH3P+Y/Fqv1k1WBYLvPsN+hXu1vmPOgyEyI7oAJQtJ3SevTvFSVlfEVq7k+PTcfveTtSbdNbLUhoW6OgqT5OZLYI7vEa5PRqzW7ItWcVsV3YMi33C7R48loLUjnbW4AobpII6HvB3oJS071r1IznOLNiGTZE7Pst3ltxJ0ZTSEh1pZ2UncJBG48lNwOGnRogE4exuf/3OetX1x3hu0ex++Qr3acXdYnQnkvMOG5SVcq0ncHZThB/KK7rU65zbJprk94troZmwLPLkxnCkK5HG2VqSdjuDsQOh6UHFWnh40ltV0i3ODijLMqK6l5lYecPKtJ3B+28orvM+mybbgt+uENwtSYttkvMrA35VpaUpJ/tApDdOeJfWa8Z9YbVcMradiS7gwy+gW2MnmQpYBG4b3HQ+Knp1Q+5nk/xPL9AugrluHEZq9OgvwZWWvuMSGlNOpLLftkqGxH2vkNRLW2xCHHuGXWeBLR2keTOZZdTuRzJUtII3HUdDVg+RcL+icPH7jLj4i6l5mK642o3SUdlBBIO3aeUUFc0V9yNJaksq5XWlhaFeQg7g1LieJXWRKQkZe+ABsP4Fv1ai2xR2pV9gRX08zT0ltC077bpKgCN/y1Y4xwsaHLZQo4g7uUgn/wBUlfSUCbeEtrL54P8A5lv1aPCW1l88H/zLfq05ngraG+aD3zrK+ko8FbQ3zQe+dZX0lBWpzq7XtN/bb77+/UtROI/WCLFZjMZa+hplCUIT2LfRIGwH2vvU5r/Cxochla04g7uBuP8A1SV9JVc2RRmYmRXGJHRyMsynW207k7JCiANz7woPJJfclS3JD6udx1ZWs+Uk7k1Y1g/DrpFccLsc+XibDkiTbo7zqy857Zam0kn7byk0WHhf0TlWKBLexF1TzsVpxZ+qkobqKASdu08tK3kfEdrBjWQ3HHbNlDUe22uW7ChtG3RlltlpZQhPMpsk7JSBuSSfHQN74NOjXmex+ec9apVs9uiWizxLVb2gzEhsIYYbBJ5EISEpHXyACq3vCp1y872fmqL9HVhWmdzm3rTjG7xcng9Nm2qNIkOBITzuLaSpR2AAG5J6DpQVea4dNYcuP9cSvSqroLBxA6rWKyQrNa8pejwYTCWI7QabIQhI2A6p8lc/rf11iy0f1zK9KqnO0d4b9Hsh0rxi+XbFnH5861sSJLouUlHO4pAKjslwAdfEBtQIdf7vPyC/TL1dXzInTXlPSHSACtajuT0p79A9BdLMl0bxe+3jGGZNwm29Dsh0uuArUSdzsFbUl+stlt2Oas5NYrQwY9vgXN5iO0VqXyISogDdRJP4Sase4W/c+4V8Vt/pNBXdr/Y7ZjWsuTWKzRhFt8OcpphoEkISAOm561YHwf8Aub8O+Cu+ncpDeKf3QeZ/GS/0CvvhnEJqziGMwsbx/JW4lshIKI7Jt8dwpBUVH2ykEnqo95oJS4ktdNT8U1nyCw2PJXolvivJSy0lpBCQUJPjTv3mml4W8lvOX6E45kWQTFTLlLEnt3lJAKuWS6hPQAD7VIH5KjXSTSLANX9P7XqFqBZV3bJLsguTZaZbzAdUFFIPI0pKE9AB0AqGdZtVs60U1Ju2mWm94RZ8WsxaECGqK1ILXasofc/hHUqWrdx1Z6qO2+w6ACgf2iow4Xssv2baOWrIclmibcpC3Q68GkN7gLIHtUAAdPeqT6AooooCiiigKiniuzG/YJozcMjxuUiNcWZLCEOKbCwApwA9D07qlaud1Fwuw59i72NZLHdkW55aHFobeU2olJ3Htk9e8UFbOf686lZzjD+OZHeGJNufWhbjaYqEElCgpPUDfvArdcE3ui8e/wB1/wBCum58E7Rf/Ydx+c3vWrktXNKsN0OwSdqTp7CkQcjthQIr8iSuQhPaLDat0LJSfaqPeKDveNT3NmUfgjf4lqkO4dMatGX6x4/j19YVIt8x9SHm0rKSoBCj3jqOoFS9pLqzmmt2f27TLUGdHnY3d+09mMMRUR1r7JtTqNloAUNloSeh8W1S7qjo5gujmDXPUbBbfJhZDZmw9CfflrfQhRUEElCyUnoo94oPrqro9gmkWnt21Hwa2OwMjsbSXoMhyQt1La1LS2SUqJB9qtQ61B2muteoOqGdWjT7MbqzNsF9kphz2ERkNqcaV3gKSAR3DqK9WmGsud6w57atNM5uEWZjl9dUxPYZiNsLWhKFOABaAFJ9shPcamjUXQ/T3SvCLtqHh1tlxMgsMZUy3vPTHHkNup7iUKJSodT0NBr9deHbSvF9IskyCz2R9m4QoRdYcVLcUEq3HXYnY99I7jd5n45kUC+2p0NTrfJRIjrKQoJWg7pOx6HqKYTTvXDULVPNrVp5mNyiS8fvkgRJ7LMNtla2yCSAtICk9w6ipi1h4adJ8c0pyjILXZ5zc+32qRJjrVcHVBLiEFSSQTseo7jQLv4VOs/nDG+Qtfsrx3ziW1bvVknWe4X2O5DnxnI0hAhtgqbcSUqG4HToTUOV0Omdrh3zUfGbLcEKchz7vEiyEpUUlTbjyEqAI6joT1oNVZLlLs93iXWAsNyobyH2VFO4C0kEHY9/UVLV14mtXrna5dsmX6OuNLYWw8kQ2xuhaSlQ328hNM/qJww6RWbA77doNmnolQ7e++ypVxeUAtKCQdievUUimDW+Ndc3sdrmIK40u5R2HkhRBKFupSobju6E0H70+/n7j/xnG9KmrZsv/mndvgL3o1VCd84Z9Jcess7ILXZ5zU+2x3JkVari6oJdbSVoJBOxAIHQ0rE3io1jmQ34j96t6mnm1NrAtrI3SoEHrt5DQRFjH86LV8MZ/XFW9uuKatKnEHZSGSofhCaqDxbrk9q+GM/rireZX8iO/B1fq0Fddu4pNZHrhHZcyCMULcSlX8Sa7ifwVYzbXVvW6O84d1raSpR98gVTmy6tl9DzZ2WghSTt4xU3s8VmsrLKGW73bwhCQlI+pjJ6AbeSgxK4pdZA8639cEblCiNvYTXdv+CoTmyXpcx6W+oKeecU4s7bbqJ3P6aw3/DSRz9edfX8tWH49wsaOTLBb5j9knl1+K04si5PAFSkgn/O9+gVWJxQ6xRYrMZm/wAZLTLaW0D2E2dkpGw8XkFQ/c5si53SVcZiwuRKeW86oDbdalFRO34Sa+l9jtRL7OiMghpmS42gE77JCiB/yFP9hnC7o/c8Nstzl2WeqRKt7D7pFyeAK1tpUo7c3TqTQfXB+GXSG54bZrjMsMhciTAYedUJjg3UptJJ238pNLlmHEHqfheV3bD7BemI9osk163wWlRG1lthlZbbSVEbnZKQNzRkPEnqvi99n43aLvBat1rkuQ4qF29paktNKKEAqI3JCUjqaYvEuHbS7NsXtWZZBaZr94vsNq4z3W57raVvvIDjiglJ2SCpR6DoKCv6/XWbfL3MvNxcDkyY+t95YSAFLUSSdh3dTUo43xIasY9YIFjtd8jtQYEdEeOgw21FKEjYDcjc9KcNXCfowEk/UO493+03vWpCNX7Lb8d1SyaxWppTUGBc348dCllRShKyACT1PTxmg0uTXq4ZFkM6/XV0Oz5z6n31hISFLUdydh0FSVifEVqpi+NwMfs17YZt8BkMx2zEbUUpHcNyNz30zejnDTpPkmleM3+62ec5On21l+QtNwdQFLUkEkAHYV1vgnaL/wCw7j85vetQaLTPRbT/AFTwO0ag5nanZuQXyOJU99EhbaXHD0JCUkAdw6Cuj8FbRjzek/Lnf20tuo+t2oOlGcXXTrDLjFiY/YpBiQGXobby0NjqAVqBUrvPU04PDtk93zLRjHMlvzyH7lOYWt9xDYQFEOrSNkjoOiRQdPhWM2jD8aiY7YmFMW+IkpZbUsrIBJPeep6mq5eNf3TeXfhh/wCDYqzOqzONf3TeXfhh/wCDYoHI4Jfc82P8Y/6RVTXUKcEvuebH+Mf9IqproCiiigKKKKAoqKOKrPb9pxpQ7kmOKjJnJmsMgyGu0RyrJ36bjyUonhgavf6yw/N3/nQWJVC3Gz7nTIf95j0yKVbwwNXv9ZYfm7/zrpNNNXcu17zCJphnioKrBdQsyRBj9g9/BpLieVe529skeKgXTT7LrzguXQ8ox9xlu5Q+fsVOthaRzIKDuD39FGpDzriR1PzTFp2NXybbXLfNQEPJbhJQogEHoR3dQKbHwP8ASH/V375x/wDCuC4gOGnTXCdJL9k1lbu4nwmErZL03nRuVpHUco36E0CiYNlF2wzLIGT2Nxpu4wFlxhTrYWkEpKTuD39FGp/wDXbUHVjMbXpxmEuC9YMgkJhT248RLTimld4SsdUnp31EGgOLWvNdYcexa9B42+fIW2+GXORewbWrodjt1SKb7ONBcD0jxK5ak4ki5pvuPMGdBMqX2rXap7uZHKNx1PTeg7nDeGjSzFMmt+R2eDc0T4DoeYU5OUpIVt4x4++pTyqxwMlxq449dEOLg3GMuLIShfKotrSUq2PiOx76QA8YGrwO3aWH5u/86PDA1e/1lh+bv/Ogm3Vrhg0oxzTXIb7bIF0RNgwHX2FLnKUkLSncbjx0nei421lwsf8A9hgf4huprxLiJ1D1JyW34Fki7UbPfn0wZojw+zc7Jw8quVXMdjt49qYfHOFXSyx3+232Ci9CZb5TUtjnn8ye0bWFp3HL1G4HSgk3WD7leU/FMn0aqq20v+6bjHxzE9OirZcgtcW92OdZ5vP7GmsLYd5FbK5VAg7HxHY1Cdm4T9KbTeYV1iIvYkw5Dchrmn7jnQoKG45eo3AoJxucJi5WyVbpQUWJTK2XQk7EpUCDsfwGl9yHhP0fhWG4TGLfdg6xFdcQTcFEcyUEj/mKnjLJr1sxa7XGNy9vFhPPN8w3HMlBUNx5NxVfM/i31ZmwZEN9yxlp9pTS9rfsdlAg7e29+ggaJIchzWZTBAdZWlxBI3G4O4qeYnFhrBIdahuXC0lpwhtQFvTvynoag2yR25l6gxHt+zekNtr2Ox2KgDVgB4SdJY8MzW2752rbfap3uHTmA3H+b5aD73DhL0cZt77yLfdudttSk73BfeBVedyaQxcJDLe4Q26pKd/ICRU9v8XmrjzK2XHLFyrSUq2t/l7/APPqAJDq35Djzm3O4oqVt5Sd6D8oUULCk94O4qdYHFfrBDhMQmLhaQyw2ltANvSTypGw/RUFsJC3kIPcSAasCx/hJ0mnWKBNebvnavxW3F8tw2G6kgnb2vv0Hvt/CvpHdrfHu0yBdVSpjSZDxTPUAVrAUrYeIbk0ut84nNVcYvk7GbTOtiLdaZLkGKlcFKlBppRQgE+M8qR1qwiFGbhwmIbPN2bLaW0bnc7JAA/RUFXnhO0pul2mXSU3fPZEt9b7vLP2HMtRUdhy9BuTQeCw8MuleVWSFk13g3NdxusdE2UpucpKS66kLWQPEN1HpUAZTxIan4NktzwuwTba3aLDLdtsFDsJK1pYZWW0BSj9seVI3Pjr9Xvig1OxO8TMYtS7MIFpfXCjB2DzL7NpRQjmPN1OyRuaX7IbrLv2QXC9z+T2VcJLkl/kTyp51qKlbDxDcmgm08XOspG31RtHzcioVym9z8lyO4X+6KbVOuEhcmQpCeVJWs7nYeIbmne004VtLMg0+sF7nt3r2XOtzEh7s53KnnW2FHYcvQbmui8D/SH/AFd++cf/AAoJG4demg+Fn+po/wCoKVfXLiX1TxLVrJcbs862It9vnLZjpcgpWoJAG258darL+ITUHTHKrlp3jK7ULJj0ldugiTE7R3sWzyp5lcw5jsO/apdwbQXA9XcStupWXIuar7kLAnTjFldk12qu/lRynlHTu3oEezPI7nl2Uz8kvK213Ce8Xn1No5ElR8g8VSVgnEjqfheJwMYsU22t26AgoYS7CStQBUVHcnv6qNNieD/SHb/J375x/wDCkp4gsVtWE6w5Di9kDwt8B9CGA85zr2LSFHc7Dfqo0EgeF1rN/tG0fNyKnfSzSHC9dcDtuquoEaZJyW+dqZrkWSWGldi6thHKgdB7RpA987mkLqZdOeJHUfAsMgYnYV2gW6D2nYh+Hzr9u4pxW6uYb+2WaCxLTzDrJgeLRsax5t5u3xiotpdcK1DmJJ6n3zXQ1G/DZmV5z3SS2ZNfzHM+StwOFhvkR7VZA2G58QqSKAooooCiiigX3j89z+/8aRf0qpN+GHBrLqLq5Bxe/mQID8d9xfYL5F7oQVDrsfGKsc1a0+sepmIqxjIHpzUJT7b5VEcShzmQSR1UlQ26+SuH0q4bsB03zKPlVgmX52cw242hMuU2tvZaeU7hLaT3Hy0EHcTPDlgGnmkVxyiwqupnx32EI7eSFo2W6lJ3HKPEaWLTXM7vgGYRMosYYM6IFhsPo5ke2SUncbjxE1YDx0+5zvPwqJ6dFI9w54VaNQdWrVit8cltwZYdLiorgQ4OVtShsSCO8DxUEkeGLqv/AKuxfIz61aDUHiZ1EzfEZ+MXlFpEGcgId7GMUr2CgroebygVLXETwy6e4BpBessskzIHJ8LseyTJlNrbPO8hB3AbBPRR8dLloJiVsznVex4veXJLcGc8pDqo6wlwAIUroSCB1A8VBo9P8queE5jbsqs4ZM+3uFxntkcyNykpO48fRRqVM34odR8vxO5Y1dUWgQriwWHuyilKuU+Q83Q9KZUcGelG38oZV8ua+hrkNaOFjTjDtLMiye1TcjXNt0Jb7KX5bamyobfbANAkflFAk9dRpJYoWUan4zjtyLgh3K6MRX+zVyq5FrCTsfEdjXMHvrvOHb7u+DfH0T0qaB5MT4VtNMayS33+3LvPsuA+l9ntJQKeZJ3G45eoqWNRbtKx/T3I75B5PZVutMqWxzjdPO2ypadx4xuBXw1Tvs3GNOb9kFuSyqXb4Lj7IeSVIKkp3G4BBI/LSHZPxa6m3/HrpYZsDGUxbjEehvFuG6FhDiChRSS6QDso7dDQdNgHFhqffM3slnmIsojTZ7LDvJEIVyqWAdjzd+xp2c1uUi0YZebtF5PZEO3vyGuYbjmQ2pQ3Hk3Aqo7HLtJsV+gXqGlpUmDIRIaDoJQVIUFDcAg7bjy1Ot84utT7vZJ1olW/GBHmxnIzpRCdCglaCkkHte/Y9KDY2rip1MyW5xMbuKLN7DuryIUgtxSlXZukIVsebodlGpqv3CLpZBsc+ayu9lxiM46jeWNuZKCR/m+UUhdonvWy7RLnHCC9EfQ+2FjdJUlQUNx5NxU/3DjC1TnQJEJ634v2UhpbS+WE6DspJB2/he/rQL5CkOQpzEtnbtGHEuI37twQRTDRuLrVOStuEtuydm6Q0raGd9j0P+dS/WWM3NvMKI8VBt+Q22spOx2KgDtT+Q+DnSpBZkJuGU86SlY/jrW246/6mg/M/hA0pYhPvoXfOZttSgDMHiH+7SA3BlDFwfYRvytuqSN/IDtVxkhlL8dxhe/K4kpO3fsaXaRwcaVPvuPruOU861FZ2nNbbk7/AOpoCLwf6U9m072l85ikK/8AeDv2/wB2mGt8VqDAjwmebsmGktI3O52SAB+ikAXxj6qsLUyi34tytnkG8F3fYdP9dWBxmark/wAn4r8hd+moLB6wr7U15LHJcm2aFMdCQ4/HbcWEjYbqSCdv7a9avtTQVF6m/dFyP40k+lVTmad8KOmN+wDH75NXefZU+2R5T3JLATzrbSpWw5eg3NJlqb90XI/jST6VVS/jPFrqbYMettihQMZVFt8VuKyXYbpWUNpCRzEOjc7DyCg3eRcSmoWn+QTsGsaLSbXYpC7fEL8Yqc7JpRQjmPMNzskbmnU0nvs3JtM8cyC5dn7MuNtZkv8AZp5U860AnYeIbmoHx/hm0+1CsULO75NyBu6X5hFyloiym0MpdeAcUEJLZITuo7AknbxmopybiQz7S/IZ+nWOw7C9aMbfXbITkyK4t9TTJ5ElakuJBVsOpCQPeFBDnEX013zU/wBcyP1zXZ4PxQ6j4hidtxm1ItBhW5gMM9rFKl8o8p5up60weLcOWB6qY7A1HySXfWrxkjCbjNRDlNtsJddHMoISptRCdz0BUfw1s/Az0o/2hlXy5r6Ggl3RHJbjmGlGPZNdg0J1whpee7JPKjmJPcPFVenGB7pDMfhTXoG6sjwPGLdhuIW3F7UuQuDbmQyyqQsKcKR/pEAAn8gqKdROF/TvOczuWV3mbkKJ9xcS48mPLbQ2CEJSOUFokdEjxmginQHhn07zjSayZPeF3YTprSlO9jJCUbhZHQcp8QpcOI7D7TgOs1+xKxl82+AY/Y9svmX7eO24dzsPGs1NOca45hoXk0zS7Do1okWSxqDUVy4x1uyFBQCzzqQtCSd1HuSKXjUzMrtqDm9wy++NxW7hP7PtkxUFDY5G0tjYEkjogePv3oLCeCX3PNj/ABj/AKRVTXUKcEvuebH+Mf8ASKqa6AooooCiiigKjXiWzy66b6TzsqszEZ+Yw+y2lD4JQQtYSe4g9xr48Teol50v0wcymxRIEqYmYywG5qFqb5Vk7nZKknfp5aSfVziYzbUzCZGJ3uzY9FhSHW3FOQ2XkuAoUFDYqcUO8eSg/Oq/Epmeo2FSsUvFutTMOS424pbCFhYKFhQ23UfGK+fBN7ovHv8Adf8AQrrnOG/ArTqVqtAxO9SpsWFJZfcW5DUlLgKG1KGxUlQ7x16UzmZaL41w7Y/I1Yw643e5Xm0coYj3VxtcZXaENq5g2hCj0WdtlDrtQMfqhhlu1AwefiV2efZhzuz7RbBAWORaVjbcEd6RS7ZfoZi+hmOy9UsXm3CVd7EkPxmpiklpSiQg8wSAdtlnx1Gnhr6mebmIfJ5H01c5qTxT53nmF3HFLrY8bjw57YQ65GZfDiQFBXQqdI8XjBoN94Zuo4/+kWL82561aTPOKjOsxw66YxcbZZ24lyjlh1bSFhYSduo3V39KjfQzErfnmrFgxK6vyo8K5PrbecjKSl1IDale1KgR3pHeDTL6x8J+AYZphkGU22+5M/MtsJT7Lch9gtqUNuigloHb8BFAsOjWNQsx1QsGM3Fx1uJcZYZdU0QFgEE9N/wU82F8KOB4tllpyWDdLy5KtktuWylxxHKpSFBQB2T3bik14XvdAYd8ZJ/VVVpiftR+Cg1WY2GLk+LXLHprjjca4R1x3VNnZQSobEj36WDUPhKwCwYFkV/i3W9LkW61ypjSVuI5SttpSwD7Xu3ApkdUL/LxbT2+5FAaYdlW+E5IaQ+CUKUlO4CgCDt+Aik0tPFNneoV4iaf3eyY3GtuSyEWeW9FZfS82zJUGVqbKnVJCwlZIJBG+24PdQKtRTw53wfadWHDLze4l/ypx+DBekNIdkRygqQgqAOzIO3TxEUmuHWxi85fZ7PJW4hidPYjOKbICglbiUkjcEb7HyUGoop6co4N9OLXjV0ujGQ5Yt2JDdfbSuRHKSpCCoA7M93SkWoNliv857V8MZ/XFW+rcUza1OpAKkMlQ394VTvb5S4U+PMaSlS2HUupCu4lJ3G/9lMvH4zNSJJbgrx7Ew27s0oiPI3APQ//ADu+g+Xhm6j/AOyLF+bc9ajwzdR/9kWL82561S5P4LtNWIT76Miy4qbbUoAyI+3QfiaRG4Mpjzn2EElLbikAnv2B2oPk4orcUs96iSa/I6V+2UhbyEHfZR26U9di4M9N59kgznchyxLkiM26oJkR9gVJBO38D3daCJLfxiahw4MeG1abGUMNJaSS2vfZIAH+d71Phidweu2JWi6yEpS9MgsyHAnuCltpUdve3NLuOCjTMH+ceX/KI/0NMhZbczaLHBtMdbi2YUZuO2pwgqKUJCQTsAN9hQVLam/dFyP40k+lVTg6fcJOAX/A7BfZV1vSJFwtseU6lDiOUKcbSoge17tzSfam/dFyP40k+lVU1Yvxf6iY9jVssMOwYs5Gt0RqK0t1h8rUltISCrZ4DfYddgKB+MXs0bHcYt9ihrcXHgRURmlOH2xShISCff2FVb8Qv3cs1+O5XpDUwnjW1MI2+tzEPk8j6al5zPIJeVZZdMkntMMyrlKclPIYBDaVLUSQkEk7dfGTQWhcOp20Iws/1NH/AFBS3azcU+dYdqjkOMW62Wd2JbZqmGluoWVlIA79ld9R5hXFrqBimI2vGYFhxh6JbYqIzLj7D5cUlI2BUQ6Bv+ACoXz/ACidmmZXTKbkxGYmXKQX3m44UG0qPiSFEnbp4yaCfPDN1H/2RYvzbnrUeGbqP/sixfm3PWpZqKDo9ScuuGdZnPym6MsMy5ywtxDIIQCAB03/AAVzlOHoTwsYJnullmyq63vJI8yc0pbrcZ5gNghRHQKaJ8XjJruPAo0z848v+UR/oaDsuCX3PNj/ABj/AKRVTXXLaV4Na9OsLiYpZ5MyTDilZQ5LUlTh5lEncpSkePyV1NAUUUUBRRRQcTrVp1b9UMJXi1ynSITCpDb5dYAKt0EkDr08dKNxF8M+N6Z6Wzcstt+uUyRHfZbS08hASQtYSe7r46aTiT1FuOl2mjmU2uBEnSEzGWOyklQRssnc+1IO/SlwxnVu7cTV3RpLktrg2S2z0qkrl25S1PJLI7RIAWSnYkbHpQLlo7ns7TXO4uWW6GxMkRm3W0tPEhJ50FB7uvTepO1a4oMl1EwWdidwx+2RI8woKnWVrKk8qwrpv08VdXxD8MWM6aaWz8ttuRXibJjPMNpZkJaCCFuBJ35Rv3GlVoCu10Qw+Jnmp9lxSfKeix57qkLdaAKkgIUrpv08VfbQTCYWomqtoxC4zJEONO7XneYCStPI0tY25gR3pFNJf9BbDoLaX9V7De7ldbjYE9uxEmpQGXCohGyuQBW2yyeh8VAX/QSxaE2eRq3Y7xPudxxxIkMRZSEpadKiGyFFPXbZwnp5K5eycROQazXWNpbeLJb7fAyVYgPyYy1lxpKu9SQrpv08dfqw6+37Xi7x9Ir7ZLZarbkajHkS4SnC80EgugpCyU77tgdR466i9cOmO6L2qTqnZr9dblccaQZ8eLLS2GXVp7kr5QFbdfEaDrNPOE/FsNzW1ZTDyO6yH7c+H0NONoCVEAjY7dfHUz6oZBIxPTjIcliMtvv2u2vS223CQlakIKgDt4ulJt4bWajp9aGPfnHvWr1WniZyXVi5xtMrrj1ogQMpdTaZMqMtwustvnkUtHMSOYA7jcbUGLVxM5Jqlco+ndzsNthQshcFvfkMLWXGkOe1Kkg9Nxv46k3E+EHE8fym05DHya7uvW2azNbbW23yqU24lYB2HcSmvphPCJiWLZba8ii5TfH37dJRIQ26hrlUUnfY7J32pkwNgB5KDW5TaGr/AI3cbI+6tpqfGcjrWgdUhaSkkf20u2PcHeJWa/2+8M5Pd3HYMpqShCm29lFCwoA9O47UzdavL7m7ZcTu94ZbQ67BgvyUIXvyqKG1KAO3i3FB59Qf5hZB8WSfRKqoM00F74y8yullm2t7E7AhEyOtha0re3SFpKSRur36V+g9dnipm3aHDWopS++hokd4ClAf96eSFwX4chbMhOVXndJSsDs2/F18lIxbpSoVwjTEJClMOpdSk9xKSDt/ypom+NjNEISgYhj2wG3+Ue9ageqUyH4zrCiQHElJI8W9K7K4LsPkSXX1ZVeQpxZWQG2/Gd/JUceG1mvmhj35x71qPDazXzQx784961BISuC3DmUl0ZVeSUdR/Bt/srgJHGDlthkOWNjGbQ61b1GKha3HN1Bv2oJ2Pedq/I41s0fIZOI4+Av2u4W961d8xweYffmG76/lV+aduCRKW2hDPKlTg5iBunfYE0DR2eUubZ4c1aQlb8dDpA7gVJB2/wCdJflXGLl1pyi62hrGLO43CmvR0KU45uoIWUgnr39K8D/GNmFkecsrOKWF1qAoxULWt7mUls8gJ2VtuQKWC+3Fy8X+fdnm0NuTZTkhaEb8qStRUQN/F1oHZhcJmK5jEZyyXkl1jyLygT3Wm20FKFPDtCkb9dgVEV9vAow3zrvP5tv9lMRpl9zrHPiuN6JNKfnnGFl+PZxfbBHxWxPM264PxG3HFvcy0tuKSCdlbbnag6c8FOGgE/XVefzbf7KTXU7H4+K6h3/G4rzj7FsuD0VtxwAKUlCiATt4+lWr4Be38kwSy3+Sy2y9cIDUlxtvflSpaAogb9dutVg8Qv3cs1+O5XpDQcHRRRQAputD+FfGM90rsWWzshukWTcWVuONNIQUpIcWjpuN+5IpRh31Z9wf+5vw74K76dyg7PS7D4mBYPbsUgynpUeCgoQ66AFK3UT126eOumoooCiiigKKKKAooooF94/Pc/v/ABpF/Sqlg4EPdGWn4HK9EaZ/j89z+/8AGkX9KqWDgQ90Zafgcr0RoHt1qwCNqbgEvEZVydtzUl1pwvtthak9msL22JHfttS+eBBj3n5c/kKPWpt6KBPrrodbuHSA5rDa79Kv0uw7dnAkMJZbd7Y9id1pJI2DhPd4qjfVXiuvOfYFdMSlYhAhNXBsNqfblqUpGygrfYp691O3rDhDGounlyw+TOcgtT+z5n20BakcjiV9x8vLt+WlD1n4U7RgOmt4yyPlk6a7b2g4llcVCUr3WlPUg+/QLxpXmD+Bag2nL40Jua7bXVOJYcWUJXuhSdiQDt9tU4akcW96zXBbxisjDYERq5xlR1PomLUpsHbqAU9e6oY0ZxBnPdT7JiEiY5CauTym1PoQFKRshStwD3/a01/gRWLz5uPyJHrUCk6T4uzm2o1kxaRLXDauUoMqeQgKUgEE7gHv7qbGbwx2jSWE7qfCyqbc5OLIN3ahuxUtokKYHaBBUFEpB5dtwDXTabcJVowvOrRlLGXzpbltkB9LK4iEhewI2JCunfUt8RHTQfOR/UMv0SqBfNOOL++ZVndlxx7C7fGbuMxuOp1ExaigKO24HL1pwEncA+WqouH77teIfGzH6wq1xH2g/BQanNbuuwYjd740yl9cCG7IS2o7BZQkq2J8XdSdR+Li95rJRhsjDYERm+qFsXIRMWpTSXz2RWAU9SOffbx7U5OWWhF/xi52Nx5TCJ8VyOXEjcoC0lO+3j76VaRwk2fC2XMxYy+dLdsaTc0MLiISl1TA7UIJB3AJRtv79B5Mj4MLDasduN0RnFxdXDiOvhBhIAUUIKtvtvHtSXU1t+4zb3dbHPta8Kt7aZkZxgrExZKQtJTvty+LelSoCiiig+0JkSJjLBUUhxYST5NzTqweCbH5EJmQc7uaS42lZHsFHTcb/wClSX2f+Von45H6RVwVm/keH+IR+qKBVW+CLH0LSsZ5c9wdx/EUetTV2qGmBaosBKytMdlDQURsVBKQN/8AlSWvcbd8beWj6x7ceVRH/vV+I/7tfkcbt9P/ANjW75av1aDrrpwVWCbcZU1WdXJCn3lulIgo2HMonb7b36SnKLcmzZPdLS26XUQZj0ZK1DYqCFlO5Hv7Vb3aZRnWiJNUgIMhhDpSD3cyQdv+dVJalfdFyX42lemVQMTjvGbfrNYLfaG8HtzqIUZuOFqmrBUEICd9uXx7UteXXlzI8su1/dYTHcuU16WppKtwguLKikHx7b1qqcbBuDuzZFhdkv7mZT2F3K3sS1NpiIIQXGwrYHm67b0DQaIDfR3Eh/U8X0SahTPOECx5Zmd4yZ/NLhGcucxyUplENCg2VqKuUEq67b0w2F2RGNYnasfafVIRbojcZLqk7FYQkJ3I8W+1begqK1Nx1rEdQb7jDElcpq2TnIyXlp5VLCVbbkDurnKfvP8AhEs+W5teMmezCfGcuctySplMRCggqO+wJV1rR+BFYvPm4/IketQJCO+rPuD/ANzfh3wV307lV16t4qzhGpF8xViWuW1bJRYS8tISVgAdSB3VM+lHFbdsB0+tGIR8ShTWra0ptL65S0qXutS9yAOn2235KCWNauK29YBqVd8TjYhAnNQHAhL7ktaFL3SD1ASdu+p30JzeRqPpVZszlQGoD1xD3NHbcK0o7N9xsbEgb7hG/wCWl0t2gtv19ht6sXC/ybLJvw7ZcJhhLqGuX2mwUogn7XetZc9cJ/DnOc0attijX2Jj2wbnyH1NOPduBJO6UggbF4p7/FQOrRXCaEZ1I1H01gZZKgNQHZSnAWW1laU8qiO8/gru6AooooCiiigX3j89z+/8aRf0qpI9C9Ql6X6iRMvRa03RUdl1r2Op7sgrnSU782x7t/JVj2v2nH2U9P14r9VPqZzympHb9j2n2hJ223Hfv5aXXwH0ef6vm0fSUHn8OOT97ln52P0VHhxyfvcs/Ox+ir0eA+jz/V82j6SjwH0ef6vm0fSUHWaJcVb+o+plqw5eFNW1M/td5IuBcKORtS/tezG+/Lt3+Opy1cw1OoGnt1xJdwNvTcGg2ZAa7Qo2UFb8u437vLUJ6LcKydOdSbXmAzBVw9gdr/FzC5OfnbUj7bnO23Nv3eKmYoE3e4fGtAm1awNZQu/rxr+MJtyoYjiRz/wWxc51cu3ab78p7q8vhxyfvcs/Ox+ipp9XcP8Ar+04vOIGd7B+qTSW/ZHZ8/Z7LSrfl3G/2vlpYPAfR5/q+bR9JQb7S3i6kZtqDZcVVgrUJNykhgyBcist7gnfl7Mb93lqb+IjroPnJ/qGX6JVLieHBOig+yoMoN4ONfx72CYnZdvt05efmPL39+xrntROL5WWYJfcWOEpi/VSA9D7f2eVdnzpKebbkG+2/dQLhgOQnFM0tGSJiiWbdLRIDJXydpynfbfY7f2U1I445IAH2OWen9bH6KlX0+x8ZXm1nxwyfYouMtEftuXm5OY7b7dN6a8cECCAfr/V1/q4fSUHvw7jMk5BldqsZwBqOJ8tqMXfqoVcnOoJ327Mb7b91Mxqh10zyc/1PL9AuluxDg2Tj+VWu+DOVP8AsCW1J7P6nhPPyKCtt+fpvtTR5Ra/q1jNzs3bdj7Ohuxu05d+TnQU77ePbfegp6PfWKc7wH0ef6vm0fSV5bxwVIt9plzvr8Uv2Owt3l+pwHNypJ2+396gUS1RfZ10iQivk9kPIa5tt+XmUBvt+WnHb4Hoq20r+yM8OYA/ySPpaULFxtk9q+GM/rirgYv/ALZv/dH6KBPfAni2/wDj/wBkN5z2P/C8v1KA5uXrtv2tePw1pVv/APT/ALHjLnsf+B5/qqRzcvTfbsvepyLx/JMv8Sv9Bqn28/yvM/Hr/WNA4jnBJFcbVKOojw5xz8v1KHTfrt/laTq8RBbrvMghfaCM+trn225uVRG+35KbscbavYwZ+sFOwQE7/VE+T8XSiXiZ9ULtMn8nZ+yX1u8u+/LzKJ2/50DZWvjYkwbXFgjTxlfsdlDXN9VSOblSBvt2XvUqWSXI3nIrldyz2JnS3ZJb5ubk51lW2/j23rX1kDc7UGKbDDOMqRjmI2fHxgLUkW2CzEDxuZT2nZoCebbsztvtvtvXtxjgyRecct13+vpTPs2K1I7P6ng8vOgK235+u29K1mll+t3Mbzj4f9kfU2c9E7Xl5efs1lPNt4t9t6BrvDjk/e5Z+dj9FR4ccn73LPzsfoq12D8HSMlw60ZB9fCo/wBUYbUnsvYAVyc6ArbfnG+29bnwH0ef6vm0fSUHn8OOT97ln52P0VHhxyvvcs/Ox+ir0HgfQAT9f6vm4fSUq+qeLDCdQr3igmezBbJSo/b8nJ2m23Xbc7d9A1TXDkzrg2nVh3LHLGvJh7OVb0wQ+I/N05QvnTzd3fsK/XgORvvjPfNI+lqeeFj3PeGfFqP0mor1g4r14BqTecQGHJnC2upb9kezuTn3bSvfl5Dt9tt3+KgnXSLDE6f6fWvEkXA3BMBsoEgtdmV7qJ+13O3f5ar441/dN5d+GH/g2KsF0ezI5/p3assMEQTPbK+w7Tn5NlEd+w37vJVfXGv7pvLvww/8GxQORwS+55sf4x/0iqmuoU4Jfc82P8Y/6RVTXQFFFFAUUUUHAa9akN6V4CvK3LUq6JRKaj9gl4NH25I35tj3beSl68OGF972R86J+jqQuPz3P7/xpF/Sqkh0P09e1P1Ci4ixc27auQy66JC2i4E8iSrbYEd+3loGc8OGF972R86J+jo8OGF972R86J+jrV+A7dPvgw/m1Xr0eA7dPvgw/m1Xr0G08OGF972R86J+jo8OGF972R86J+jrV+A7dPvgw/m1Xr0eA7dPvgw/m1Xr0G08OGF972R86J+jro9MuLiLmufWbFEYS9DVc5SY4fNwCw3vv15ezG/d5RUP6scJs/AdPLvl7uaRpyLa0lwx0wVILm60p25uc7fbb91Rlwu+6Bwv40b/AO9BZPqpiys208vWKomCEq5xiwHy3zhvcg77bjfu8tKmeB+aTv8AZBj/ADWr6Smw1LylvCcCu+VOw1TEW2MXywlfIXNiBtvsdu+l/wBP+L+3ZbnNlxdvCJUVd1nNQ0vqnpUGytQTzbcg3237qDWaecH0vFM4s+RqzhiUm3S25BZFuUkr5Tvtv2h2/spn8yvIxvDrzkCmDJFrt78wtBXKXOybUvl32O2/LtvXzz3IEYphl2yRyMqUm3RVyCylfKV8o3238VKw/wAV0DUZpzTxnDZNvdydJsyJapyVpYVJ/gQ4U8g5gkr323G+1BssR4yomQZRa7GnBH2DPltxg6bklXJzqCd9uz67b0z+TXQWXGrneSyXhBhuyS2FcvPyIKtt/FvttSnYZwa3LH8stN8XncR9MCY1JLQt6klYQoK235+m+1NflVrVesWulmS8GVToT0UOFO4QVtlO+3j233oFO8OCH972R86J+jrCuMqJf0mxpwR9g3H+KB03JKuTtPac23Z9dubfatZ4D10++DD+bVevXrs3BTc7fd4c459DcEd9t0p+pyhzcqgdvt/eoPiODOXZVC9HPGHkwD7JLYtpSV9n7bbftOm+1bONxsQ/ZDUT7H8jfnDfN9U0+Xbf/J012UDbGLr8De/UNVBB3sLkHiObkd5tvLsd6C4mYz7IhvMBXL2iCjfbu3G1JvN4JZkiW9I+yBHT2i1L2+pijtud/wDWVs4nG3bJEtpgafzE9osJBNxT03P+5TbRHhIhtSAnlDjYXt5NxvQU49l/GSzzdy+Xf8tNraeCqXcLVEnDP2ECSwh0JNsUeXmSDt/lPfpTHl8k9a9t+V0nb8tONZuNa2W+0Q4BwGY4YzCGub6opHNypA3+096g8x4H5n3wo/zWr6SlLyK3GzZFcbSp0PGDLdjFwJ25+RZTvt4t9qcg8cNrI2+x9M+ck+pScZPcheclul3S0WUzpjskNk7lHOsq238e29A2OL8Z0OzY3bbQcDfeMKI1HLguSRz8iAnfbs+m+1Ktmt5TkeZ3nIExzHTcp70sNFXMW+0WVcu/TfbfbetNWR30FsuiB20dxI/1PF9EmoK1A4wIuJ5vesZXg78pVrmuxS8LiEhzkUU823Znbfbu3qdNEBvo7iQ/qaL6JNL1qNwf3HLM8vmTIziJFRc5zspLKoClFsLUVcpPON9t6BmdPsjTl2CWfJ0xTETdITcoMFfOW+ZO/LvsN/w7VWjxSe6CzX40c/QKsr03xxeI6fWTGHJSZa7XBbiqeSjlDhSnbfbc7VWpxSe6CzX40c/QKCwDhY9z3hnxaj9JqJtZOFCVn+pd6zBGZswE3J1LgjqgFwt7NpRtzc43+137vHUe6TcW9vwfTmyYo7hUqau2RQwp9M5KA5sT125Dt311Hhw2v730z5yT6lB8GNfGNAGhpM/jbl+csP8AAmeiWGA9ze335ClXL9tt3nurzSNDXuI55Ws8fIW8eayLqm3ORTIUx2H8W6uBSebfsebuG3Nt4t6WjWbM2tQNR7tlrMBcBE9xKwwtwLKNkgd4A37vJVgfBR7mTEfwTP8AGP0HWaG4I5pvpzAxNy4puKoqlq7dLXZhXMoq+13O3f5a7iiigKKKKAooooF94/Pc/v8AxpF/Sqlg4EPdGWn4HK9EaZ/j89z+/wDGkX9KqWDgQ90Zafgcr0RoHu1oz+LpngMvLplveuDMZ1pssNOBCj2iwjfc9Om+9L94buNeY92+WNfsqQeOn3Od5+FRPToqtqgeTw3ca8x7t8sa/ZXT6WcVljz7PLXicTE7jDeuDhbS+5KQpKNklW5AG57qr0qWuEH3Q+KfCV+iXQPPxd+5wzL4I36ZukJ4XfdA4X8aN/8Aen24u/c35j8Eb9M3SE8LvugcL+NG/wDvQWR6s4u/mum17xaNKbiPXKKWEPOJKkoJIO5A6+Klo004RMgxPUTH8nfzC2SWrXcWZa2URXEqWELCikEnYE7U4I7hWlzzIWcSwu85PIjrks2qE7LW0hQClhCSogE9xO1B8NScfeyrA71jkeQiO7cYbkdDq0kpQVDbcgUoUThVvunc1rUGXllunRsZcF5djNRlpW+iMe2UhKidgVBBAJ8tdb4buK+ZN3+VN/srS55xiY1keD37H2cPurDtztsiGh1clBShTrSkBRG3cObeg6nFeMbHr/kttsjWGXRlyfKbjpcVLbIQVqCdyAPFvTRDqN6qS0f+6pi3xtG9ImrbE/aj8FBmiiig1uVfzYuvwN79Q1UCWi9cexBAK3eXc+Lc7Vb9lX82Lr8De/UNVBB0M3MPEbhD3MR5djvQNajgtyO3rE5WbWpaY57QpENwEhPXy+9XWo40cct6BAXhV1WqOOyKhLbAJT037ver9OcaOMT21QW8MuyFSAWkqMlvYFXTfu9+uOc4LsnuDip6MztKESD2oSYzm4Cuu3f79Bh3gqyNxKpP172oJX7fb2G50B6+WlVusRVvukqCtYWqO8toqA2BKVEb/wDKnc8NPGAj2H9Zd25gOz5vZTe246b91ce/wc5Lf3l31nMbUy1cVGUhtUZZUgOHmAPXvG9ApVZA3O1ei5RFQrlJhKWFqYeW0VAdCUqI3/5UzePcGmTXexW+7t5lamm5sVqSlCoyyUhaQoA9fFvQfrHuDXIrzYYF2azS1tImxm5CUKiOEpC0hWx6+Leluy6zOY5ld2sDzyH3LbNdiLdQNgstrKSQD3A7U5sXi4x3DYzeJSsSucp+zJEBx5uQgJcUyOzKgCNwDy7/AJa5WdwqZBqJMez6HlVthRsjcVdWozsdalsokHtQhRB2JAVsSPJQbDAeMLHsawmy2B7Dro+5boLMZTqJbYCyhASSAR71bzw3ca8x7t8sa/ZSZZhY3cbyu6Y+++h923y3Iy3UDYLKFFJIH5KYHBeELI8rw20ZLHy61x2bnDblIaXGWVIC0ggEg9T1oJLPG5jRBH1j3b5Y3+ylG1cyljNdSb9lUWK5EZucxUhDLigpSAduhI6eKvBnuOvYlml3xmRIbkvWyWuMt1CSErKTtuAa0lAyemvCZfs2wW0ZXGy62xGbnHD6GXIrilIBJ6Eg7HurofAiyXz4tPyN39tffSDizx3CdNbFikrE7nLetsVLC3m5CEpWQT1AI9+us8N3FfMm7/Km/wBlAoOq2GyMAzy5YnKmtTXoCwhTzaClK90g9Aevjpg9B+Kax6c6U2bDZmK3Gc/bw9zPtSUJSvtH3HBsCNxsF7fkqB9bcxjZ9qZd8shw3YbE9xK0suqClJ2SB1I/BUpaRcLN/wBRtPLXmULKbdBj3DteRh1halI7N1bZ3IO3UoJ/LQPFo9nUbUfA4WWRID0BmUpYDDqwtSeVRT3jp4q7CuD0EwWXpxpnb8TmzmZz8VThU80gpSrmUT3H8Nd5QFFFFAUUUUC+8fnuf3/jSL+lVLBwIe6MtPwOV6I0z/H57n9/40i/pVSwcCHujLT8DleiNA13HT7nO8/Conp0VW1VqfEZgdx1J0rn4na5UeLKkvMOJcf35AEOJUe7r3ClR8CvOvOOyf8AU/ZQK1UtcIPuh8U+Er9EupL8CvOvOOyf9T9ldrodwtZdgmqNlyq4Xy1SI0B5S3G2ufnUChSem428dBM/F37m/Mfgjfpm6Qnhd90Dhfxo3/3p9uLv3OGZfBG/TN0hPC77oHC/jRv/AL0Fpo7hXBcRP3CM5+IZfolV3o7hXBcRP3CM5+IZfolUFUhrZ4pZn8iyi04/Fdbafuc1mG245vyoU4sIBO3XYFXir64XYJGU5ZbMdiOtsv3CSiO2tzflSVHYE7eKmn0/4RM0x/OsfyCRf7O4xbbnGmOIRz8yktupWQOnfsmg19u4U8wwK4R82uORWKVDsTibg+zH7btHENHnUlPMgDchPTcgVIXhsYGOn1qZL0/EevTHZ1aXr9hl5ssZxDb06E7HbWv7VKloKQT73WkXyHg+zWzWK43h/IbMtqFFdkrSntN1BCCogdO/pQTNZOMrB7reYVsZxfI0OS5DbCFL7DlSVqCQTsvu60zdU8YxObtWS2y5vJUtuJLafWlPeQlYUQP7KePw1MF83L3/ANP9tAzV5irm2iZDbUlK32FtJKu4FSSOv9tI07wUZ4t1S/rqxr2xJ/8An+pUl+Gpgvm5e/8Ap/tr9x+NDBnn22U45ewVqCRv2fjO3loI1hcFmdx5jL5ynGlBtYUQC/12P+5TyQWVR4DLCiCpttKCR3HYbV96D3UFOJ/lM/jj+mreMR/mjaPgLP6iaSc8GGc+yy8Mjsm3OVbfwnl/BTw2OIuDZIMFxQUuPHbaUR3EpSAf0UFRGU/zpunw179dVWx6b/c4xv4oi+hRScXjg1zibeJk1GRWVKX5DjqQQ5uApRI8Xv06mKW5204rabS8tK3YUJmOtSe4lCAkke90oKndTfui5H8aSfSqptMB4wMJx/B7FYJOM5C6/brcxEccb7HlUpttKSRuvfbcVosu4Pc1vGU3W7M5BZkNTJjz6Eq7TcBayoA9O/Y1q/Aszodfrjsn/U/ZQey58LmXaj3ORn1syCxxIOQOquUdiT2vattvHtEpVyoI5gFAHYkb04el+PysV07x/G5rzL0m2W9mK64zvyKUhABKdwDt08YpdbTxQYnpzbI2B3OyXWTNx9pNtkPM8nZuLZHZqUnc77EpJFerw1MF83L3/wBP9tBy2qfCRmeWai5Bk0PJLAxGuU52S22723OlKlEgHZG2/wCClT1DxeXhebXbFZ0hiRJtkhUdx1nfkWR4xuAdutWv4RkEbLMOtWSQ2nGY9ziokttubcyUqG4B28dKlrDwpZhmep2QZTBvtpYjXKYp9pt3n5kggdDsPeoEuoppPArzrzjsn/U/ZS/6nYhNwPOrpiVwkMyJVucS2441vyKJQlXTfr3KFBzdNtoBxR4jp3pHZMOueP3yXLt4f7R6P2XZq533HBtzLB7lgd3eK4nTLhay3PMJt2VW6+WqPGnIK0Nu8/MnZRHXYe9XS+BXnXnHZP8AqfsoHH0mzm36jYREyu2RJUSNKUsJakcvOOVRB35SR4q6yo/4fMHuGnel1uxW5yWJMmKpwqcZ35TzLJG2/Xx1IFAUUUUBRRRQL7x+e5/f+NIv6VUmfDVn1n001XhZZfY0+TCjsPNqbhIQp0laCkbBSkjbc+Wn74otP7zqVpa5jNidjNzFTWHwp9RSnlQTv1APlpTfA21N/p9j/Pq9Wgmvw1tLvN/Mvkkb6ejw1tLvN/Mvkkb6eoU8DbU3+n2P8+r1aPA21N/p9j/Pq9Wgmvw1tLvN/Mvkkb6ejw1tLvN/Mvkkb6eoU8DbU3+n2P8APq9WjwNtTf6fY/z6vVoO1114qdP870mv+JWmzZOxOuLCG2XJUdhLSSHEq9sUvKI6JPcDUBcLvugcL+NG/wDvUkeBtqb/AE+x/n1erXX6McLef4fqljuTXKZaFw7dNQ+8lp5RUUjfuHLQOsO4VzOquPzMr01yTGbc7HamXS2vxGFvqIbStaCkFRAJA3PXYGumHdRQIhYOGbOtLr1D1Dv93xyVasedTcJbMKQ8t9bbZ5lBAW0lJVsOgKgPfqVRxq6XJHKcfzHp0/8AaRvp6nXVOxS8m06v1ggKbTKnwXGGi4dkhSk7Df3qSBXBvqaVE+z7H3/69Xq0E1eGtpd5v5l8kjfT15rpxY6eZnbZWIWyyZSzOvjK7bGckRmEtIdfSWkFZS8SEhSxuQCdt9ge6od8DbU3+n2P8+r1a2+GcJGo9nzCzXaTOsqmIVwYkOBL6iSlDiVHb2vfsDQeDwKtUT1+uDDvlcn6CvPcuDTU2Bb5M56/4gpuO0p1YTKkbkJBJ2/gO/pVgo7q8V+iuTrHOhNEBx+M40knu3UkgfpoKe4EVyZPjwmlJS4+6ltJV3AqIA397rTKR+DTU2MW5y7/AIgW2iHVASpG5A6nb+A76+ll4QNSod4hTHZ1kKGH23FAPq32SoE/5vvU+L7Kl25ccEcymigeTfbagW3w1tLh/wDb+ZfJI309HhraXeb+ZfJI309Qp4G2pv8AT7H+fV6tHgbam/0+x/n1erQTX4a2l3m/mXySN9PR4a2l3m/mXySN9PUKeBtqb/T7H+fV6tHgbam/0+x/n1erQTWONbS4n+b+ZfJI309MdZLixd7JBu0ZDiGJsZuQ2lwAKCVpCgDsSN9j5aQccG2poO/s+x/n1erT34jb3rViVotUgpL0OCxHcKT0KkNpSdve3FBA994xNNbPeptpk2HLVvw5C2HFNxY5SVIUUkjd8HbceSvF4aulx6fW/mXySN9PUVZjwj6j3fLLtdI86ypZlzXn2wp9W4SpalDf2vkNakcG2pv9Psf59Xq0GzvnC9nuo13mZ9ZbxjUa2ZA8u5RWpch9LyGniXEhYS0pIUAobgKI38ZpcMysEzFcrumN3B1h2XbZTkV5bCiW1KQrYlJIB26eMCrYNOLNKx/ALFYpqm1SYFvZjOlB3SVIQEnb3txSg6q8KmoWT6k5FkUCbZ0RbjcXpLIceUFBK1kjccvf1oGh4c/uE4V8TR/1BXfVy+ktgmYtpnjuOXBTa5dut7UZ5TZ3SVJSAdverqKAPdVYPGB7pDMfhTXoG6s+PdSZ698MWeZzq5kGVWqZaW4VwfQtpLzygsANIT1AT5Umg+GhHFNgGBaWWXFbvZsnfmwWlIdcix2FNklRPtSp5J8fjAprdLs1teomCW7MbLHmR4Fw7Tsm5aEpdTyOqbPMEqUO9B22J6bUkHgbam/0+x/n1erTi8OuG3PANHLFiN4cYcnQA/2qmVEoPPIccGxO3iWKCQKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiigKKKKAooooCiiig//2Q==";
+  document.getElementById('qrImg').src = 'data:image/jpeg;base64,' + QR_DATA;
+
+  // === SLIDE NAVIGATION ===
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const channels = Array.from(document.querySelectorAll('.channel[data-slide]'));
+  const total = slides.length;
+  const progressFill = document.getElementById('progressFill');
+  const chName = document.getElementById('chName');
+  const chTopic = document.getElementById('chTopic');
+  const messagesArea = document.getElementById('messagesArea');
+
+  let current = 0;
+
+  function go(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+    slides[current].classList.remove('active');
+    channels.forEach(c => c.classList.remove('active'));
+    current = idx;
+    slides[current].classList.add('active');
+    const activeCh = channels.find(c => parseInt(c.dataset.slide) === idx);
+    if (activeCh) activeCh.classList.add('active');
+    chName.textContent = slides[current].dataset.name || 'channel';
+    chTopic.textContent = slides[current].dataset.topic || '';
+    progressFill.style.width = (((idx + 1) / total) * 100) + '%';
+    messagesArea.scrollTop = 0;
+    document.title = '#' + (slides[current].dataset.name || 'channel') + ' · TDC Class · Wed 20 May';
+  }
+
+  channels.forEach(c => c.addEventListener('click', () => go(parseInt(c.dataset.slide))));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault(); go(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); go(current - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); go(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); go(total - 1);
+    } else if (e.key.toLowerCase() === 'f') {
+      e.preventDefault();
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  document.getElementById('hdrPrev').addEventListener('click', () => go(current - 1));
+  document.getElementById('hdrNext').addEventListener('click', () => go(current + 1));
+  document.getElementById('hdrFull').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  });
+
+  go(0);
+
+  // === QUIZ ===
+  const questions = [
+    {
+      type: 'code',
+      q: 'What does HTML stand for?',
+      a: '<strong>HyperText Markup Language.</strong> It\'s a markup language — it describes structure, not behaviour. CSS handles style, JavaScript handles behaviour.'
+    },
+    {
+      type: 'code',
+      q: 'In CSS, what\'s the difference between padding and margin?',
+      a: '<strong>Padding</strong> is the space <em>inside</em> the element — between content and border. <strong>Margin</strong> is the space <em>outside</em> — between border and other elements. Padding is part of the element, margin is space around it.'
+    },
+    {
+      type: 'code',
+      q: 'What does the HTTP status code 404 mean?',
+      a: '<strong>Not Found.</strong> The server is up, but the specific page doesn\'t exist at that URL. Different from 500 (server broken) or 403 (you\'re not allowed in).'
+    },
+    {
+      type: 'code',
+      q: 'In JavaScript, what\'s the difference between == and ===?',
+      a: '<strong>==</strong> checks value with type coercion. <strong>===</strong> checks value AND type. <code>"5" == 5</code> is true. <code>"5" === 5</code> is false. Use <code>===</code> by default — it does what you expect.'
+    },
+    {
+      type: 'gk',
+      q: 'What year did the World Wide Web become publicly available?',
+      a: '<strong>1991.</strong> Tim Berners-Lee at CERN published the first website in August 1991. The web is younger than most of you in this room. (Older than some of you. Awkward.)'
+    },
+    {
+      type: 'client',
+      q: 'What does "scope creep" mean in a project?',
+      a: '<strong>When the project keeps growing past what you originally agreed.</strong> "Could you just…", "While you\'re in there…", "Oh, and one more thing…". Sounds tiny. Kills your weekend. The fix: a written scope, and a polite way to say "that\'s outside scope."'
+    },
+    {
+      type: 'client',
+      q: 'Why make a wireframe BEFORE you start coding?',
+      a: 'Because <strong>changing a sketch costs minutes; changing built code costs hours or days.</strong> Wireframes let you and the client agree on structure before the expensive work starts. Catch problems where they\'re cheap to fix.'
+    },
+    {
+      type: 'client',
+      q: 'Name 3 things you\'d include in a project brief.',
+      a: 'Lots of right answers. The big ones: <strong>goals, audience, scope &amp; deliverables, timeline, budget, brand assets, who provides content, success metrics.</strong> Plus reference sites — "we want to feel like X" is worth a hundred adjectives.'
+    },
+    {
+      type: 'client',
+      q: 'What\'s the difference between UI and UX?',
+      a: '<strong>UI</strong> (User Interface) is the visual/interactive layer — buttons, layout, colours, type. <strong>UX</strong> (User Experience) is the whole experience — flow, performance, copy, accessibility, how it feels. Good UI can sit inside bad UX. Bad UI is always bad UX.'
+    },
+    {
+      type: 'gk',
+      q: 'What\'s the most-visited website in the world?',
+      a: '<strong>google.com.</strong> By a long way. YouTube is usually second — and that\'s also Google. Truly, it\'s Google\'s internet, we\'re just renting space.'
+    }
+  ];
+
+  let qIndex = 0;
+  let answerShown = false;
+
+  const qText = document.getElementById('qText');
+  const qAnswer = document.getElementById('qAnswer');
+  const qPill = document.getElementById('qPill');
+  const qCount = document.getElementById('qCount');
+  const revealBtn = document.getElementById('revealBtn');
+  const nextQBtn = document.getElementById('nextQBtn');
+  const quizFinale = document.getElementById('quizFinale');
+  const winnerName = document.getElementById('winnerName');
+  const winnerScore = document.getElementById('winnerScore');
+  const restartQuiz = document.getElementById('restartQuiz');
+
+  function renderQuestion() {
+    if (qIndex >= questions.length) { showDone(); return; }
+    const q = questions[qIndex];
+    qText.textContent = q.q;
+    qAnswer.innerHTML = q.a;
+    qAnswer.classList.remove('show');
+    answerShown = false;
+    qPill.className = 'qpill ' + q.type;
+    qPill.textContent = q.type === 'code' ? 'CODE' : q.type === 'client' ? 'CLIENT' : 'GEN KNOWLEDGE';
+    qCount.textContent = 'Q' + (qIndex + 1) + ' of 10';
+    revealBtn.textContent = 'Reveal answer';
+    nextQBtn.textContent = qIndex === questions.length - 1 ? 'See final scores →' : 'Next question →';
+  }
+
+  revealBtn.addEventListener('click', () => {
+    if (!answerShown) {
+      qAnswer.classList.add('show');
+      answerShown = true;
+      revealBtn.textContent = 'Hide answer';
+    } else {
+      qAnswer.classList.remove('show');
+      answerShown = false;
+      revealBtn.textContent = 'Reveal answer';
+    }
+  });
+
+  nextQBtn.addEventListener('click', () => {
+    qIndex++;
+    if (qIndex >= questions.length) {
+      showDone();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  function showDone() {
+    document.querySelector('.quiz-card').style.display = 'none';
+    quizFinale.classList.add('show');
+    const teams = Array.from(document.querySelectorAll('.sb-row')).map((row, i) => ({
+      name: row.querySelector('.tname').value || ('Team ' + (i + 1)),
+      score: parseInt(row.querySelector('.sbscore').dataset.score || '0', 10)
+    }));
+    const max = Math.max(...teams.map(t => t.score));
+    const winners = teams.filter(t => t.score === max);
+    if (max === 0) {
+      winnerName.textContent = 'A draw!';
+      winnerScore.textContent = "everyone got 0. that's also a result.";
+    } else if (winners.length === 1) {
+      winnerName.textContent = winners[0].name;
+      winnerScore.textContent = winners[0].score + ' point' + (winners[0].score === 1 ? '' : 's');
+    } else {
+      winnerName.textContent = 'Tied!';
+      winnerScore.textContent = winners.map(w => w.name).join(' & ') + ' — ' + max + ' each';
+    }
+  }
+
+  restartQuiz.addEventListener('click', () => {
+    qIndex = 0;
+    document.querySelector('.quiz-card').style.display = '';
+    quizFinale.classList.remove('show');
+    document.querySelectorAll('.sbscore').forEach(s => { s.dataset.score = '0'; s.textContent = '0'; });
+    renderQuestion();
+  });
+
+  // scoreboard +/-
+  document.querySelectorAll('.sb-row .sb-ctrls button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const team = btn.dataset.team;
+      const action = btn.dataset.action;
+      const row = document.querySelector('.sb-row:nth-of-type(' + (parseInt(team) + 1) + ')');
+      const scoreEl = row.querySelector('.sbscore');
+      let val = parseInt(scoreEl.dataset.score || '0', 10);
+      val = action === 'plus' ? val + 1 : Math.max(0, val - 1);
+      scoreEl.dataset.score = val;
+      scoreEl.textContent = val;
+      scoreEl.classList.remove('bumped');
+      requestAnimationFrame(() => {
+        scoreEl.classList.add('bumped');
+        setTimeout(() => scoreEl.classList.remove('bumped'), 240);
+      });
+    });
+  });
+
+  renderQuestion();
+</script>
+</body>
+</html>

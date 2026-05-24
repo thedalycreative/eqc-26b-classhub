@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26B · The Yearbook Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Fraunces:ital,wght@0,400;0,500;0,700;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Major+Mono+Display&family=Syne:wght@400;700;800&family=DM+Serif+Display&family=Inter:wght@400;500;700&family=Rubik+Mono+One&family=Caveat:wght@400;700&family=Instrument+Serif:ital@0;1&family=Archivo+Black&family=Anton&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Rozha+One&family=Monoton&family=Shrikhand&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0d0d;
+    --paper:#f4f0e6;
+    --paper-warm:#ede8da;
+    --card:#ffffff;
+    --green:#2f6d3b;
+    --green-bright:#4a9956;
+    --green-pale:#e3efd9;
+    --muted:#5a5a52;
+    --faint:#a09d93;
+    --accent:#d9412e;
+    --lie:#c2381f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh}
+  body{
+    padding:40px 28px 80px;line-height:1.5;
+    background-image:
+      radial-gradient(circle at 20% 30%,rgba(47,109,59,0.04),transparent 40%),
+      radial-gradient(circle at 80% 70%,rgba(217,65,46,0.03),transparent 40%);
+  }
+
+  .shell{max-width:1680px;margin:0 auto}
+
+  header{border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:14px 0 22px;margin-bottom:32px}
+  .meta-row{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
+    color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--ink);margin-bottom:18px;
+  }
+  .meta-row .issue{color:var(--green);font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(56px,10vw,110px);line-height:0.9;letter-spacing:-0.025em}
+  h1 em{font-style:italic;color:var(--green)}
+  h1 .amp{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);font-size:0.7em;vertical-align:0.05em}
+  .kicker{font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;color:var(--muted);margin-top:8px;max-width:720px}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:28px}
+  .stats{display:flex;gap:18px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
+  .stats strong{color:var(--green);font-weight:500;font-size:15px}
+  .stats .sep{color:var(--faint)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{
+    font-family:'IBM Plex Mono';font-size:11px;padding:10px 16px;border:1.5px solid var(--ink);
+    background:var(--card);color:var(--ink);border-radius:3px;cursor:pointer;font-weight:500;
+    text-transform:uppercase;letter-spacing:0.14em;transition:all 0.15s;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.primary:hover{background:var(--green);border-color:var(--green)}
+  .btn.danger{border-color:var(--accent);color:var(--accent)}
+  .btn.danger:hover{background:var(--accent);color:var(--paper)}
+
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+
+  .tile{
+    position:relative;border:2px solid var(--ink);border-radius:4px;padding:22px 22px 18px;min-height:260px;
+    display:flex;flex-direction:column;cursor:pointer;
+    box-shadow:5px 5px 0 var(--ink);
+    transition:transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+    animation:tileIn 0.5s cubic-bezier(0.4,0,0.2,1) backwards;
+  }
+  @keyframes tileIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .tile:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+
+  .tile-controls{
+    position:absolute;top:8px;right:8px;display:flex;gap:4px;z-index:5;
+    opacity:0;transition:opacity 0.15s ease;
+  }
+  .tile:hover .tile-controls{opacity:1}
+  .tile-ctrl{
+    width:26px;height:26px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);
+    border-radius:3px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono';font-weight:500;transition:all 0.15s;
+  }
+  .tile-ctrl:hover{background:var(--ink);color:var(--paper)}
+  .tile-ctrl.remove:hover{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+
+  .tile-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+  .tile-avatar{
+    width:76px;height:76px;border-radius:4px;background:rgba(255,255,255,0.25);
+    border:1.5px solid rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;
+    font-size:32px;overflow:hidden;flex-shrink:0;
+  }
+  .tile-avatar img{width:100%;height:100%;object-fit:cover}
+  .tile-head-text{min-width:0;flex:1}
+  .tile-name{font-size:24px;font-weight:500;line-height:1.05;letter-spacing:-0.01em;word-break:break-word;margin-bottom:4px}
+  .tile-bio{font-size:13.5px;line-height:1.45;opacity:0.88}
+
+  .tile-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+  .tile-tag{
+    display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;
+    font-size:11px;font-weight:500;font-family:'Space Grotesk',sans-serif;border:1.5px solid;
+  }
+
+  .tile-facts{display:flex;flex-direction:column;gap:7px;flex:1}
+  .fact{
+    padding:11px 13px;border-radius:4px;background:rgba(0,0,0,0.15);font-size:13.5px;line-height:1.4;
+    position:relative;transition:all 0.3s ease;
+  }
+
+  .tile.revealed .fact[data-truth="true"]{
+    background:rgba(47,109,59,0.25);box-shadow:inset 3px 0 0 var(--green);
+  }
+  .tile.revealed .fact[data-truth="false"]{
+    background:rgba(194,56,31,0.3);box-shadow:inset 3px 0 0 var(--lie);
+    animation:shake 0.5s ease;
+  }
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+  .fact-label{
+    position:absolute;top:7px;right:9px;font-family:'IBM Plex Mono';font-size:9px;
+    padding:2px 7px;border-radius:3px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;
+    opacity:0;transition:opacity 0.4s ease 0.2s;
+  }
+  .tile.revealed .fact-label{opacity:1}
+  .fact[data-truth="true"] .fact-label{background:var(--green);color:var(--paper)}
+  .fact[data-truth="false"] .fact-label{background:var(--lie);color:var(--paper)}
+
+  .tile-foot{
+    font-family:'IBM Plex Mono';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    margin-top:12px;padding-top:10px;border-top:1.5px solid rgba(0,0,0,0.15);
+    display:flex;justify-content:space-between;opacity:0.7;
+  }
+
+  /* empty */
+  .empty-state{
+    grid-column:1/-1;text-align:center;padding:80px 20px;
+    border:2px dashed var(--ink);border-radius:4px;background:var(--card);
+  }
+  .empty-state h3{font-family:'Fraunces',serif;font-size:32px;font-weight:400;margin-bottom:10px}
+  .empty-state h3 em{font-style:italic;color:var(--green)}
+  .empty-state p{font-family:'Instrument Serif',serif;font-style:italic;color:var(--muted);font-size:16px}
+
+  /* modals */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(13,13,13,0.65);backdrop-filter:blur(4px);
+    display:none;align-items:flex-start;justify-content:center;padding:60px 20px;z-index:100;overflow-y:auto;
+  }
+  .modal-bg.open{display:flex;animation:fadeIn 0.2s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--paper);border:2px solid var(--ink);border-radius:4px;
+    max-width:780px;width:100%;padding:28px;animation:modalUp 0.3s ease;box-shadow:8px 8px 0 var(--ink);
+  }
+  @keyframes modalUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal h2{font-family:'Fraunces',serif;font-size:30px;font-weight:400;margin-bottom:6px}
+  .modal h2 em{color:var(--green);font-style:italic}
+  .modal p.hint{font-family:'Instrument Serif',serif;font-style:italic;color:var(--muted);margin-bottom:18px;font-size:16px}
+  .modal textarea{
+    width:100%;min-height:320px;font-family:'JetBrains Mono';font-size:13px;line-height:1.6;
+    padding:16px;background:var(--ink);border:1.5px solid var(--ink);border-radius:3px;
+    color:#d9d0ad;resize:vertical;
+  }
+  .modal textarea:focus{outline:none;box-shadow:0 0 0 2px var(--green)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+
+  /* toast */
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:var(--paper);padding:12px 24px;border-radius:3px;font-size:12px;
+    font-family:'IBM Plex Mono';font-weight:500;text-transform:uppercase;letter-spacing:0.14em;
+    opacity:0;pointer-events:none;transition:all 0.3s;z-index:200;box-shadow:4px 4px 0 var(--green);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.error{box-shadow:4px 4px 0 var(--accent)}
+
+  .live-indicator{
+    display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono';font-size:11px;color:var(--green);
+  }
+  .live-indicator .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <div class="meta-row">
+      <span>EQC · Intake 26B</span>
+      <span class="issue">Issue № 01</span>
+      <span><span class="live-indicator"><span class="dot"></span>LIVE · <span id="liveDate">—</span></span></span>
+    </div>
+    <h1>The <em>Yearbook</em> Wall.</h1>
+    <p class="kicker">Three facts each. Two true, one a lie. Click a tile to reveal — after we've all had a guess.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="stats">
+      <span><strong id="tileCount">0</strong> tiles</span>
+      <span class="sep">·</span>
+      <span><strong id="revealedCount">0</strong> revealed</span>
+    </div>
+    <div class="actions">
+      <button class="btn" id="hideAllBtn" type="button">Hide all</button>
+      <button class="btn" id="addManualBtn" type="button">+ Paste code</button>
+      <button class="btn danger" id="clearBtn" type="button">Clear wall</button>
+    </div>
+  </div>
+
+  <div class="wall" id="wall">
+    <div class="empty-state" id="emptyState">
+      <h3>The wall is <em>waiting</em>.</h3>
+      <p>Tiles will appear here as students hit submit.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- paste modal -->
+<div class="modal-bg" id="pasteModal">
+  <div class="modal">
+    <h2>Paste <em>tile</em> code</h2>
+    <p class="hint">Drop the HTML block a student sent you. You can paste multiple tiles at once.</p>
+    <textarea id="pasteArea" placeholder="<!-- 26B tile: ... -->
+<div class='tile' data-name='...'>
+  ...
+</div>"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="pasteCancelBtn" type="button">Cancel</button>
+      <button class="btn primary" id="pasteAddBtn" type="button">Add to wall</button>
+    </div>
+  </div>
+</div>
+
+<!-- edit modal -->
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <h2>Edit <em>tile</em> code</h2>
+    <p class="hint">Tweak the HTML directly. Changes save to the wall when you hit update.</p>
+    <textarea id="editArea"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="editCancelBtn" type="button">Cancel</button>
+      <button class="btn primary" id="editSaveBtn" type="button">Update tile</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== FIREBASE ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+    // ============================================================
+    // SAME CONFIG AS THE TILE BUILDER — paste yours here.
+    // ============================================================
+    apiKey: "REPLACE_WITH_YOUR_API_KEY",
+    authDomain: "REPLACE.firebaseapp.com",
+    databaseURL: "https://REPLACE-default-rtdb.firebaseio.com",
+    projectId: "REPLACE",
+  };
+
+  window.__firebase = { initializeApp, getDatabase, ref, set, onValue, remove, update, config: firebaseConfig };
+  window.__firebaseReady = true;
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<script>
+(() => {
+  const TILE_PATH_ROOT = 'yearbook26b/tiles';
+  const LOCAL_KEY = 'yearbook26b:wall';
+  const REVEAL_KEY = 'yearbook26b:revealed';
+
+  const $ = id => document.getElementById(id);
+
+  let tiles = {}; // keyed by id
+  let revealed = {}; // keyed by id -> boolean
+  let editingId = null;
+
+  $('liveDate').textContent = new Date().toLocaleDateString('en-AU', {day:'numeric', month:'long', year:'numeric'}).toUpperCase();
+
+  // ==== reveal state local only ====
+  try { revealed = JSON.parse(localStorage.getItem(REVEAL_KEY) || '{}'); } catch(e){ revealed = {}; }
+  function saveReveal(){ localStorage.setItem(REVEAL_KEY, JSON.stringify(revealed)); }
+
+  // ==== load from storage or subscribe ====
+  function boot(){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, onValue } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      onValue(ref(db, TILE_PATH_ROOT), (snap) => {
+        tiles = snap.val() || {};
+        render();
+      });
+    } else {
+      // localStorage fallback, polled for manual pastes
+      function poll(){
+        try { tiles = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}') || {}; } catch(e){ tiles = {}; }
+        render();
+      }
+      poll();
+      setInterval(poll, 2000);
+    }
+  }
+
+  // ==== parse pasted HTML ====
+  function parsePaste(raw){
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = raw.trim();
+    const parsed = [];
+    wrapper.querySelectorAll('.tile').forEach(el => {
+      const name = el.getAttribute('data-name') || 'Unknown';
+      const slug = el.getAttribute('data-slug') || name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+      const photo = el.getAttribute('data-photo') || null;
+      const bg = el.getAttribute('data-bg') || '#f4d35e';
+      const fontTitle = el.getAttribute('data-font-title') || 'Fraunces';
+      const fontBody = el.getAttribute('data-font-body') || 'Space Grotesk';
+      const headerColor = el.getAttribute('data-header-color') || '#0d0d0d';
+      const bodyColor = el.getAttribute('data-body-color') || '#1a1a1a';
+      const bio = el.getAttribute('data-bio') || '';
+      const tags = [];
+      el.querySelectorAll('.tag').forEach(t => {
+        const text = t.textContent.trim();
+        tags.push({
+          text: text.replace(/^\S+\s+/, ''),
+          prefix: (text.match(/^\S+/) || [''])[0],
+          category: t.getAttribute('data-category') || 'learn',
+          bg: t.getAttribute('data-bg') || '#e3efd9',
+          border: t.getAttribute('data-border') || '#4a9956',
+          color: t.getAttribute('data-color') || '#1e4a28',
+        });
+      });
+      const facts = [];
+      el.querySelectorAll('.fact').forEach(f => {
+        const truth = f.getAttribute('data-truth');
+        facts.push({
+          text: f.textContent.trim(),
+          isTruth: truth === 'true' ? true : truth === 'false' ? false : null,
+        });
+      });
+      parsed.push({
+        id: slug + '-' + Date.now() + Math.random().toString(36).slice(2,5),
+        name, slug, photo, bg, fontTitle, fontBody, headerColor, bodyColor, bio, tags, facts,
+        submittedAt: Date.now(),
+      });
+    });
+    return parsed;
+  }
+
+  // ==== SAVE TILE (shared) ====
+  async function saveTile(tile){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, set } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await set(ref(db, `${TILE_PATH_ROOT}/${tile.id}`), tile);
+    } else {
+      const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      all[tile.id] = tile;
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+      tiles = all;
+      render();
+    }
+  }
+
+  async function removeTile(id){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, remove } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await remove(ref(db, `${TILE_PATH_ROOT}/${id}`));
+    } else {
+      const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      delete all[id];
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+      tiles = all;
+      render();
+    }
+    delete revealed[id];
+    saveReveal();
+  }
+
+  async function clearAllTiles(){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, set } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await set(ref(db, TILE_PATH_ROOT), null);
+    } else {
+      localStorage.setItem(LOCAL_KEY, '{}');
+      tiles = {};
+      render();
+    }
+    revealed = {};
+    saveReveal();
+  }
+
+  // ==== RENDER ====
+  function escapeHTML(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function renderBioHtml(raw){
+    let s = escapeHTML(raw);
+    s = s.replace(/&lt;(\/?)(b|i|u)&gt;/g, '<$1$2>');
+    return s;
+  }
+
+  function render(){
+    const wall = $('wall');
+    const empty = $('emptyState');
+    const ids = Object.keys(tiles).sort((a,b) => (tiles[a].submittedAt||0) - (tiles[b].submittedAt||0));
+
+    $('tileCount').textContent = ids.length;
+    $('revealedCount').textContent = ids.filter(id => revealed[id]).length;
+
+    // clear existing tiles
+    wall.querySelectorAll('.tile').forEach(n => n.remove());
+
+    if (ids.length === 0){
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    ids.forEach((id, idx) => {
+      const t = tiles[id];
+      const el = document.createElement('div');
+      el.className = 'tile' + (revealed[id] ? ' revealed' : '');
+      el.style.background = t.bg;
+      el.style.borderColor = 'var(--ink)';
+      el.style.color = t.bodyColor;
+      el.style.animationDelay = (idx * 0.04) + 's';
+
+      const avatarHTML = t.photo
+        ? `<div class="tile-avatar"><img src="${t.photo}" alt=""></div>`
+        : `<div class="tile-avatar">👋</div>`;
+
+      const tagsHTML = (t.tags || []).map(tag =>
+        `<span class="tile-tag" style="background:${tag.bg};border-color:${tag.border};color:${tag.color}">${escapeHTML(tag.prefix||'')} ${escapeHTML(tag.text||'')}</span>`
+      ).join('');
+
+      const factsHTML = (t.facts || []).map(f => {
+        const truth = f.isTruth === true ? 'true' : f.isTruth === false ? 'false' : 'unset';
+        const label = f.isTruth === true ? 'TRUTH' : 'LIE';
+        return `<div class="fact" data-truth="${truth}" style="font-family:'${t.fontBody}',sans-serif">
+          ${escapeHTML(f.text)}
+          <span class="fact-label">${label}</span>
+        </div>`;
+      }).join('');
+
+      el.innerHTML = `
+        <div class="tile-controls">
+          <button class="tile-ctrl edit" title="Edit code" data-action="edit" data-id="${id}">&lt;/&gt;</button>
+          <button class="tile-ctrl remove" title="Remove" data-action="remove" data-id="${id}">×</button>
+        </div>
+        <div class="tile-head">
+          ${avatarHTML}
+          <div class="tile-head-text">
+            <h3 class="tile-name" style="font-family:'${t.fontTitle}',serif;color:${t.headerColor}">${escapeHTML(t.name)}</h3>
+            ${t.bio ? `<p class="tile-bio" style="font-family:'${t.fontBody}',sans-serif">${renderBioHtml(t.bio)}</p>` : ''}
+          </div>
+        </div>
+        ${tagsHTML ? `<div class="tile-tags">${tagsHTML}</div>` : ''}
+        <div class="tile-facts">${factsHTML}</div>
+        <div class="tile-foot">
+          <span>№ ${String(idx+1).padStart(2,'0')}</span>
+          <span>${revealed[id] ? 'Revealed' : 'Tap to reveal'}</span>
+        </div>
+      `;
+
+      // tile click → toggle reveal (but not when clicking controls)
+      el.addEventListener('click', (e) => {
+        if (e.target.closest('.tile-ctrl')) return;
+        revealed[id] = !revealed[id];
+        saveReveal();
+        render();
+      });
+
+      wall.appendChild(el);
+    });
+
+    // wire up controls
+    wall.querySelectorAll('.tile-ctrl').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const action = btn.dataset.action;
+        if (action === 'remove'){
+          if (confirm(`Remove ${tiles[id]?.name || 'this tile'}?`)){
+            await removeTile(id);
+            showToast('Tile removed');
+          }
+        } else if (action === 'edit'){
+          editingId = id;
+          const t = tiles[id];
+          const raw = tileToCode(t);
+          $('editArea').value = raw;
+          $('editModal').classList.add('open');
+        }
+      });
+    });
+  }
+
+  function tileToCode(t){
+    const tagsStr = (t.tags || []).map(tag =>
+      `    <span class="tag" data-category="${escapeHTML(tag.category)}" data-bg="${escapeHTML(tag.bg)}" data-border="${escapeHTML(tag.border)}" data-color="${escapeHTML(tag.color)}">${escapeHTML(tag.prefix||'')} ${escapeHTML(tag.text||'')}</span>`
+    ).join('\n');
+    const factsStr = (t.facts || []).map(f => {
+      const truth = f.isTruth === true ? 'true' : f.isTruth === false ? 'false' : 'unset';
+      return `    <div class="fact" data-truth="${truth}">${escapeHTML(f.text)}</div>`;
+    }).join('\n');
+    const photoAttr = t.photo ? ` data-photo="${t.photo}"` : '';
+    return `<!-- 26B tile: ${escapeHTML(t.name)} -->
+<div class="tile" data-name="${escapeHTML(t.name)}" data-slug="${escapeHTML(t.slug||'')}"${photoAttr}
+     data-bg="${t.bg}" data-font-title="${t.fontTitle}" data-font-body="${t.fontBody}"
+     data-header-color="${t.headerColor}" data-body-color="${t.bodyColor}"
+     data-bio="${escapeHTML(t.bio||'')}">
+  <h3 class="tile-name">${escapeHTML(t.name)}</h3>
+  <p class="tile-bio">${renderBioHtml(t.bio||'')}</p>
+  <div class="tile-tags">
+${tagsStr}
+  </div>
+  <div class="tile-facts">
+${factsStr}
+  </div>
+</div>`;
+  }
+
+  // ==== paste flow ====
+  $('addManualBtn').addEventListener('click', () => {
+    $('pasteArea').value = '';
+    $('pasteModal').classList.add('open');
+    setTimeout(() => $('pasteArea').focus(), 100);
+  });
+  $('pasteCancelBtn').addEventListener('click', () => $('pasteModal').classList.remove('open'));
+  $('pasteAddBtn').addEventListener('click', async () => {
+    const raw = $('pasteArea').value.trim();
+    if (!raw){ showToast('Paste some code first', true); return; }
+    const parsed = parsePaste(raw);
+    if (parsed.length === 0){ showToast('No valid tiles found', true); return; }
+    for (const tile of parsed){ await saveTile(tile); }
+    $('pasteModal').classList.remove('open');
+    showToast(`Added ${parsed.length} tile${parsed.length > 1 ? 's' : ''}`);
+  });
+
+  // ==== edit flow ====
+  $('editCancelBtn').addEventListener('click', () => { $('editModal').classList.remove('open'); editingId = null; });
+  $('editSaveBtn').addEventListener('click', async () => {
+    const raw = $('editArea').value.trim();
+    const parsed = parsePaste(raw);
+    if (parsed.length === 0){ showToast('Invalid tile code', true); return; }
+    const fresh = parsed[0];
+    // Preserve original id so it replaces rather than duplicates
+    fresh.id = editingId;
+    fresh.submittedAt = tiles[editingId]?.submittedAt || Date.now();
+    await saveTile(fresh);
+    $('editModal').classList.remove('open');
+    editingId = null;
+    showToast('Tile updated');
+  });
+
+  // ==== toolbar actions ====
+  $('hideAllBtn').addEventListener('click', () => {
+    revealed = {};
+    saveReveal();
+    render();
+    showToast('All tiles hidden');
+  });
+  $('clearBtn').addEventListener('click', async () => {
+    const count = Object.keys(tiles).length;
+    if (count === 0) return;
+    if (confirm(`Clear all ${count} tiles? This cannot be undone.`)){
+      await clearAllTiles();
+      showToast('Wall cleared');
+    }
+  });
+
+  // ==== keyboard ====
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){
+      $('pasteModal').classList.remove('open');
+      $('editModal').classList.remove('open');
+      editingId = null;
+    }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){
+      if ($('pasteModal').classList.contains('open')){ e.preventDefault(); $('pasteAddBtn').click(); }
+      if ($('editModal').classList.contains('open')){ e.preventDefault(); $('editSaveBtn').click(); }
+    }
+  });
+
+  // ==== toast ====
+  let toastTm;
+  function showToast(msg, isError){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.toggle('error', !!isError);
+    t.classList.add('show');
+    clearTimeout(toastTm);
+    toastTm = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  boot();
+})();
+</script>
+
+</body>
+</html>

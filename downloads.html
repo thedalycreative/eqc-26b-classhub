@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downloads · 26B Class Hub</title>
+<meta name="description" content="All downloadable resources for EQC Intake 26B — PDFs, code zips, example sites, images, and data files for front-end web development students.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="Downloads · 26B Class Hub">
+<meta property="og:description" content="PDFs, code zips, examples and assets for 26B students.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.svg">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/theme.css">
+
+<style>
+  /* Downloads-specific table-like list */
+  .dl-list {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .dl-row {
+    background: var(--dc-bg2);
+    border: 1px solid var(--dc-border);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 44px 1fr auto auto;
+    gap: 14px; align-items: center;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    text-decoration: none; color: inherit;
+  }
+  .dl-row:hover {
+    background: var(--dc-bg3);
+    border-color: var(--dc-blurple);
+    transform: translateX(2px);
+    text-decoration: none;
+  }
+  .dl-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: grid; place-items: center; font-size: 22px;
+    background: rgba(88,101,242,0.15); color: var(--dc-blurple);
+  }
+  .dl-icon.pdf  { background: rgba(237,66,69,0.15);  color: var(--dc-red); }
+  .dl-icon.zip  { background: rgba(254,231,92,0.12); color: var(--dc-yellow); }
+  .dl-icon.html { background: rgba(87,242,135,0.12); color: var(--dc-green); }
+  .dl-icon.img  { background: rgba(235,69,158,0.12); color: var(--dc-fuchsia); }
+  .dl-icon.json { background: rgba(252,176,69,0.12); color: var(--dc-orange); }
+  .dl-icon.pptx { background: rgba(237,66,69,0.15);  color: var(--dc-red); }
+  .dl-icon.xlsx { background: rgba(87,242,135,0.12); color: var(--dc-green); }
+
+  .dl-info { min-width: 0; }
+  .dl-name {
+    font-size: 15px; font-weight: 700;
+    color: var(--dc-white); letter-spacing: -0.2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .dl-desc {
+    font-size: 13px; color: var(--dc-light);
+    margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .dl-size {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    color: var(--dc-muted); padding: 4px 10px;
+    background: var(--dc-bg); border-radius: 4px;
+    border: 1px solid var(--dc-border);
+    letter-spacing: 0.5px;
+  }
+  .dl-action {
+    color: var(--dc-blurple); font-size: 20px;
+    display: grid; place-items: center;
+    width: 36px; height: 36px; border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .dl-row:hover .dl-action {
+    background: rgba(88,101,242,0.15);
+  }
+
+  @media (max-width: 640px) {
+    .dl-row { grid-template-columns: 36px 1fr auto; padding: 12px 14px; gap: 10px; }
+    .dl-icon { width: 36px; height: 36px; font-size: 18px; }
+    .dl-name { font-size: 14px; }
+    .dl-desc { white-space: normal; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; }
+    .dl-size { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="topnav-brand">
+      <img src="assets/logo.svg" alt="26B Class Hub" width="220" height="56">
+      <div class="topnav-brand-text">
+        <span class="sr-only">26B Class Hub</span>
+      </div>
+    </a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link"><i class="bi bi-house-door"></i><span>Hub</span></a>
+      <a href="lessons/" class="topnav-link"><i class="bi bi-journal-text"></i><span>Lessons</span></a>
+      <a href="resources.html" class="topnav-link"><i class="bi bi-bookmark-star"></i><span>Resources</span></a>
+      <a href="downloads.html" class="topnav-link active"><i class="bi bi-download"></i><span>Downloads</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HEADER ============ -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow"><span class="dot"></span> EVERY FILE · ONE PAGE</div>
+    <h1 class="page-title">Class <span class="accent">Downloads</span></h1>
+    <p class="page-subtitle">
+      All the PDFs, starter code, examples and assets for Intake 26B in one place.
+      Right-click to "Save link as…" or just click to open in a new tab.
+    </p>
+  </div>
+</header>
+
+<!-- ============ CONTENT ============ -->
+<main class="container">
+
+  <!-- ============ PDFs ============ -->
+  <section class="section" id="pdfs">
+    <div class="section-head">
+      <div class="section-icon">📄</div>
+      <div>
+        <h2 class="section-title">PDFs &amp; Course Material</h2>
+        <p class="section-blurb">Briefs, requirements, wireframe examples, cheat sheets — handouts from class.</p>
+      </div>
+    </div>
+    <div class="dl-list">
+
+      <a href="downloads/pdfs/building-first-website-requirements.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Building Your First Website — Requirements</div>
+          <div class="dl-desc">The brief / spec document for your original front-end website project.</div>
+        </div>
+        <span class="dl-size">11 MB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/front-end-development.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Front End Development — Overview</div>
+          <div class="dl-desc">Reference deck covering HTML, CSS, and the front-end role.</div>
+        </div>
+        <span class="dl-size">2.3 MB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/tech-specs-and-sow.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Tech Specs &amp; SOW Templates</div>
+          <div class="dl-desc">Technical specification and Statement of Work template — useful for your portfolio brief.</div>
+        </div>
+        <span class="dl-size">3.6 MB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/wireframe-example-1.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Wireframe Example 1</div>
+          <div class="dl-desc">Low-fidelity wireframe sample — basic layout reference.</div>
+        </div>
+        <span class="dl-size">454 KB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/wireframe-example-2.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Wireframe Example 2</div>
+          <div class="dl-desc">Mid-fidelity wireframe sample — more developed annotations.</div>
+        </div>
+        <span class="dl-size">112 KB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/wireframe-example-extreme.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Wireframe Example — Extreme Detail</div>
+          <div class="dl-desc">Hi-fidelity wireframe with full design system annotations. The "gold standard".</div>
+        </div>
+        <span class="dl-size">4.5 MB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Terminal Commands Cheat Sheet</div>
+          <div class="dl-desc">Print this — cd, ls, mkdir, git basics. Tim's class cheat sheet.</div>
+        </div>
+        <span class="dl-size">PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/icon-audit-worksheet.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Icon Audit Worksheet</div>
+          <div class="dl-desc">Worksheet for the icons &amp; symbols audit exercise.</div>
+        </div>
+        <span class="dl-size">PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/pdfs/26b-yearbook-wall.pdf" target="_blank" class="dl-row">
+        <div class="dl-icon pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">26B · The Yearbook Wall</div>
+          <div class="dl-desc">PDF export of the class yearbook page from April 2026.</div>
+        </div>
+        <span class="dl-size">726 KB · PDF</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ CODE / ZIPS ============ -->
+  <section class="section" id="code">
+    <div class="section-head">
+      <div class="section-icon">💾</div>
+      <div>
+        <h2 class="section-title">Starter Code &amp; Zips</h2>
+        <p class="section-blurb">Ready-to-unzip project starters and reference builds.</p>
+      </div>
+    </div>
+    <div class="dl-list">
+
+      <a href="downloads/code/bin-chicken-bistro.zip" class="dl-row">
+        <div class="dl-icon zip"><i class="bi bi-file-earmark-zip-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Bin Chicken Bistro</div>
+          <div class="dl-desc">Tim's complete site example used in class — full HTML/CSS/image set.</div>
+        </div>
+        <span class="dl-size">48 KB · ZIP</span>
+        <div class="dl-action"><i class="bi bi-download"></i></div>
+      </a>
+
+      <a href="downloads/code/26b-yearbook-repo.zip" class="dl-row">
+        <div class="dl-icon zip"><i class="bi bi-file-earmark-zip-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">26B Yearbook Repo</div>
+          <div class="dl-desc">The yearbook wall starter — HTML/CSS/JS plus the photo data structure.</div>
+        </div>
+        <span class="dl-size">23 KB · ZIP</span>
+        <div class="dl-action"><i class="bi bi-download"></i></div>
+      </a>
+
+      <a href="downloads/code/eqc-yearbook-starter.zip" class="dl-row">
+        <div class="dl-icon zip"><i class="bi bi-file-earmark-zip-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">EQC Yearbook Starter (Full Photos)</div>
+          <div class="dl-desc">Complete starter with full-resolution class photos. Large file.</div>
+        </div>
+        <span class="dl-size">110 MB · ZIP</span>
+        <div class="dl-action"><i class="bi bi-download"></i></div>
+      </a>
+
+      <a href="downloads/code/icons-and-symbols.pptx" class="dl-row">
+        <div class="dl-icon pptx"><i class="bi bi-file-earmark-slides-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Icons &amp; Symbols Slides</div>
+          <div class="dl-desc">PowerPoint deck — pairs with the icon-audit worksheet.</div>
+        </div>
+        <span class="dl-size">PPTX</span>
+        <div class="dl-action"><i class="bi bi-download"></i></div>
+      </a>
+
+      <a href="examples/trivia/questions.xlsx" class="dl-row">
+        <div class="dl-icon xlsx"><i class="bi bi-file-earmark-spreadsheet-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">26B Trivia Questions (XLSX)</div>
+          <div class="dl-desc">Spreadsheet of trivia questions used by the in-class trivia app.</div>
+        </div>
+        <span class="dl-size">46 KB · XLSX</span>
+        <div class="dl-action"><i class="bi bi-download"></i></div>
+      </a>
+
+      <a href="downloads/data/26b-yearbook-2026-04-19.json" target="_blank" class="dl-row">
+        <div class="dl-icon json"><i class="bi bi-filetype-json"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Yearbook Data (JSON)</div>
+          <div class="dl-desc">Class data file — names, photos, quotes. Drives the yearbook wall.</div>
+        </div>
+        <span class="dl-size">16 KB · JSON</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ EXAMPLE SITES ============ -->
+  <section class="section" id="examples">
+    <div class="section-head">
+      <div class="section-icon">🌐</div>
+      <div>
+        <h2 class="section-title">Live Example Sites</h2>
+        <p class="section-blurb">Open these in a new tab — see the rendered page, then view source to read the code.</p>
+      </div>
+    </div>
+    <div class="dl-list">
+
+      <a href="examples/website-build/index.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-globe2"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Website Build Example (Skywings)</div>
+          <div class="dl-desc">Full worked example — homepage, about, contact. View source to learn the pattern.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="examples/yearbook-wall/index.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-people-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Yearbook Wall (Live)</div>
+          <div class="dl-desc">The interactive class yearbook wall — JSON-driven HTML page.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="examples/yearbook-wall/v1.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-clock-history"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Yearbook Wall — v1 (Iteration)</div>
+          <div class="dl-desc">First version of the yearbook wall, kept for reference.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="examples/yearbook-wall/v2.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-clock-history"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Yearbook Wall — v2 (Iteration)</div>
+          <div class="dl-desc">Second iteration of the wall — improved layout.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="examples/yearbook-wall/v3.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-clock-history"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Yearbook Wall — v3 (Iteration)</div>
+          <div class="dl-desc">Third iteration — closest to the final.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="examples/trivia/index.html" target="_blank" class="dl-row">
+        <div class="dl-icon html"><i class="bi bi-question-circle-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">26B Trivia App</div>
+          <div class="dl-desc">Playable trivia game built in plain HTML/JS — reads questions from an XLSX.</div>
+        </div>
+        <span class="dl-size">HTML</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ IMAGES ============ -->
+  <section class="section" id="images">
+    <div class="section-head">
+      <div class="section-icon">🖼️</div>
+      <div>
+        <h2 class="section-title">Reference Images</h2>
+        <p class="section-blurb">Wireframe references and class photos for use in your projects.</p>
+      </div>
+    </div>
+    <div class="dl-list">
+
+      <a href="downloads/images/gsd-wireframe.png" target="_blank" class="dl-row">
+        <div class="dl-icon img"><i class="bi bi-image-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">GSD Wireframe Reference</div>
+          <div class="dl-desc">Wireframe example PNG used in Class 16 (Wireframes &amp; AI Tools).</div>
+        </div>
+        <span class="dl-size">PNG</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/images/dashboard-framework.jpeg" target="_blank" class="dl-row">
+        <div class="dl-icon img"><i class="bi bi-image-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Dashboard Framework Reference</div>
+          <div class="dl-desc">Lobby dashboard layout reference used during peer-review week.</div>
+        </div>
+        <span class="dl-size">JPEG</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+      <a href="downloads/images/class-photo-2026-05-20.jpeg" target="_blank" class="dl-row">
+        <div class="dl-icon img"><i class="bi bi-camera-fill"></i></div>
+        <div class="dl-info">
+          <div class="dl-name">Class Photo — 20 May 2026</div>
+          <div class="dl-desc">Snapshot from class day, May 20.</div>
+        </div>
+        <span class="dl-size">800 KB · JPEG</span>
+        <div class="dl-action"><i class="bi bi-box-arrow-up-right"></i></div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    26B Class Hub · EQC · Front-End Web Dev
+    <span class="dot-row"><span></span><span></span><span></span></span>
+    Built for <a href="index.html">Intake 26B</a> · Perth WA
+  </div>
+</footer>
+
+</body>
+</html>

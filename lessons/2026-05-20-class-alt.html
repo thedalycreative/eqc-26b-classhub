@@ -1,0 +1,1595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Class · Wed 20 May 2026 · Wireframes & AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500;1,9..144,700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --orange: #ff8a3d;
+    --teal: #2f9ea0;
+    --paper: #fafaf7;
+    --ink: #1a1a1a;
+    --rule: #1a1a1a;
+    --muted: #6b6b66;
+    --softink: #2a2a28;
+    --hairline: rgba(26,26,26,0.12);
+    --shadow: 0 2px 0 var(--ink);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    background-image:
+      radial-gradient(rgba(26,26,26,0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+    mix-blend-mode: multiply;
+  }
+
+  /* SLIDE STAGE ----------------------------------------------------------- */
+
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 5vh 7vw;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 280ms ease;
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slide.active .reveal {
+    animation: rise 600ms 100ms cubic-bezier(.2,.6,.2,1) both;
+  }
+  .slide.active .reveal-2 { animation: rise 600ms 220ms cubic-bezier(.2,.6,.2,1) both; }
+  .slide.active .reveal-3 { animation: rise 600ms 340ms cubic-bezier(.2,.6,.2,1) both; }
+  .slide.active .reveal-4 { animation: rise 600ms 460ms cubic-bezier(.2,.6,.2,1) both; }
+  .slide.active .reveal-5 { animation: rise 600ms 580ms cubic-bezier(.2,.6,.2,1) both; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SLIDE CHROME (top bar + page numbers) --------------------------------- */
+
+  .chrome-top {
+    position: fixed;
+    top: 22px;
+    left: 7vw;
+    right: 7vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .chrome-top .brand {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+  }
+  .chrome-top .section {
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .chrome-top .date {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .pagenum {
+    position: fixed;
+    bottom: 24px;
+    left: 7vw;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    z-index: 50;
+    pointer-events: none;
+  }
+  .pagenum strong { color: var(--ink); font-weight: 500; font-style: normal; }
+
+  /* NAV CONTROLS ---------------------------------------------------------- */
+
+  .nav {
+    position: fixed;
+    bottom: 22px;
+    right: 7vw;
+    display: flex;
+    gap: 10px;
+    z-index: 80;
+  }
+
+  .nav button {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform 80ms ease, box-shadow 80ms ease;
+    letter-spacing: 0.02em;
+  }
+  .nav button:hover {
+    transform: translate(-1px,-1px);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .nav button:active {
+    transform: translate(1px,1px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+  .nav button[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--orange);
+    z-index: 90;
+    transition: width 280ms ease;
+  }
+
+  /* TYPE ------------------------------------------------------------------ */
+
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05; }
+  h1 { font-size: clamp(54px, 8vw, 120px); font-weight: 400; }
+  h2 { font-size: clamp(38px, 5vw, 72px); font-weight: 400; }
+  h3 { font-size: clamp(22px, 2.4vw, 32px); font-weight: 500; }
+  p, li { font-size: clamp(16px, 1.4vw, 19px); line-height: 1.55; color: var(--softink); }
+  .lede { font-family: 'Fraunces', serif; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.4; font-weight: 400; color: var(--ink); }
+  em { font-family: 'Fraunces', serif; font-style: italic; }
+  strong { font-weight: 600; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.92em; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--teal);
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--teal);
+    margin-bottom: 28px;
+  }
+
+  .eyebrow.orange { color: var(--orange); border-color: var(--orange); }
+
+  /* TITLE SLIDE ----------------------------------------------------------- */
+
+  .titleslide {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 28px;
+    max-width: 1100px;
+  }
+
+  .titleslide .meta {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(18px, 1.5vw, 22px);
+    color: var(--muted);
+  }
+
+  .titleslide h1 .accent {
+    color: var(--orange);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .titleslide h1 .accent2 {
+    color: var(--teal);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .titleslide .signoff {
+    margin-top: 18px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 18px;
+  }
+
+  /* AGENDA ---------------------------------------------------------------- */
+
+  .agenda {
+    max-width: 980px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-content: center;
+    height: 100%;
+  }
+  .agenda h2 { margin-bottom: 18px; }
+  .agenda-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+  .agenda-list li {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 18px;
+    padding: 14px 0;
+    border-top: 1px solid var(--hairline);
+    align-items: baseline;
+    font-size: 19px;
+  }
+  .agenda-list li:last-child { border-bottom: 1px solid var(--hairline); }
+  .agenda-list .num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .agenda-list .time {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  /* QUIZ ------------------------------------------------------------------ */
+
+  .quiz {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    gap: 18px;
+    padding-top: 30px;
+  }
+
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .team {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 14px;
+    align-items: center;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .team:nth-child(1) { background: linear-gradient(180deg, rgba(255,138,61,0.08), transparent); }
+  .team:nth-child(2) { background: linear-gradient(180deg, rgba(47,158,160,0.08), transparent); }
+  .team:nth-child(3) { background: linear-gradient(180deg, rgba(26,26,26,0.04), transparent); }
+
+  .team-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    grid-column: 1 / 2;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed transparent;
+    outline: none;
+    color: var(--ink);
+    padding: 2px 0;
+    transition: border-color 120ms ease;
+    width: 100%;
+  }
+  .team-name:focus { border-bottom-color: var(--orange); }
+
+  .score {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: right;
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    transition: transform 220ms cubic-bezier(.2,.8,.2,1);
+  }
+  .score.bumped { transform: scale(1.18); }
+
+  .team-controls {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .team-controls button {
+    font-family: 'Space Grotesk', sans-serif;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 1.5px 1.5px 0 var(--ink);
+    transition: transform 80ms;
+  }
+  .team-controls button:hover { transform: translate(-0.5px,-0.5px); }
+  .team-controls button:active { transform: translate(1.5px,1.5px); box-shadow: 0 0 0 var(--ink); }
+  .team-controls .plus { background: var(--orange); color: var(--ink); }
+  .team-controls .minus { background: var(--paper); }
+
+  .quiz-question {
+    align-self: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+  }
+  .quiz-question .qbadge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .qbadge .pill {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 8px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .qbadge .pill.client { background: var(--teal); }
+  .qbadge .pill.code { background: var(--orange); }
+  .qbadge .pill.gk { background: var(--ink); }
+  .qbadge .qnum { color: var(--muted); }
+
+  .quiz-question .q {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(34px, 4.4vw, 56px);
+    line-height: 1.12;
+    font-weight: 400;
+    margin-bottom: 22px;
+    color: var(--ink);
+  }
+  .quiz-question .a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(17px, 1.5vw, 21px);
+    line-height: 1.55;
+    color: var(--softink);
+    background: rgba(47,158,160,0.1);
+    border-left: 3px solid var(--teal);
+    padding: 16px 20px;
+    max-width: 820px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 350ms ease, opacity 350ms ease, padding 350ms ease;
+    padding-top: 0; padding-bottom: 0;
+  }
+  .quiz-question .a.shown {
+    max-height: 400px;
+    opacity: 1;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .quiz-question .a strong { color: var(--ink); }
+
+  .quiz-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 8px;
+  }
+  .quiz-controls button {
+    background: var(--ink);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 22px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    box-shadow: 3px 3px 0 var(--orange);
+    transition: transform 80ms;
+  }
+  .quiz-controls button.secondary {
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .quiz-controls button:hover { transform: translate(-1px,-1px); }
+  .quiz-controls button:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--orange); }
+  .quiz-controls button[disabled] { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 var(--orange); }
+  .quiz-controls button.secondary[disabled] { box-shadow: 3px 3px 0 var(--ink); }
+  .quiz-progress {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+    margin-left: 12px;
+  }
+
+  /* QUIZ DONE / CELEBRATION SCREEN */
+  .quiz-done {
+    display: none;
+    text-align: center;
+    align-self: center;
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  .quiz-done.show { display: block; }
+  .quiz-done .winner-name {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(60px, 9vw, 120px);
+    color: var(--orange);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1;
+    margin: 10px 0 14px;
+  }
+  .quiz-done .winner-score {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .quiz-done .restart {
+    margin-top: 26px;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 10px 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    font-size: 13px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  /* CONTENT GRID ---------------------------------------------------------- */
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-content: center;
+    max-width: 1280px;
+    height: 100%;
+  }
+
+  .layout-1col {
+    max-width: 980px;
+    align-content: center;
+    height: 100%;
+    display: grid;
+    gap: 24px;
+  }
+
+  .layout-stack {
+    align-content: center;
+    height: 100%;
+    display: grid;
+    gap: 28px;
+    max-width: 1180px;
+  }
+
+  /* CARDS / TILES --------------------------------------------------------- */
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+  .card {
+    border: 1.5px solid var(--ink);
+    padding: 20px;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 8px;
+  }
+  .card .ord {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    line-height: 1.15;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .card p { font-size: 15px; line-height: 1.55; }
+  .card.teal .ord { color: var(--teal); }
+
+  /* RESOURCE LIST --------------------------------------------------------- */
+
+  .resource-list {
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+  .resource-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 14px 0;
+    border-top: 1px solid var(--hairline);
+    align-items: baseline;
+  }
+  .resource-list li:last-child { border-bottom: 1px solid var(--hairline); }
+  .resource-list .rname {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .resource-list .rdesc { color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .resource-list .rlink {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 1px;
+    white-space: nowrap;
+  }
+  .resource-list .rlink:hover { color: var(--orange); border-color: var(--orange); }
+
+  /* FIDELITY DIAGRAM ------------------------------------------------------ */
+  .fidelity {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    align-items: stretch;
+  }
+  .fidelity-step {
+    border: 1.5px solid var(--ink);
+    padding: 16px 14px;
+    text-align: center;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .fidelity-step svg { width: 100%; height: 80px; }
+  .fidelity-step .fname {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .fidelity-step .fcost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* FACT BLOCK ------------------------------------------------------------ */
+  .fact {
+    border-left: 4px solid var(--orange);
+    padding: 18px 24px;
+    background: rgba(255,138,61,0.05);
+    margin-bottom: 14px;
+  }
+  .fact .label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .fact p {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  /* COMPARISON TABLE ----------------------------------------------------- */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--ink);
+  }
+  .compare > div {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .compare > div:nth-child(3n+2) { border-left: 1px solid var(--hairline); border-right: 1px solid var(--hairline); }
+  .compare > div:nth-last-child(-n+3) { border-bottom: none; }
+  .compare .head {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px;
+  }
+  .compare .head.teal { background: var(--teal); }
+  .compare .head.orange { background: var(--orange); color: var(--ink); }
+
+  /* PROMPT EXAMPLE ------------------------------------------------------- */
+  .prompt-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 24px 28px;
+    border: 1.5px solid var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.65;
+    box-shadow: 6px 6px 0 var(--orange);
+    position: relative;
+  }
+  .prompt-card .tag {
+    color: var(--orange);
+    font-weight: 600;
+  }
+  .prompt-card .pheader {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--orange);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* MARQUEE / HOOK SLIDE -------------------------------------------------- */
+  .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 16px 0;
+    margin: 20px 0;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: scroll 28s linear infinite;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+  }
+  .marquee-track span { padding: 0 30px; color: var(--ink); }
+  .marquee-track span::before { content: '✻'; color: var(--orange); margin-right: 30px; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* MISC ------------------------------------------------------------------ */
+  ul.bullets {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  ul.bullets li {
+    padding-left: 28px;
+    position: relative;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  ul.bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 600;
+  }
+  ul.bullets.teal li::before { color: var(--teal); }
+  ul.bullets.check li::before { content: '✓'; color: var(--teal); }
+  ul.bullets.cross li::before { content: '×'; color: var(--orange); font-size: 22px; line-height: 1.2; }
+
+  a.inline-link {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal);
+  }
+  a.inline-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  .breaktime {
+    display: grid;
+    place-content: center;
+    height: 100%;
+    text-align: center;
+    gap: 14px;
+  }
+  .breaktime h2 { font-size: clamp(60px, 10vw, 140px); }
+  .breaktime .typeit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(18px, 1.6vw, 22px);
+    color: var(--ink);
+    margin-top: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 22px;
+    display: inline-block;
+    justify-self: center;
+  }
+
+  /* HINTS ----------------------------------------------------------------- */
+  .keyhints {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .keyhints kbd {
+    border: 1px solid var(--hairline);
+    padding: 2px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink);
+    background: rgba(255,255,255,0.5);
+  }
+
+  /* responsive tweaks for narrow screens */
+  @media (max-width: 900px) {
+    .layout, .grid-3, .grid-2, .grid-4, .scoreboard, .fidelity, .compare { grid-template-columns: 1fr; }
+    .compare > div:nth-child(3n+2) { border-left: none; border-right: none; }
+    .agenda-list li { grid-template-columns: 40px 1fr; }
+    .agenda-list .time { grid-column: 2; padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="chrome-top">
+  <div class="brand">EQC · ICT & Web Development</div>
+  <div class="section" id="sectionLabel">— · —</div>
+  <div class="date">Wed 20 May 2026</div>
+</div>
+
+<div class="pagenum"><strong id="pageNumNow">01</strong> / <span id="pageNumTotal">19</span></div>
+
+<div class="nav">
+  <button id="prevBtn">← Prev</button>
+  <button id="nextBtn">Next →</button>
+</div>
+
+<div class="keyhints">
+  <span><kbd>←</kbd> <kbd>→</kbd> navigate</span>
+  <span><kbd>F</kbd> fullscreen</span>
+</div>
+
+<div class="stage" id="stage">
+
+<!-- SLIDE 01 · TITLE -->
+<section class="slide" data-section="—">
+  <div class="titleslide">
+    <div class="meta reveal">Class Plan · Wednesday 20 May 2026</div>
+    <h1 class="reveal-2">Today we <span class="accent">plan</span> before we <span class="accent2">build</span>.</h1>
+    <p class="lede reveal-3" style="max-width: 760px; margin-top: 14px;">
+      Wireframes, prototypes, and the AI tools worth using (and the ones to be wary of). By the end of today, you've got the kit you need to start your first original site — due Monday.
+    </p>
+    <div class="signoff reveal-4">— Tim · The Daly Creative & EQC</div>
+  </div>
+</section>
+
+<!-- SLIDE 02 · AGENDA -->
+<section class="slide" data-section="Agenda">
+  <div class="agenda">
+    <span class="eyebrow reveal">Today's Run</span>
+    <h2 class="reveal-2">What we're doing.</h2>
+    <ul class="agenda-list">
+      <li class="reveal-3"><span class="num">01</span><span>Icebreaker quiz — code, clients & curveballs</span><span class="time">~20 min</span></li>
+      <li class="reveal-3"><span class="num">02</span><span>Monkeytype warm-up before break</span><span class="time">~10 min</span></li>
+      <li class="reveal-3"><span class="num">03</span><span>Break</span><span class="time">~15 min</span></li>
+      <li class="reveal-4"><span class="num">04</span><span>Wireframing & prototyping — why we plan</span><span class="time">~30 min</span></li>
+      <li class="reveal-4"><span class="num">05</span><span>AI platforms — what's ethical, what's useful</span><span class="time">~30 min</span></li>
+      <li class="reveal-4"><span class="num">06</span><span>Sound & music: ElevenLabs, Suno (for fun at home)</span><span class="time">~10 min</span></li>
+      <li class="reveal-5"><span class="num">07</span><span>Plan & start your original site — due Monday</span><span class="time">rest of day</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 03 · ICEBREAKER QUIZ -->
+<section class="slide" data-section="Icebreaker">
+  <div class="quiz">
+    <div class="scoreboard">
+      <div class="team">
+        <input class="team-name" data-team="0" value="Team Orange" maxlength="18" />
+        <div class="score" data-score="0">0</div>
+        <div class="team-controls">
+          <button class="plus" data-action="plus" data-team="0">+1</button>
+          <button class="minus" data-action="minus" data-team="0">−</button>
+        </div>
+      </div>
+      <div class="team">
+        <input class="team-name" data-team="1" value="Team Teal" maxlength="18" />
+        <div class="score" data-score="0">0</div>
+        <div class="team-controls">
+          <button class="plus" data-action="plus" data-team="1">+1</button>
+          <button class="minus" data-action="minus" data-team="1">−</button>
+        </div>
+      </div>
+      <div class="team">
+        <input class="team-name" data-team="2" value="Team Ink" maxlength="18" />
+        <div class="score" data-score="0">0</div>
+        <div class="team-controls">
+          <button class="plus" data-action="plus" data-team="2">+1</button>
+          <button class="minus" data-action="minus" data-team="2">−</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-question" id="quizQuestion">
+      <div class="qbadge">
+        <span class="pill code" id="qPill">CODE</span>
+        <span class="qnum" id="qNum">Question 01 / 10</span>
+      </div>
+      <div class="q" id="qText">Loading question…</div>
+      <div class="a" id="qAnswer"><strong>Answer:</strong> <span id="qAnswerText"></span></div>
+    </div>
+
+    <div class="quiz-done" id="quizDone">
+      <span class="eyebrow orange">Final Score</span>
+      <div class="winner-name" id="winnerName">—</div>
+      <div class="winner-score" id="winnerScore">—</div>
+      <button class="restart" id="restartQuiz">Reset quiz</button>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="secondary" id="revealBtn">Reveal answer</button>
+      <button id="nextQBtn">Next question →</button>
+      <span class="quiz-progress" id="quizProgress">Q1 of 10</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 04 · MONKEYTYPE BREAK -->
+<section class="slide" data-section="Warm-up">
+  <div class="breaktime">
+    <span class="eyebrow reveal">Before Break</span>
+    <h2 class="reveal-2"><em>Monkeytype.</em></h2>
+    <p class="lede reveal-3" style="max-width: 640px; margin: 0 auto;">10 minutes. See where your speed and accuracy land. Then break, then we plan.</p>
+    <a class="typeit reveal-4" href="https://monkeytype.com" target="_blank" rel="noopener">monkeytype.com →</a>
+  </div>
+</section>
+
+<!-- SLIDE 05 · WIREFRAMING OPENER -->
+<section class="slide" data-section="Planning">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">Part Two</span>
+    <h1 class="reveal-2">Wireframes &amp;<br/>prototypes.</h1>
+    <p class="lede reveal-3" style="max-width: 720px;">The boring slide that saves your weekend. Plan the structure first, style it later, build it last — in roughly that order.</p>
+    <div class="reveal-4" style="font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 18px;">If you've ever rebuilt a homepage three times because the client &ldquo;changed their mind&rdquo;, this section is for you.</div>
+  </div>
+</section>
+
+<!-- SLIDE 06 · WHAT IS A WIREFRAME -->
+<section class="slide" data-section="Planning">
+  <div class="layout">
+    <div>
+      <span class="eyebrow reveal">Definition</span>
+      <h2 class="reveal-2">A wireframe is the<br/><em>blueprint</em>, not the building.</h2>
+      <p class="reveal-3" style="margin-top: 22px; font-size: 18px;">It's a low-fidelity visual plan that answers <strong>what goes where</strong> — not what colour it is, what font it uses, or what the hero image looks like.</p>
+      <p class="reveal-4" style="margin-top: 14px; font-size: 18px;">Grey boxes for images. Placeholder text. No styling. The point is structure, hierarchy, and flow — agreed before the expensive work starts.</p>
+    </div>
+    <div class="reveal-3" style="display: grid; place-content: center;">
+      <svg viewBox="0 0 360 280" style="width: 100%; max-width: 380px;" xmlns="http://www.w3.org/2000/svg">
+        <!-- hand-drawn wireframe -->
+        <g fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <rect x="14" y="14" width="332" height="252" rx="2" />
+          <line x1="14" y1="50" x2="346" y2="50" />
+          <rect x="28" y="24" width="60" height="16" rx="2" />
+          <line x1="220" y1="32" x2="246" y2="32" />
+          <line x1="258" y1="32" x2="284" y2="32" />
+          <line x1="296" y1="32" x2="322" y2="32" />
+
+          <line x1="28" y1="78" x2="220" y2="78" stroke-width="3"/>
+          <line x1="28" y1="92" x2="180" y2="92" />
+          <line x1="28" y1="104" x2="200" y2="104" />
+          <rect x="28" y="120" width="84" height="22" rx="2" fill="#ff8a3d" stroke="none"/>
+          <text x="46" y="135" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="600" fill="#1a1a1a">CTA</text>
+
+          <rect x="240" y="68" width="92" height="80" rx="2" />
+          <line x1="240" y1="68" x2="332" y2="148" />
+          <line x1="332" y1="68" x2="240" y2="148" />
+
+          <line x1="28" y1="170" x2="332" y2="170" stroke-dasharray="3 4" stroke="#6b6b66"/>
+
+          <rect x="28" y="184" width="92" height="64" rx="2" />
+          <rect x="134" y="184" width="92" height="64" rx="2" />
+          <rect x="240" y="184" width="92" height="64" rx="2" />
+        </g>
+        <text x="180" y="270" text-anchor="middle" font-family="'Fraunces', serif" font-style="italic" font-size="12" fill="#6b6b66">low-fi wireframe · grey boxes &amp; promises</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 07 · WHY PLAN -->
+<section class="slide" data-section="Planning">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">The Case For Planning</span>
+    <h2 class="reveal-2">Cheap now beats expensive later.</h2>
+    <div class="grid-3 reveal-3" style="margin-top: 12px;">
+      <div class="card">
+        <div class="ord">01</div>
+        <h3>Catch the gaps</h3>
+        <p>You'll find missing pages, missing copy, and missing flows — while it costs minutes to fix, not days.</p>
+      </div>
+      <div class="card teal">
+        <div class="ord">02</div>
+        <h3>Align with the client</h3>
+        <p>Show structure before style. Disagreements about &ldquo;where the contact form lives&rdquo; are easier to settle on a sketch than on built code.</p>
+      </div>
+      <div class="card">
+        <div class="ord">03</div>
+        <h3>Protect your time</h3>
+        <p>The number of times a wireframe has saved me from rebuilding a whole page from scratch — I've stopped counting.</p>
+      </div>
+    </div>
+    <div class="reveal-4" style="font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 18px; padding-top: 8px;">Rule of thumb: 10 minutes planning saves an hour building. An hour planning can save a weekend rebuilding.</div>
+  </div>
+</section>
+
+<!-- SLIDE 08 · FIDELITY SPECTRUM -->
+<section class="slide" data-section="Planning">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">The Spectrum</span>
+    <h2 class="reveal-2">From sketch to ship.</h2>
+    <p class="lede reveal-3" style="max-width: 760px;">Each step gets more expensive to change. Catch problems early in the cheap stuff on the left.</p>
+    <div class="fidelity reveal-4">
+      <div class="fidelity-step">
+        <svg viewBox="0 0 80 60"><g fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M8 12 L72 12 M8 22 L60 22 M8 32 L72 32 M8 42 L48 42 M8 52 L40 52" stroke-dasharray="2 3"/></g></svg>
+        <div class="fname">Sketch</div>
+        <div class="fcost">5 min · paper</div>
+      </div>
+      <div class="fidelity-step">
+        <svg viewBox="0 0 80 60"><g fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="6" y="6" width="68" height="10"/><rect x="6" y="22" width="40" height="32"/><rect x="50" y="22" width="24" height="14"/><rect x="50" y="40" width="24" height="14"/></g></svg>
+        <div class="fname">Wireframe</div>
+        <div class="fcost">30 min · Figma</div>
+      </div>
+      <div class="fidelity-step">
+        <svg viewBox="0 0 80 60"><g><rect x="6" y="6" width="68" height="10" fill="#1a1a1a"/><rect x="6" y="22" width="40" height="32" fill="#ff8a3d"/><rect x="50" y="22" width="24" height="14" fill="#2f9ea0"/><rect x="50" y="40" width="24" height="14" fill="#1a1a1a"/></g></svg>
+        <div class="fname">Mockup</div>
+        <div class="fcost">2–4 hrs · Figma</div>
+      </div>
+      <div class="fidelity-step">
+        <svg viewBox="0 0 80 60"><g><rect x="6" y="6" width="68" height="10" fill="#1a1a1a"/><rect x="6" y="22" width="40" height="32" fill="#ff8a3d"/><rect x="50" y="22" width="24" height="14" fill="#2f9ea0"/><rect x="50" y="40" width="24" height="14" fill="#1a1a1a"/></g><circle cx="62" cy="48" r="3" fill="none" stroke="#ff8a3d" stroke-width="2"><animate attributeName="r" values="2;6;2" dur="1.6s" repeatCount="indefinite"/></circle></svg>
+        <div class="fname">Prototype</div>
+        <div class="fcost">half day · clickable</div>
+      </div>
+      <div class="fidelity-step">
+        <svg viewBox="0 0 80 60"><g font-family="'JetBrains Mono', monospace" font-size="6" fill="#2f9ea0"><text x="4" y="14">&lt;div class=</text><text x="4" y="24">  "hero"&gt;</text><text x="4" y="34" fill="#1a1a1a">  Hello</text><text x="4" y="44">&lt;/div&gt;</text></g></svg>
+        <div class="fname">Built</div>
+        <div class="fcost">days+ · code</div>
+      </div>
+    </div>
+    <div class="reveal-5" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding-top: 10px;">
+      <div style="height: 1px; background: var(--ink);"></div>
+      <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; color: var(--ink);">cost &amp; pain to change increases →</div>
+      <div style="height: 1px; background: var(--ink);"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 09 · THE PROCESS -->
+<section class="slide" data-section="Planning">
+  <div class="layout">
+    <div>
+      <span class="eyebrow reveal">A Repeatable Process</span>
+      <h2 class="reveal-2">Same order. Every project.</h2>
+      <p class="reveal-3" style="margin-top: 18px; font-size: 18px;">It works whether the site has 1 page or 50. The earlier steps cost almost nothing — skip them and you'll pay for it later.</p>
+    </div>
+    <div>
+      <ul class="bullets reveal-3" style="margin-top: 0;">
+        <li class="reveal-3"><strong>Discover</strong> — who's the audience, what's the goal, what does "done" look like?</li>
+        <li class="reveal-3"><strong>Sitemap</strong> — what pages exist and how do they connect?</li>
+        <li class="reveal-4"><strong>User flows</strong> — what's the path through a task (e.g. "buy a thing")?</li>
+        <li class="reveal-4"><strong>Wireframes</strong> — structure per page, no style.</li>
+        <li class="reveal-4"><strong>Content</strong> — real words, not lorem. (Or as close as you can get.)</li>
+        <li class="reveal-5"><strong>Mockups</strong> — apply the visual design.</li>
+        <li class="reveal-5"><strong>Prototype</strong> — click through to test the flows.</li>
+        <li class="reveal-5"><strong>Build</strong> — code it.</li>
+        <li class="reveal-5"><strong>Test &amp; ship</strong> — watch someone actually use it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 · FREE TOOLS -->
+<section class="slide" data-section="Planning">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">Free Tools To Plan With</span>
+    <h2 class="reveal-2">Everything you need — none of it costs a cent.</h2>
+    <ul class="resource-list reveal-3">
+      <li>
+        <div>
+          <div class="rname">Excalidraw</div>
+          <div class="rdesc">Hand-drawn wireframes in the browser. Quick, scrappy, easy to share. Great first step.</div>
+        </div>
+        <a class="rlink" href="https://excalidraw.com" target="_blank" rel="noopener">excalidraw.com</a>
+      </li>
+      <li>
+        <div>
+          <div class="rname">Figma</div>
+          <div class="rdesc">Industry standard. Free tier covers wireframes, mockups, prototypes &amp; team collaboration.</div>
+        </div>
+        <a class="rlink" href="https://www.figma.com" target="_blank" rel="noopener">figma.com</a>
+      </li>
+      <li>
+        <div>
+          <div class="rname">Penpot</div>
+          <div class="rdesc">Open source Figma alternative. Free forever, no account paywall.</div>
+        </div>
+        <a class="rlink" href="https://penpot.app" target="_blank" rel="noopener">penpot.app</a>
+      </li>
+      <li>
+        <div>
+          <div class="rname">Whimsical</div>
+          <div class="rdesc">Wireframes, flowcharts &amp; sitemaps in one. Free tier for small projects.</div>
+        </div>
+        <a class="rlink" href="https://whimsical.com" target="_blank" rel="noopener">whimsical.com</a>
+      </li>
+      <li>
+        <div>
+          <div class="rname">draw.io / diagrams.net</div>
+          <div class="rdesc">Free flowcharts, sitemaps and user flow diagrams. No login required.</div>
+        </div>
+        <a class="rlink" href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a>
+      </li>
+      <li>
+        <div>
+          <div class="rname">Pen &amp; paper</div>
+          <div class="rdesc">Free. Always available. Genuinely the fastest tool for first-pass sketches.</div>
+        </div>
+        <a class="rlink" href="#" onclick="event.preventDefault()">free.always</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 11 · AI OPENER -->
+<section class="slide" data-section="AI">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">Part Three</span>
+    <h1 class="reveal-2">AI tools — what to use,<br/>what to <em>watch out for</em>.</h1>
+    <p class="lede reveal-3" style="max-width: 740px;">Some of these platforms are extraordinary. Some of them have track records you should know about before you paste your client's data into them.</p>
+    <div class="reveal-4" style="font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 18px;">The goal isn't to ban tools. It's to choose them with your eyes open.</div>
+  </div>
+</section>
+
+<!-- SLIDE 12 · CHATGPT / COPILOT HOOK -->
+<section class="slide" data-section="AI">
+  <div class="layout-stack">
+    <span class="eyebrow orange reveal">Things You Probably Didn't Know</span>
+    <h2 class="reveal-2">About ChatGPT &amp; Copilot.</h2>
+    <div class="reveal-3" style="display: grid; gap: 14px; margin-top: 8px;">
+      <div class="fact">
+        <div class="label">April 2023</div>
+        <p>Samsung banned ChatGPT company-wide after engineers leaked confidential source code into it <strong>three times in 20 days</strong>. Once the data is in OpenAI's servers, you can't pull it back.</p>
+      </div>
+      <div class="fact">
+        <div class="label">December 2024</div>
+        <p>Italy's data protection authority fined OpenAI <strong>€15 million</strong> — the first GDPR fine ever issued against a generative AI company — for training ChatGPT on personal data without proper legal basis. (Overturned on appeal March 2026, but the case still shaped EU law.)</p>
+      </div>
+      <div class="fact">
+        <div class="label">GitHub Copilot</div>
+        <p>Sued in a class action (Doe v. GitHub) for training on open-source code without honouring the licenses. Copilot has been caught suggesting code that's near-verbatim copies of training data — including comments and variable names.</p>
+      </div>
+      <div class="fact">
+        <div class="label">Default settings</div>
+        <p>On free / personal tiers, your conversations train the model unless you turn it off. That includes anything you paste in. Read the terms before you paste a client brief.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13 · CLAUDE -->
+<section class="slide" data-section="AI">
+  <div class="layout">
+    <div>
+      <span class="eyebrow teal reveal" style="color: var(--teal); border-color: var(--teal);">Anthropic</span>
+      <h2 class="reveal-2"><em>Claude.</em></h2>
+      <p class="reveal-3" style="margin-top: 18px; font-size: 18px;">Made by Anthropic, founded by ex-OpenAI safety researchers. Built with "Constitutional AI" — safety principles baked into the training, not bolted on.</p>
+      <p class="reveal-4" style="margin-top: 12px; font-size: 18px; font-family: 'Fraunces', serif; font-style: italic; color: var(--muted);">It's also what I used to build this slideshow you're looking at right now.</p>
+    </div>
+    <div>
+      <h3 class="reveal-3" style="margin-bottom: 14px;">Strong at</h3>
+      <ul class="bullets teal reveal-3">
+        <li>Long-form writing &amp; editing — tone, voice, polish</li>
+        <li>Reading &amp; reasoning over big documents (200k token context ≈ 150k words)</li>
+        <li>Code review, refactoring, debugging</li>
+        <li>Live HTML/code artifacts in the chat (like this one)</li>
+        <li>Projects with persistent context &amp; reusable Skills</li>
+        <li>Computer Use — driving a browser to actually do tasks</li>
+      </ul>
+      <div class="reveal-4" style="margin-top: 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px;">
+        <a class="inline-link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>
+        &nbsp;·&nbsp;
+        <a class="inline-link" href="https://docs.claude.com" target="_blank" rel="noopener">docs.claude.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 14 · GEMINI -->
+<section class="slide" data-section="AI">
+  <div class="layout">
+    <div>
+      <span class="eyebrow reveal">Google DeepMind</span>
+      <h2 class="reveal-2"><em>Gemini.</em></h2>
+      <p class="reveal-3" style="margin-top: 18px; font-size: 18px;">Google's family of models — natively multimodal (text, image, audio, video all at once) with a context window that goes well past 1 million tokens.</p>
+      <p class="reveal-4" style="margin-top: 12px; font-size: 18px; font-family: 'Fraunces', serif; font-style: italic; color: var(--muted);">Plays well with the Workspace tools you already use — Docs, Sheets, Gmail, Drive.</p>
+    </div>
+    <div>
+      <h3 class="reveal-3" style="margin-bottom: 14px;">Strong at</h3>
+      <ul class="bullets reveal-3">
+        <li>Deep Research — multi-source web research with citations</li>
+        <li>NotebookLM — turn your own PDFs &amp; notes into a podcast-style audio overview</li>
+        <li>Native image understanding &amp; generation (Imagen)</li>
+        <li>Native video generation (Veo)</li>
+        <li>Massive context — feed it whole textbooks, whole codebases</li>
+        <li>Built right into Google Workspace if your work lives there</li>
+      </ul>
+      <div class="reveal-4" style="margin-top: 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px;">
+        <a class="inline-link" href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a>
+        &nbsp;·&nbsp;
+        <a class="inline-link" href="https://notebooklm.google" target="_blank" rel="noopener">notebooklm.google</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 15 · WHAT TO USE FOR WHAT -->
+<section class="slide" data-section="AI">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">In Practice</span>
+    <h2 class="reveal-2">What to reach for, and when.</h2>
+    <div class="compare reveal-3" style="margin-top: 14px;">
+      <div class="head">Task</div>
+      <div class="head teal">Claude</div>
+      <div class="head orange">Gemini</div>
+
+      <div><strong>Writing &amp; editing — tone, voice, polish</strong></div>
+      <div>★★★ Reaches for nuance, holds a voice well.</div>
+      <div>★★ Solid, sometimes generic.</div>
+
+      <div><strong>Long documents — read, summarise, analyse</strong></div>
+      <div>★★★ Excellent over 100s of pages.</div>
+      <div>★★★ Best for truly massive context (1M+ tokens).</div>
+
+      <div><strong>Web research with sources</strong></div>
+      <div>★★ Good with search enabled.</div>
+      <div>★★★ Deep Research is genuinely impressive.</div>
+
+      <div><strong>Code review, refactor, debugging</strong></div>
+      <div>★★★ Best in class for reasoning over a repo.</div>
+      <div>★★ Capable, especially in IDE integration.</div>
+
+      <div><strong>Image generation</strong></div>
+      <div>★ Not its strength.</div>
+      <div>★★★ Imagen — fast, controllable.</div>
+
+      <div><strong>Audio overview of your own notes</strong></div>
+      <div>—</div>
+      <div>★★★ NotebookLM. Unique &amp; weirdly useful.</div>
+
+      <div><strong>Building live artifacts (HTML, code, slides)</strong></div>
+      <div>★★★ Native to the product.</div>
+      <div>★★ Possible, less seamless.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 16 · PROMPT GENERATION -->
+<section class="slide" data-section="AI">
+  <div class="layout">
+    <div>
+      <span class="eyebrow reveal">Prompt Craft</span>
+      <h2 class="reveal-2">Better prompts,<br/>better results.</h2>
+      <p class="reveal-3" style="margin-top: 18px; font-size: 18px;">You don't need to memorise a framework. You need to give it what a thoughtful human would need: <strong>role, context, examples, format.</strong></p>
+      <ul class="bullets reveal-4" style="margin-top: 18px;">
+        <li><strong>Set the role.</strong> "You are a senior front-end developer reviewing junior code."</li>
+        <li><strong>Give context.</strong> Audience, goal, brand voice, constraints.</li>
+        <li><strong>Show examples.</strong> One good example &gt; ten sentences of description.</li>
+        <li><strong>Specify the format.</strong> Length, structure, what NOT to include.</li>
+        <li><strong>Iterate.</strong> First answer is a draft. Tell it what to fix.</li>
+      </ul>
+    </div>
+    <div class="reveal-3">
+      <div class="prompt-card">
+        <span class="pheader">Bad prompt</span>
+        write me a homepage for a coffee shop
+        <br/><br/>
+        <span class="pheader">Better prompt</span>
+        You are a copywriter for small Perth hospitality businesses.<br/><br/>
+        Write a homepage for <span class="tag">Pulse Coffee</span>, a Mt Lawley specialty cafe.<br/><br/>
+        <span class="tag">Audience:</span> locals, 25–40, who want good coffee without pretension.<br/><br/>
+        <span class="tag">Tone:</span> warm, plain-spoken, lightly witty. No "elevated" or "passionate" — those are tired.<br/><br/>
+        <span class="tag">Format:</span><br/>
+        — Hero headline (max 8 words)<br/>
+        — Sub-headline (one sentence)<br/>
+        — 3 short paragraphs about beans, brunch, &amp; the room<br/>
+        — One short call to action<br/><br/>
+        <span class="tag">Don't:</span> use the words "passionate", "artisanal", or "journey".
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 · BONUS TOOLS -->
+<section class="slide" data-section="AI">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">For Fun · Try At Home</span>
+    <h2 class="reveal-2">Sound &amp; music.</h2>
+    <p class="lede reveal-3" style="max-width: 760px;">Two more tools worth knowing — both have generous free tiers. Use them for site demo voiceovers, presentation intros, or just because.</p>
+    <div class="grid-2 reveal-4" style="margin-top: 8px;">
+      <div class="card">
+        <div class="ord">01</div>
+        <h3>ElevenLabs</h3>
+        <p>Text-to-speech and voice cloning at near-human quality. Use it for site walkthroughs, demo voiceovers, accessibility audio, or hold music alternatives.</p>
+        <a class="inline-link" style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px;" href="https://elevenlabs.io" target="_blank" rel="noopener">elevenlabs.io →</a>
+      </div>
+      <div class="card teal">
+        <div class="ord">02</div>
+        <h3>Suno</h3>
+        <p>AI music generation — full songs from a prompt, with lyrics and vocals. Custom background tracks for a project demo in minutes.</p>
+        <a class="inline-link" style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px;" href="https://suno.com" target="_blank" rel="noopener">suno.com →</a>
+      </div>
+    </div>
+    <div class="reveal-5" style="font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 16px; padding-top: 8px;">A note on rights: anything you generate may not be commercially usable on the free tier — check each platform's terms before you sell it on or hand it to a client.</div>
+  </div>
+</section>
+
+<!-- SLIDE 18 · ASSIGNMENT -->
+<section class="slide" data-section="Assignment">
+  <div class="layout-stack">
+    <span class="eyebrow orange reveal">Your Job This Week</span>
+    <h1 class="reveal-2">Plan your<br/>original site.</h1>
+    <p class="lede reveal-3" style="max-width: 760px;">Due Monday 25 May. Spend the rest of today setting yourself up properly — the build will be much smoother for it.</p>
+    <div class="grid-2 reveal-4" style="margin-top: 10px;">
+      <div>
+        <h3 style="margin-bottom: 12px;">Do today</h3>
+        <ul class="bullets check">
+          <li>Pick what the site is &amp; who it's for</li>
+          <li>Sketch a sitemap — what pages, in what order</li>
+          <li>Wireframe the homepage at minimum (Excalidraw / Figma / paper)</li>
+          <li>Gather any content you've got — copy, images, brand stuff</li>
+          <li>Note the questions you'll need answered by Friday</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom: 12px;">Don't yet</h3>
+        <ul class="bullets cross">
+          <li>Don't open a code editor</li>
+          <li>Don't pick fonts or colours</li>
+          <li>Don't ask Claude or Gemini to "build it for you"</li>
+          <li>Don't lorem-ipsum your way through it — plan the real content</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 19 · RESOURCES TO TAKE -->
+<section class="slide" data-section="Resources">
+  <div class="layout-stack">
+    <span class="eyebrow reveal">Take These With You</span>
+    <h2 class="reveal-2">All the links, in one place.</h2>
+    <div class="grid-2 reveal-3" style="margin-top: 12px;">
+      <div>
+        <h3 style="margin-bottom: 14px; font-size: 22px; color: var(--teal);">Planning</h3>
+        <ul class="resource-list">
+          <li><div class="rname" style="font-size: 18px;">Excalidraw</div><a class="rlink" href="https://excalidraw.com" target="_blank" rel="noopener">excalidraw.com</a></li>
+          <li><div class="rname" style="font-size: 18px;">Figma</div><a class="rlink" href="https://www.figma.com" target="_blank" rel="noopener">figma.com</a></li>
+          <li><div class="rname" style="font-size: 18px;">Penpot</div><a class="rlink" href="https://penpot.app" target="_blank" rel="noopener">penpot.app</a></li>
+          <li><div class="rname" style="font-size: 18px;">Whimsical</div><a class="rlink" href="https://whimsical.com" target="_blank" rel="noopener">whimsical.com</a></li>
+          <li><div class="rname" style="font-size: 18px;">draw.io</div><a class="rlink" href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom: 14px; font-size: 22px; color: var(--orange);">AI Platforms</h3>
+        <ul class="resource-list">
+          <li><div class="rname" style="font-size: 18px;">Claude</div><a class="rlink" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></li>
+          <li><div class="rname" style="font-size: 18px;">Gemini</div><a class="rlink" href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a></li>
+          <li><div class="rname" style="font-size: 18px;">NotebookLM</div><a class="rlink" href="https://notebooklm.google" target="_blank" rel="noopener">notebooklm.google</a></li>
+          <li><div class="rname" style="font-size: 18px;">ElevenLabs</div><a class="rlink" href="https://elevenlabs.io" target="_blank" rel="noopener">elevenlabs.io</a></li>
+          <li><div class="rname" style="font-size: 18px;">Suno</div><a class="rlink" href="https://suno.com" target="_blank" rel="noopener">suno.com</a></li>
+          <li><div class="rname" style="font-size: 18px;">Monkeytype</div><a class="rlink" href="https://monkeytype.com" target="_blank" rel="noopener">monkeytype.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal-4" style="text-align: center; padding-top: 26px; font-family: 'Fraunces', serif; font-style: italic; color: var(--muted); font-size: 20px;">— Go plan. See you Friday. —</div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  // ============================================================
+  //  SLIDES NAVIGATION
+  // ============================================================
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progress = document.getElementById('progress');
+  const pageNumNow = document.getElementById('pageNumNow');
+  const pageNumTotal = document.getElementById('pageNumTotal');
+  const sectionLabel = document.getElementById('sectionLabel');
+
+  let current = 0;
+  pageNumTotal.textContent = String(total).padStart(2, '0');
+
+  function go(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    progress.style.width = (((idx + 1) / total) * 100) + '%';
+    pageNumNow.textContent = String(idx + 1).padStart(2, '0');
+    sectionLabel.textContent = slides[current].dataset.section || '—';
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+  }
+
+  prevBtn.addEventListener('click', () => go(current - 1));
+  nextBtn.addEventListener('click', () => go(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    // ignore when typing in a text input
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      go(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      go(current - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); go(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); go(total - 1);
+    } else if (e.key.toLowerCase() === 'f') {
+      e.preventDefault();
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // initial state
+  go(0);
+
+  // ============================================================
+  //  QUIZ
+  // ============================================================
+
+  const questions = [
+    {
+      type: 'code',
+      q: 'What does HTML stand for?',
+      a: '<strong>HyperText Markup Language.</strong> It\'s a markup language — it describes structure, not behaviour. CSS handles style, JavaScript handles behaviour.'
+    },
+    {
+      type: 'code',
+      q: 'In CSS, what\'s the difference between padding and margin?',
+      a: '<strong>Padding</strong> is the space <em>inside</em> the element — between the content and the border. <strong>Margin</strong> is the space <em>outside</em> the element — between its border and other elements. Padding is part of the element, margin is space around it.'
+    },
+    {
+      type: 'code',
+      q: 'What does the HTTP status code 404 mean?',
+      a: '<strong>Not Found.</strong> The server is up and reachable, but the specific page or resource doesn\'t exist at that URL. Different from 500 (server broken) or 403 (you\'re not allowed in).'
+    },
+    {
+      type: 'code',
+      q: 'In JavaScript, what\'s the difference between == and ===?',
+      a: '<strong>==</strong> checks value with type coercion. <strong>===</strong> checks value AND type — strict equality. <span class="mono">"5" == 5</span> is true. <span class="mono">"5" === 5</span> is false. Use <span class="mono">===</span> by default — it does what you expect.'
+    },
+    {
+      type: 'gk',
+      q: 'What year did the World Wide Web become publicly available?',
+      a: '<strong>1991.</strong> Tim Berners-Lee at CERN published the first website in August 1991. The web is younger than most of you in this room.'
+    },
+    {
+      type: 'client',
+      q: 'What does "scope creep" mean in a project?',
+      a: '<strong>When the project keeps growing past what you originally agreed.</strong> "Could you just add a…", "While you\'re in there…", "Oh, and one more thing…". Each one sounds tiny. Together they kill your timeline and your weekend. The fix: a clear written scope and a polite way to say "that\'s outside scope".'
+    },
+    {
+      type: 'client',
+      q: 'Why make a wireframe BEFORE you start coding?',
+      a: 'Because <strong>changing a sketch costs minutes; changing built code costs hours or days.</strong> Wireframes let you and the client agree on structure before the expensive work starts. Catch problems where they\'re cheap to fix.'
+    },
+    {
+      type: 'client',
+      q: 'Name 3 things you\'d include in a project brief.',
+      a: 'Lots of right answers. The big ones: <strong>goals, audience, scope &amp; deliverables, timeline, budget, brand assets, content responsibility, success metrics.</strong> Plus reference sites — "we want to feel like X" is worth a hundred adjectives.'
+    },
+    {
+      type: 'client',
+      q: 'What\'s the difference between UI and UX?',
+      a: '<strong>UI</strong> (User Interface) is the visual/interactive layer — buttons, layout, colours, type. <strong>UX</strong> (User Experience) is the whole experience of using the thing — flow, performance, copy, accessibility, how it feels. Good UI can sit inside bad UX. Bad UI is always bad UX.'
+    },
+    {
+      type: 'gk',
+      q: 'What\'s the most-visited website in the world?',
+      a: '<strong>google.com.</strong> By a long way. It\'s been the most-visited site for years. YouTube is usually second, and it\'s also Google.'
+    }
+  ];
+
+  let qIndex = 0;
+  let answerShown = false;
+
+  const qText = document.getElementById('qText');
+  const qAnswer = document.getElementById('qAnswer');
+  const qAnswerText = document.getElementById('qAnswerText');
+  const qPill = document.getElementById('qPill');
+  const qNum = document.getElementById('qNum');
+  const revealBtn = document.getElementById('revealBtn');
+  const nextQBtn = document.getElementById('nextQBtn');
+  const quizProgress = document.getElementById('quizProgress');
+  const quizDone = document.getElementById('quizDone');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const winnerName = document.getElementById('winnerName');
+  const winnerScore = document.getElementById('winnerScore');
+  const restartQuiz = document.getElementById('restartQuiz');
+
+  function renderQuestion() {
+    if (qIndex >= questions.length) { showDone(); return; }
+    const q = questions[qIndex];
+    qText.textContent = q.q;
+    qAnswerText.innerHTML = q.a;
+    qAnswer.classList.remove('shown');
+    answerShown = false;
+    qPill.className = 'pill ' + q.type;
+    qPill.textContent = q.type === 'code' ? 'CODE' : q.type === 'client' ? 'CLIENT' : 'GENERAL KNOWLEDGE';
+    qNum.textContent = 'Question ' + String(qIndex + 1).padStart(2, '0') + ' / 10';
+    quizProgress.textContent = 'Q' + (qIndex + 1) + ' of 10';
+    revealBtn.disabled = false;
+    revealBtn.textContent = 'Reveal answer';
+    nextQBtn.textContent = qIndex === questions.length - 1 ? 'See final scores →' : 'Next question →';
+  }
+
+  revealBtn.addEventListener('click', () => {
+    if (!answerShown) {
+      qAnswer.classList.add('shown');
+      answerShown = true;
+      revealBtn.textContent = 'Hide answer';
+    } else {
+      qAnswer.classList.remove('shown');
+      answerShown = false;
+      revealBtn.textContent = 'Reveal answer';
+    }
+  });
+
+  nextQBtn.addEventListener('click', () => {
+    qIndex++;
+    if (qIndex >= questions.length) {
+      showDone();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  function showDone() {
+    quizQuestion.style.display = 'none';
+    document.querySelector('.quiz-controls').style.display = 'none';
+    quizDone.classList.add('show');
+    const teams = Array.from(document.querySelectorAll('.scoreboard .team')).map((el, i) => ({
+      name: el.querySelector('.team-name').value || ('Team ' + (i + 1)),
+      score: parseInt(el.querySelector('.score').dataset.score || '0', 10)
+    }));
+    const max = Math.max(...teams.map(t => t.score));
+    const winners = teams.filter(t => t.score === max);
+    if (max === 0) {
+      winnerName.textContent = 'A draw!';
+      winnerScore.textContent = 'Everyone gets 0. That\'s a result.';
+    } else if (winners.length === 1) {
+      winnerName.textContent = winners[0].name;
+      winnerScore.textContent = winners[0].score + ' point' + (winners[0].score === 1 ? '' : 's');
+    } else {
+      winnerName.textContent = 'Tied!';
+      winnerScore.textContent = winners.map(w => w.name).join(' & ') + ' — ' + max + ' each';
+    }
+  }
+
+  restartQuiz.addEventListener('click', () => {
+    qIndex = 0;
+    quizQuestion.style.display = '';
+    document.querySelector('.quiz-controls').style.display = '';
+    quizDone.classList.remove('show');
+    document.querySelectorAll('.score').forEach(s => { s.dataset.score = '0'; s.textContent = '0'; });
+    renderQuestion();
+  });
+
+  // scoreboard +/-
+  document.querySelectorAll('.team-controls button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const team = btn.dataset.team;
+      const action = btn.dataset.action;
+      const scoreEl = document.querySelector('.team:nth-child(' + (parseInt(team) + 1) + ') .score');
+      let val = parseInt(scoreEl.dataset.score || '0', 10);
+      val = action === 'plus' ? val + 1 : Math.max(0, val - 1);
+      scoreEl.dataset.score = val;
+      scoreEl.textContent = val;
+      scoreEl.classList.remove('bumped');
+      requestAnimationFrame(() => {
+        scoreEl.classList.add('bumped');
+        setTimeout(() => scoreEl.classList.remove('bumped'), 220);
+      });
+    });
+  });
+
+  renderQuestion();
+</script>
+</body>
+</html>

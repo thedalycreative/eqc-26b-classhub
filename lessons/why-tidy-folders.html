@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Tidy Folders = A Free Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#f3e9d8;
+    --sand-deep:#ecdcc2;
+    --ink:#2a211b;
+    --ink-soft:#5c4f44;
+    --sun:#e8633a;
+    --sun-deep:#c9461f;
+    --sky:#3a7d8c;
+    --cream:#fbf6ec;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Newsreader",Georgia,serif;
+    background:var(--sand);
+    color:var(--ink);
+    line-height:1.55;
+    font-size:20px;
+    overflow-x:hidden;
+  }
+  .display{font-family:"Bricolage Grotesque",sans-serif;line-height:1.0;letter-spacing:-0.02em}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:96vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px 24px 80px;
+    overflow:hidden;
+    background:linear-gradient(180deg,#f6d9a8 0%, #f0bd8a 38%, #e89b6e 60%, var(--sand) 100%);
+  }
+  /* the sun */
+  .sun{
+    position:absolute;
+    top:14%;
+    width:min(360px,62vw);
+    height:min(360px,62vw);
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 45%, #ffd27a 0%, #ff9d4d 55%, var(--sun) 100%);
+    box-shadow:0 0 90px 30px rgba(255,170,90,.55);
+    animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise{from{transform:translateY(70px) scale(.85);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+  /* faint road lines */
+  .road{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:140%;height:46%;
+    background:
+      linear-gradient(180deg,transparent,rgba(42,33,27,.06)),
+      conic-gradient(from 90deg at 50% 0%, transparent 0 48.6%, rgba(42,33,27,.10) 48.6% 51.4%, transparent 51.4%);
+    opacity:.7;}
+  .hero-inner{position:relative;z-index:2;max-width:880px}
+  .kicker{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:700;text-transform:uppercase;letter-spacing:.32em;
+    font-size:14px;color:var(--sun-deep);margin-bottom:22px;
+    animation:fade .8s .2s both;
+  }
+  h1.display{
+    font-weight:800;
+    font-size:clamp(46px,9vw,104px);
+    color:var(--ink);
+    margin-bottom:24px;
+    animation:fade .9s .35s both;
+  }
+  h1 .swap{color:var(--sun-deep)}
+  .lede{
+    font-size:clamp(20px,2.4vw,27px);
+    color:var(--ink-soft);
+    max-width:620px;margin:0 auto 36px;
+    animation:fade .9s .55s both;
+  }
+  .scroll-hint{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+    opacity:.55;animation:fade 1s .9s both, bob 2s 1.4s ease-in-out infinite;
+  }
+  @keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:80px 24px}
+  .wrap{max-width:760px;margin:0 auto}
+  .big{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(32px,5.5vw,56px);line-height:1.04;letter-spacing:-.02em;
+    margin-bottom:28px;
+  }
+  .big .hi{color:var(--sun-deep)}
+  p.body{font-size:clamp(19px,2.2vw,23px);color:var(--ink-soft);margin-bottom:20px}
+  p.body b{color:var(--ink)}
+
+  .truth{background:var(--ink);color:var(--cream)}
+  .truth .big{color:var(--cream)}
+  .truth p.body{color:#d9ccbd}
+  .truth p.body b{color:#fff}
+
+  /* before / after */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  .card{
+    border-radius:18px;padding:26px 24px;
+    font-family:"Bricolage Grotesque",sans-serif;
+  }
+  .card h3{font-size:15px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px;font-weight:700}
+  .card ul{list-style:none}
+  .card li{font-size:17px;line-height:1.45;margin-bottom:12px;display:flex;gap:10px;align-items:flex-start}
+  .card li .ic{flex:none;font-size:18px;line-height:1.3}
+  .messy{background:#efe0cf;border:2px dashed #c9a884}
+  .messy h3{color:var(--sun-deep)}
+  .messy li{color:#6b5947}
+  .tidy{background:var(--sky);color:#eafdff}
+  .tidy h3{color:#cdeef3}
+
+  /* big payoff list */
+  .pay{margin-top:14px}
+  .pay .row{
+    display:flex;gap:20px;align-items:flex-start;
+    padding:24px 0;border-top:2px solid var(--sand-deep);
+  }
+  .pay .row:last-child{border-bottom:2px solid var(--sand-deep)}
+  .pay .num{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(34px,6vw,52px);color:var(--sun);line-height:.9;flex:none;width:64px;
+  }
+  .pay .t{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:clamp(20px,3vw,26px);margin-bottom:6px}
+  .pay .d{font-size:18px;color:var(--ink-soft)}
+
+  /* the 3 rules */
+  .rules{background:var(--sun);color:#fff;text-align:center}
+  .rules .big{color:#fff}
+  .rules .three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+  .rules .r{background:rgba(255,255,255,.14);border-radius:18px;padding:30px 18px;backdrop-filter:blur(2px)}
+  .rules .r .e{font-size:40px;display:block;margin-bottom:12px}
+  .rules .r .rt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:19px}
+
+  /* closer */
+  .closer{text-align:center;background:linear-gradient(180deg,var(--sand),#f6d9a8)}
+  .closer .big{margin-bottom:18px}
+  .closer .sign{
+    font-family:"Newsreader",serif;font-style:italic;font-size:20px;color:var(--ink-soft);margin-top:30px;
+  }
+
+  @media(max-width:620px){
+    body{font-size:18px}
+    .ba{grid-template-columns:1fr}
+    .rules .three{grid-template-columns:1fr}
+    .pay .num{width:52px}
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="sun"></div>
+    <div class="road"></div>
+    <div class="hero-inner">
+      <div class="kicker">For Dwain &amp; Ayu</div>
+      <h1 class="display">Tidy folders now.<br><span class="swap">Free life later.</span></h1>
+      <p class="lede">The way you keep your study folders today is the way you'll run your business tomorrow. Let's set you up to work from anywhere.</p>
+      <div class="scroll-hint">Scroll ↓</div>
+    </div>
+  </header>
+
+  <!-- THE BIG IDEA -->
+  <section>
+    <div class="wrap">
+      <h2 class="big">Here's the secret nobody tells you. <span class="hi">A messy laptop builds a messy business.</span></h2>
+      <p class="body">You're not learning back end web dev to pass a test. You're learning it so one day you can open a laptop on a beach, in a café, on a train — and <b>make money from anywhere.</b></p>
+      <p class="body">But here's the catch. When you work for yourself, <b>there is no teacher and no boss</b> telling you where to put things. No IT person. No office filing cabinet. It's just <b>you and your folders.</b></p>
+      <p class="body">If your laptop is a junk drawer now, it'll be a junk drawer then — except then it's costing you <b>real clients and real money.</b></p>
+    </div>
+  </section>
+
+  <!-- THE TRUTH (dark) -->
+  <section class="truth">
+    <div class="wrap">
+      <h2 class="big">Your laptop is your whole office.</h2>
+      <p class="body">When you live the nomad life, you don't carry a desk, a cabinet, or a back room. <b>Everything you own as a business fits on one screen.</b></p>
+      <p class="body">So that one screen has to be clean. Not fancy. Not perfect. Just <b>clean enough to find anything in 5 seconds</b> while the kettle boils.</p>
+
+      <div class="ba">
+        <div class="card messy">
+          <h3>Messy life</h3>
+          <ul>
+            <li><span class="ic">😩</span> "Where did I save that?"</li>
+            <li><span class="ic">⏳</span> 20 mins hunting for one file</li>
+            <li><span class="ic">📉</span> Lost work, redone twice</li>
+            <li><span class="ic">😬</span> Looks amateur to clients</li>
+            <li><span class="ic">🌀</span> Stressed before you start</li>
+          </ul>
+        </div>
+        <div class="card tidy">
+          <h3>Tidy life</h3>
+          <ul>
+            <li><span class="ic">⚡</span> Find anything, instantly</li>
+            <li><span class="ic">🧠</span> Brain free to actually build</li>
+            <li><span class="ic">💼</span> Looks pro → clients trust you</li>
+            <li><span class="ic">💸</span> Trust → they pay you</li>
+            <li><span class="ic">🏝️</span> Work from literally anywhere</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY IT PAYS -->
+  <section>
+    <div class="wrap">
+      <h2 class="big">What tidy folders actually <span class="hi">get you</span></h2>
+      <div class="pay">
+        <div class="row">
+          <div class="num">1</div>
+          <div><div class="t">Time = money</div><div class="d">Every minute spent hunting for a file is a minute you're not earning. Tidy folders give you that time back, every single day.</div></div>
+        </div>
+        <div class="row">
+          <div class="num">2</div>
+          <div><div class="t">You look like a pro</div><div class="d">Clients can't see your code skills at first. But they can feel whether you're organised. Organised = trustworthy = "yes, take my money."</div></div>
+        </div>
+        <div class="row">
+          <div class="num">3</div>
+          <div><div class="t">You never lose work</div><div class="d">A file in the right folder is a file you'll still have in a year. Your future self will thank you when an old client comes back.</div></div>
+        </div>
+        <div class="row">
+          <div class="num">4</div>
+          <div><div class="t">The habit runs itself</div><div class="d">Do it now while it's just study work. By the time you're earning, putting things in the right place is automatic — like brushing your teeth.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 3 RULES -->
+  <section class="rules">
+    <div class="wrap">
+      <h2 class="big">The whole system. Just 3 rules.</h2>
+      <p class="body" style="color:#fff5ee;max-width:520px;margin:0 auto">You don't need an app. You don't need to be smart. You just need to do these three things, every time.</p>
+      <div class="three">
+        <div class="r"><span class="e">📦</span><div class="rt">One home for everything. Every file goes in a folder. Never the desktop.</div></div>
+        <div class="r"><span class="e">🏷️</span><div class="rt">Name it clearly. "Week 3 Notes" — not "stuff" or "final final 2".</div></div>
+        <div class="r"><span class="e">🧹</span><div class="rt">Tidy as you go. 10 seconds now beats 20 minutes later.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer">
+    <div class="wrap">
+      <h2 class="big">Start clean. Stay free.</h2>
+      <p class="body">You're not just organising folders. You're practising for the life you actually want — laptop open, sun out, money coming in, <b>nobody telling you what to do.</b></p>
+      <p class="body">That life is built one tidy folder at a time. Start today.</p>
+      <p style="margin-top:30px"><a href="how-to-organise.html" style="display:inline-block;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;background:var(--sun-deep);color:#fff;text-decoration:none;padding:16px 30px;border-radius:40px;box-shadow:0 12px 26px -12px rgba(201,70,31,.7)">Show me how to set it up →</a></p>
+      <p class="sign">You've got this. — Tim</p>
+    </div>
+  </section>
+
+</body>
+</html>

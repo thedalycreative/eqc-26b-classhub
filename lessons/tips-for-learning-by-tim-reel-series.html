@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tips for Learning by Tim — Reel Series Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fbf7f0;--paper-2:#f4ecdf;--ink:#1d1620;--ink-soft:#5b5160;
+    --bubble:#ff3d7f;--bubble-deep:#d61f63;--mint:#2bb6a3;--mint-deep:#179183;--sun:#ffc24b;--card:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Hanken Grotesk',sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 0 80px;
+    background-image:
+      radial-gradient(circle at 10% 4%, rgba(255,61,127,.10), transparent 36%),
+      radial-gradient(circle at 90% 3%, rgba(43,182,163,.12), transparent 40%),
+      radial-gradient(rgba(29,22,32,.035) 1px, transparent 1px);
+    background-size:auto,auto,22px 22px;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+  header{padding:56px 0 24px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--bubble-deep);border:2px solid var(--ink);
+    border-radius:40px;padding:6px 14px;background:var(--card);box-shadow:3px 3px 0 var(--ink)}
+  .kicker::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--bubble);box-shadow:0 0 0 3px rgba(255,61,127,.25)}
+  h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(38px,7.5vw,68px);
+    line-height:.94;letter-spacing:-.02em;margin:18px 0 4px}
+  h1 .pink{color:var(--bubble);position:relative;display:inline-block}
+  h1 .pink::after{content:"";position:absolute;left:-2%;right:-2%;bottom:6%;height:24%;background:var(--sun);z-index:-1;transform:rotate(-1.2deg);border-radius:3px}
+  .sub{font-size:18px;color:var(--ink-soft);max-width:580px;margin-top:12px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chip{font-family:'Space Mono',monospace;font-size:12.5px;font-weight:700;background:var(--card);
+    border:2px solid var(--ink);border-radius:8px;padding:7px 12px;box-shadow:2px 2px 0 var(--ink)}
+  .chip b{color:var(--mint-deep)}
+
+  /* anchors */
+  .anchor{margin-top:30px;background:var(--ink);color:var(--paper);border-radius:16px;padding:20px;
+    box-shadow:6px 6px 0 var(--bubble);position:relative}
+  .anchor h2{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--sun);margin-bottom:6px}
+  .anchor p.note{font-size:13px;color:#cfc6cf;margin-bottom:13px}
+  .codeblock{font-family:'Space Mono',monospace;font-size:12.5px;line-height:1.62;background:rgba(255,255,255,.06);
+    border:1px dashed rgba(255,255,255,.3);border-radius:10px;padding:13px;color:#fff;white-space:pre-wrap;word-break:break-word}
+  .anchor .copybtn{margin-top:11px}
+
+  .section-label{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:14px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin:46px 0 8px;display:flex;align-items:center;gap:12px}
+  .section-label::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 14px)}
+  .section-sub{font-size:14px;color:var(--ink-soft);margin-bottom:18px;max-width:620px}
+
+  /* reel cards */
+  .reel{background:var(--card);border:2.5px solid var(--ink);border-radius:16px;margin-bottom:18px;overflow:hidden;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .16s ease,box-shadow .16s ease}
+  .reel:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--bubble)}
+  .reel-top{display:flex;align-items:stretch;border-bottom:2.5px solid var(--ink)}
+  .reel-num{background:var(--bubble);color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:26px;min-width:60px;display:flex;align-items:center;justify-content:center;border-right:2.5px solid var(--ink)}
+  .reel-num.alt{background:var(--mint)}
+  .reel-head{padding:12px 16px;flex:1;display:flex;flex-direction:column;justify-content:center}
+  .reel-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;line-height:1.15}
+  .reel-cite{font-family:'Space Mono',monospace;font-size:11px;color:var(--mint-deep);font-weight:700;margin-top:3px}
+  .reel-body{padding:14px 16px 16px}
+  .do{font-size:15px;margin-bottom:6px}
+  .do b{background:var(--sun);padding:0 4px;border-radius:3px}
+  .vo{font-size:15px;line-height:1.5;font-style:italic;color:var(--ink);border-left:4px solid var(--mint);
+    padding:3px 0 3px 13px;margin:10px 0 14px;background:linear-gradient(90deg,rgba(43,182,163,.07),transparent)}
+  .reel-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft)}
+  .tag b{color:var(--bubble-deep)}
+
+  .copybtn{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;
+    border:2px solid var(--ink);background:var(--paper-2);color:var(--ink);padding:7px 13px;border-radius:8px;
+    box-shadow:2px 2px 0 var(--ink);transition:all .12s ease;user-select:none;white-space:nowrap}
+  .copybtn:hover{background:var(--sun)}
+  .copybtn:active{transform:translate(2px,2px);box-shadow:none}
+  .copybtn.copied{background:var(--mint);color:#fff;border-color:var(--mint-deep)}
+  .anchor .copybtn{border-color:var(--paper);background:var(--bubble);color:#fff;box-shadow:3px 3px 0 rgba(255,255,255,.2)}
+  .anchor .copybtn:hover{background:var(--bubble-deep)}
+  .anchor .copybtn.copied{background:var(--mint)}
+
+  .hidden-prompt{display:none}
+
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+  @media(max-width:620px){.footer-grid{grid-template-columns:1fr}}
+  .fcard{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:18px;box-shadow:3px 3px 0 var(--ink)}
+  .fcard h3{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+  .fcard ul{list-style:none;font-size:13.5px;color:var(--ink-soft)}
+  .fcard li{padding:5px 0;padding-left:18px;position:relative}
+  .fcard li::before{content:"›";position:absolute;left:0;color:var(--bubble);font-weight:700}
+  .endnote{text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="kicker">EQC · Reel Series Bank · 20 Episodes</span>
+    <h1>Tips for Learning<br>by <span class="pink">Tim</span></h1>
+    <p class="sub">Twenty bite-size reels of real, lesser-known learning science — the stuff students can actually do in class. One tap copies a ready-to-run Flow prompt for each episode.</p>
+    <div class="meta-row">
+      <span class="chip">EPISODES <b>20</b></span>
+      <span class="chip">EACH <b>~20s</b></span>
+      <span class="chip">VOICE <b>Male · Australian</b></span>
+      <span class="chip">RATIO <b>9:16 vertical</b></span>
+    </div>
+
+    <div class="anchor">
+      <h2>★ Series anchor — already baked into every reel below</h2>
+      <p class="note">Each reel's copy button includes all of this. Here it is standalone if you generate extras or a thumbnail.</p>
+      <div class="codeblock" id="anchor-text">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Recurring host character (identical every episode): "Tim", a friendly male teacher in his mid-30s with ginger hair and a neatly sculpted, well-groomed ginger beard, warm and approachable, smart-casual outfit. Voiceover: one upbeat, playful narrator with a natural MALE AUSTRALIAN accent. Punchy ~20-second pace. Series title card "TIPS FOR LEARNING BY TIM" on a solid EQC brand-colour background, end card with EQC logo.</div>
+      <button class="copybtn" data-copy="anchor-text">⧉ Copy series anchor</button>
+    </div>
+  </header>
+
+  <div class="section-label">The 20 Reels</div>
+  <p class="section-sub">Episodes 1–4 are the heavy hitters (strongest evidence). After that they're ordered for variety, not ranking — shuffle the posting order however you like.</p>
+
+  <!-- ============ REELS ============ -->
+
+  <!-- 1 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num">1</div>
+      <div class="reel-head"><div class="reel-title">Test yourself — don't re-read</div>
+      <div class="reel-cite">Dunlosky 2013 · Hattie &amp; Donoghue 2021 (242 studies)</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> shut the book and scribble down everything you remember before you look again.</p>
+      <p class="vo">"Re-reading your notes feels productive — but it's a trap. The single best thing you can do is shut the book and try to remember it. It's called retrieval practice, and across hundreds of studies it beats re-reading every single time. Struggling to recall it is the bit that makes it stick."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Retrieval beats re-reading"</b></span>
+      <button class="copybtn" data-copy="r1">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r1">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", a friendly male teacher mid-30s with ginger hair and a neatly sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, punchy ~20s pace. SCENE: Tim closes a glowing textbook with a satisfying snap, taps his temple, and answers fly out as little glowing cards. A student re-reading the same page in a loop looks frustrated while a student writing from memory levels up with sparkles. On-screen text: "RETRIEVAL BEATS RE-READING". Small citation bottom corner: "Dunlosky 2013; Hattie & Donoghue 2021". End on EQC "Tips for Learning by Tim" card. NARRATOR: "Re-reading your notes feels productive, but it's a trap. The single best thing you can do is shut the book and try to remember it. It's called retrieval practice, and across hundreds of studies it beats re-reading every single time. Struggling to recall it is the bit that makes it stick."</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num">2</div>
+      <div class="reel-head"><div class="reel-title">Space it out — cramming leaks</div>
+      <div class="reel-cite">Distributed practice · Hattie &amp; Donoghue 2021</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> three 20-minute sessions across the week beat one 60-minute panic.</p>
+      <p class="vo">"Cramming the night before is like filling a bucket with a hole in it — most of it leaks out by morning. Spread the same study time across a few days and you'll remember way more, for way longer. Same effort, better timing. Your future self says thanks."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Space &gt; cram"</b></span>
+      <button class="copybtn" data-copy="r2">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r2">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", friendly male teacher mid-30s, ginger hair and neatly sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a cartoon bucket labelled CRAM with water pouring out a hole overnight; beside it three small tidy cups labelled MON, WED, FRI stay full. Tim points at a calendar with three small study blocks lighting up green. On-screen text: "SPACE IT OUT". Citation: "Distributed practice — Hattie & Donoghue 2021". End on EQC series card. NARRATOR: "Cramming the night before is like filling a bucket with a hole in it. Most of it leaks out by morning. Spread the same study time across a few days and you'll remember way more, for way longer. Same effort, better timing. Your future self says thanks."</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num">3</div>
+      <div class="reel-head"><div class="reel-title">Mix your topics (interleaving)</div>
+      <div class="reel-cite">Rohrer &amp; Taylor 2007 · +30–50% on new problems</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> jumble different problem types together instead of doing 20 of the same in a row.</p>
+      <p class="vo">"Here's a weird one. Instead of drilling one topic till you're sick of it, mix a few together. It feels harder — and that's the point. Students who jumbled their practice scored thirty to fifty per cent better on new problems. Mixing forces your brain to pick the right tool, not just autopilot."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"+30–50% on novel problems"</b></span>
+      <button class="copybtn" data-copy="r3">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r3">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: three colour-coded problem types (A, B, C). First shown as boring identical stacks (AAA BBB CCC), then Tim shuffles them like cards into a mixed deck (A B C A B C) that glows. A brain character grabs the correct labelled "tool" for each. Big number pops: "+30-50%". On-screen text: "MIX IT UP". Citation: "Rohrer & Taylor 2007". End on EQC series card. NARRATOR: "Here's a weird one. Instead of drilling one topic till you're sick of it, mix a few together. It feels harder, and that's the point. Students who jumbled their practice scored thirty to fifty per cent better on new problems. Mixing forces your brain to pick the right tool, not just autopilot."</div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num">4</div>
+      <div class="reel-head"><div class="reel-title">Write it by hand</div>
+      <div class="reel-cite">van der Meer et al., Frontiers in Psychology 2023 (EEG)</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> take key notes with a pen — save the laptop for long essays.</p>
+      <p class="vo">"Typing is faster, sure. But brain scans show writing by hand lights up way more of your brain — the bits tied to memory and learning. When you type, you transcribe. When you write, you actually process it. So for the notes that matter, grab a pen."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Pen &gt; keyboard for memory"</b></span>
+      <button class="copybtn" data-copy="r4">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r4">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: split brain diagram — left side "TYPING" lights up a small dim patch, right side "HANDWRITING" lights up a big bright web of connections with EEG-style waves. Tim writes with a pen and the page glows; a keyboard version stays flat. On-screen text: "WRITE IT BY HAND". Citation: "van der Meer et al., Frontiers in Psychology 2023". End on EQC series card. NARRATOR: "Typing is faster, sure. But brain scans show writing by hand lights up way more of your brain, the bits tied to memory and learning. When you type, you transcribe. When you write, you actually process it. So for the notes that matter, grab a pen."</div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">5</div>
+      <div class="reel-head"><div class="reel-title">Teach it to steal it (Protégé Effect)</div>
+      <div class="reel-cite">The Protégé Effect · learning-by-teaching research</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> explain today's topic to a mate (or your dog) like they've never heard it.</p>
+      <p class="vo">"Want to know if you really get something? Try teaching it. The second you explain it to someone else, your brain finds every gap you didn't know you had. It's called the protégé effect — we learn best when we prep to teach. So turn to the person next to you and explain it."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Teach to learn"</b></span>
+      <button class="copybtn" data-copy="r5">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r5">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a student in a tiny teacher hat explains at a mini whiteboard to a friend (and a cute dog in the audience); as they teach, little "gap" holes in their own knowledge cloud get patched and glow. Tim gives a thumbs up. On-screen text: "TEACH IT TO LEARN IT". Citation: "The Protégé Effect". End on EQC series card. NARRATOR: "Want to know if you really get something? Try teaching it. The second you explain it to someone else, your brain finds every gap you didn't know you had. It's called the protégé effect. We learn best when we prep to teach. So turn to the person next to you and explain it."</div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">6</div>
+      <div class="reel-head"><div class="reel-title">Draw it, don't just write it</div>
+      <div class="reel-cite">Dual coding · Madan 2023</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> turn a definition into a quick doodle or diagram next to the words.</p>
+      <p class="vo">"Your brain stores words and pictures in different places — so use both. Pair a quick sketch with your notes and you've just doubled the hooks your memory can grab onto later. It doesn't have to be art. A dodgy little diagram beats a perfect paragraph."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Words + pictures = dual coding"</b></span>
+      <button class="copybtn" data-copy="r6">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r6">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a page where plain text on its own looks dull; Tim adds a quick doodle beside it and two memory "hooks" (one labelled WORDS, one PICTURES) snap into the brain. A messy but charming diagram gets a green tick over a neat boring paragraph. On-screen text: "DRAW IT TOO". Citation: "Dual coding — Madan 2023". End on EQC series card. NARRATOR: "Your brain stores words and pictures in different places, so use both. Pair a quick sketch with your notes and you've just doubled the hooks your memory can grab onto later. It doesn't have to be art. A dodgy little diagram beats a perfect paragraph."</div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">7</div>
+      <div class="reel-head"><div class="reel-title">Review right before sleep</div>
+      <div class="reel-cite">Sleep &amp; memory consolidation research</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> do a quick recap of the hardest bit just before bed — then actually sleep.</p>
+      <p class="vo">"Your brain doesn't switch off at night — it files everything you learned that day into long-term storage while you sleep. So a quick review right before bed gives your memory a head start. And pulling an all-nighter? That's deleting the very thing that saves it."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Sleep = save button"</b></span>
+      <button class="copybtn" data-copy="r7">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r7">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a sleeping student's brain runs a tiny "saving..." progress bar, filing glowing memory cards into a cabinet labelled LONG-TERM. A big "SAVE" button glows. Contrast: an all-nighter student with a deleting/trash animation. On-screen text: "SLEEP IS THE SAVE BUTTON". Citation: "Sleep & memory research". End on EQC series card. NARRATOR: "Your brain doesn't switch off at night. It files everything you learned that day into long-term storage while you sleep. So a quick review right before bed gives your memory a head start. And pulling an all-nighter? That's deleting the very thing that saves it."</div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">8</div>
+      <div class="reel-head"><div class="reel-title">Quizzing actually calms nerves</div>
+      <div class="reel-cite">Agarwal et al. 2014</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> low-stakes self-quizzing all term — not one terrifying review at the end.</p>
+      <p class="vo">"Sounds backwards, but testing yourself regularly actually lowers exam stress. When students did low-stakes quizzes through the term, their exam anxiety went down and confidence went up. Familiar beats scary. The more you practise being tested, the less the real one rattles you."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Quizzing lowers anxiety"</b></span>
+      <button class="copybtn" data-copy="r8">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r8">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a stress meter on a nervous student drops from red to green as they tick off small friendly "QUIZ" cards through a term calendar; a confidence bar fills up. The final big EXAM looks small and unscary. On-screen text: "TESTING CALMS NERVES". Citation: "Agarwal et al. 2014". End on EQC series card. NARRATOR: "Sounds backwards, but testing yourself regularly actually lowers exam stress. When students did low-stakes quizzes through the term, their exam anxiety went down and confidence went up. Familiar beats scary. The more you practise being tested, the less the real one rattles you."</div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">9</div>
+      <div class="reel-head"><div class="reel-title">Ask "but why?" (Elaboration)</div>
+      <div class="reel-cite">Elaborative interrogation</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> for every fact, ask "why is that true?" and answer it.</p>
+      <p class="vo">"Don't just memorise that something's true — ask why it's true. That one question forces you to connect new info to stuff you already know, and connected knowledge sticks. Be the annoying kid who keeps asking why. Your memory loves it."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Ask why"</b></span>
+      <button class="copybtn" data-copy="r9">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r9">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a single fact-card floats alone, then a glowing "WHY?" speech bubble appears and threads connect it to a web of other known cards, all lighting up. Tim taps his chin like a curious detective. On-screen text: "ASK WHY". Citation: "Elaborative interrogation". End on EQC series card. NARRATOR: "Don't just memorise that something's true, ask why it's true. That one question forces you to connect new info to stuff you already know, and connected knowledge sticks. Be the annoying kid who keeps asking why. Your memory loves it."</div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">10</div>
+      <div class="reel-head"><div class="reel-title">Anchor it to a concrete example</div>
+      <div class="reel-cite">Concrete examples · Madan 2023</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> attach every abstract idea to a real, specific example you can picture.</p>
+      <p class="vo">"Abstract ideas slide straight out of your head. So nail them down with a real example. Learning about loops in code? Picture a vending machine repeating till you pay. The weirder and more specific the example, the better it sticks. Concrete beats vague every time."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Make it concrete"</b></span>
+      <button class="copybtn" data-copy="r10">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r10">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a slippery abstract blob labelled "CONCEPT" keeps sliding off a shelf; Tim attaches it to a vivid concrete example (a vending machine looping) and it locks in place with a click. On-screen text: "ANCHOR IT TO AN EXAMPLE". Citation: "Concrete examples — Madan 2023". End on EQC series card. NARRATOR: "Abstract ideas slide straight out of your head, so nail them down with a real example. Learning about loops in code? Picture a vending machine repeating till you pay. The weirder and more specific the example, the better it sticks. Concrete beats vague every time."</div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">11</div>
+      <div class="reel-head"><div class="reel-title">Chew gum to stay sharp</div>
+      <div class="reel-cite">Brain Sciences 2025 · Ginns et al. 2019</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> grab a piece from the bottle on the desk when focus dips. (Yep — that's why it's there.)</p>
+      <p class="vo">"You've seen the bottle on my desk. Here's the secret: chewing pumps more blood to your brain and bumps up your focus. Students who chewed while studying even scored higher on tests. So when you're fading — grab a piece, get chewing, and bin it after."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Grab a piece. Stay sharp."</b></span>
+      <button class="copybtn" data-copy="r11">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r11">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual; a white Wrigley's gum bottle with green labelling sits on his desk. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: Tim holds up the white green-labelled Wrigley's bottle; a brain chews and lights up with blood-flow arrows; a drowsy student chews and snaps alert; quick green tick "higher test scores"; a piece goes neatly into a bin. On-screen text: "GRAB A PIECE. STAY SHARP". Citation: "Brain Sciences 2025; Ginns et al. 2019". End on EQC series card. NARRATOR: "You've seen the bottle on my desk. Here's the secret: chewing pumps more blood to your brain and bumps up your focus. Students who chewed while studying even scored higher on tests. So when you're fading, grab a piece, get chewing, and bin it after."</div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">12</div>
+      <div class="reel-head"><div class="reel-title">Move before you sit down</div>
+      <div class="reel-cite">Exercise &amp; cognition research</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> a brisk walk or a few stairs before a study block primes your brain.</p>
+      <p class="vo">"Your brain learns better when your body's moved recently. Even a quick walk before class boosts blood flow and the chemicals that help you focus and remember. So if you're stuck, don't push harder — get up, move for five minutes, then come back sharper."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Move, then learn"</b></span>
+      <button class="copybtn" data-copy="r12">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r12">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a sluggish student does a quick walk/stairs; a brain meter fills with fresh oxygen arrows and turns bright; they sit back down and focus crisply. Tim jogs on the spot encouragingly. On-screen text: "MOVE THEN LEARN". Citation: "Exercise & cognition research". End on EQC series card. NARRATOR: "Your brain learns better when your body's moved recently. Even a quick walk before class boosts blood flow and the chemicals that help you focus and remember. So if you're stuck, don't push harder. Get up, move for five minutes, then come back sharper."</div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">13</div>
+      <div class="reel-head"><div class="reel-title">Guess before you're taught (Pretesting)</div>
+      <div class="reel-cite">The pretesting effect</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> try to answer before the lesson — even a wrong guess primes you.</p>
+      <p class="vo">"Here's a cheat code: have a crack at the answer before you've been taught it. Even when you guess wrong, that little struggle primes your brain to grab the right answer when it lands. Being wrong first actually makes you learn it better. So guess away."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Guess first"</b></span>
+      <button class="copybtn" data-copy="r13">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r13">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a student makes a wrong guess (a playful "X"), but a glowing slot opens in their brain shaped like the answer; when the correct answer arrives it snaps perfectly into the primed slot with a satisfying ding. On-screen text: "GUESS FIRST". Citation: "The pretesting effect". End on EQC series card. NARRATOR: "Here's a cheat code: have a crack at the answer before you've been taught it. Even when you guess wrong, that little struggle primes your brain to grab the right answer when it lands. Being wrong first actually makes you learn it better. So guess away."</div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">14</div>
+      <div class="reel-head"><div class="reel-title">Doodle to pay attention</div>
+      <div class="reel-cite">Andrade 2009, "What does doodling do?"</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> let your hand doodle in the margin during a long talk — it keeps you tuned in.</p>
+      <p class="vo">"Teachers used to bust you for doodling — turns out it might help. A study found people who doodled during a boring talk actually remembered more, because a little light doodling stops your mind wandering off completely. So keep one hand busy and stay in the room."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Doodling aids focus"</b></span>
+      <button class="copybtn" data-copy="r14">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r14">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: during a long talk, a daydreaming student's mind floats away on a cloud; another student lightly doodles in the margin and stays anchored, remembering more (memory bar higher). Tim winks. On-screen text: "DOODLE TO FOCUS". Citation: "Andrade 2009". End on EQC series card. NARRATOR: "Teachers used to bust you for doodling. Turns out it might help. A study found people who doodled during a boring talk actually remembered more, because a little light doodling stops your mind wandering off completely. So keep one hand busy and stay in the room."</div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">15</div>
+      <div class="reel-head"><div class="reel-title">Say it out loud (Production Effect)</div>
+      <div class="reel-cite">The production effect</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> read the key bit aloud instead of silently — even a mutter works.</p>
+      <p class="vo">"Reading silently is fine. Reading out loud is better. Saying a word makes it more distinctive in your memory, so you're more likely to recall it later. It's called the production effect. So when it really matters, stop mouthing it and actually say it."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Say it to save it"</b></span>
+      <button class="copybtn" data-copy="r15">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r15">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a silently-read word looks faint and grey; the same word spoken aloud becomes bold, colourful and stamped into a memory vault with a sound-wave. Tim cups his hand to his mouth. On-screen text: "SAY IT OUT LOUD". Citation: "The production effect". End on EQC series card. NARRATOR: "Reading silently is fine. Reading out loud is better. Saying a word makes it more distinctive in your memory, so you're more likely to recall it later. It's called the production effect. So when it really matters, stop mouthing it and actually say it."</div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">16</div>
+      <div class="reel-head"><div class="reel-title">Generate, don't recognise</div>
+      <div class="reel-cite">The generation effect</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> cover the answer and produce it yourself before flipping the card.</p>
+      <p class="vo">"Recognising an answer when you see it feels like knowing it — but it's a lie. Make your brain generate the answer from scratch first. Use flashcards where you say it before you flip. The effort of producing it is exactly what burns it in. No peeking."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Produce &gt; recognise"</b></span>
+      <button class="copybtn" data-copy="r16">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r16">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a flashcard face-down; a student strains to "generate" the answer (a little dumbbell/effort animation on the brain) before flipping it to reveal a match and a strong glowing memory bond. A "just recognising" student's bond is weak and flickery. On-screen text: "GENERATE IT YOURSELF". Citation: "The generation effect". End on EQC series card. NARRATOR: "Recognising an answer when you see it feels like knowing it, but it's a lie. Make your brain generate the answer from scratch first. Use flashcards where you say it before you flip. The effort of producing it is exactly what burns it in. No peeking."</div>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">17</div>
+      <div class="reel-head"><div class="reel-title">Stop mid-task on purpose (Zeigarnik)</div>
+      <div class="reel-cite">The Zeigarnik effect</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> pause a task half-done — your brain keeps chewing on it in the background.</p>
+      <p class="vo">"Weird brain hack: unfinished tasks stick in your head more than finished ones. It's the Zeigarnik effect. So if you stop a problem halfway, your brain keeps quietly working on it in the background. Sometimes the answer just turns up later. Leave it open on purpose."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Unfinished = unforgotten"</b></span>
+      <button class="copybtn" data-copy="r17">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r17">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a half-finished puzzle glows and "pings" in the back of a student's mind while they do other things; a lightbulb pops later out of nowhere. A completed task quietly fades away by comparison. On-screen text: "LEAVE IT UNFINISHED". Citation: "The Zeigarnik effect". End on EQC series card. NARRATOR: "Weird brain hack: unfinished tasks stick in your head more than finished ones. It's the Zeigarnik effect. So if you stop a problem halfway, your brain keeps quietly working on it in the background. Sometimes the answer just turns up later. Leave it open on purpose."</div>
+    </div>
+  </div>
+
+  <!-- 18 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">18</div>
+      <div class="reel-head"><div class="reel-title">If it feels easy, it's not working</div>
+      <div class="reel-cite">Desirable difficulties · Bjork</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> pick the study method that feels harder — that's the one building memory.</p>
+      <p class="vo">"Big myth: if studying feels smooth, it's working. Usually the opposite. Highlighting feels easy and does almost nothing. The methods that feel like a struggle — recalling, mixing, self-testing — are the ones actually building memory. Researchers call it desirable difficulty. Lean into the hard."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Hard = working"</b></span>
+      <button class="copybtn" data-copy="r18">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r18">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a highlighter glides easily over text but the memory bar barely moves; a student doing effortful recall sweats a little but their memory bar shoots up. A "feels easy / does nothing" vs "feels hard / works" split. On-screen text: "IF IT FEELS EASY, IT'S NOT WORKING". Citation: "Desirable difficulties — Bjork". End on EQC series card. NARRATOR: "Big myth: if studying feels smooth, it's working. Usually the opposite. Highlighting feels easy and does almost nothing. The methods that feel like a struggle, recalling, mixing, self-testing, are the ones actually building memory. Researchers call it desirable difficulty. Lean into the hard."</div>
+    </div>
+  </div>
+
+  <!-- 19 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">19</div>
+      <div class="reel-head"><div class="reel-title">Switch up where you study</div>
+      <div class="reel-cite">Context variation research</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> study the same topic in a couple of different spots, not just one.</p>
+      <p class="vo">"Always studying in the exact same chair? Try mixing your spots. Studying the same material in different places gives your memory more cues to grab onto, so it's less tied to one room. Library, kitchen, park bench — variety makes the knowledge more portable."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Change your scenery"</b></span>
+      <button class="copybtn" data-copy="r19">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r19">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: the same glowing fact gets studied in three settings (library, kitchen, park bench), each adding a different coloured "cue" thread to the memory so it's anchored from multiple places. On-screen text: "CHANGE YOUR SPOT". Citation: "Context variation research". End on EQC series card. NARRATOR: "Always studying in the exact same chair? Try mixing your spots. Studying the same material in different places gives your memory more cues to grab onto, so it's less tied to one room. Library, kitchen, park bench, variety makes the knowledge more portable."</div>
+    </div>
+  </div>
+
+  <!-- 20 -->
+  <div class="reel">
+    <div class="reel-top"><div class="reel-num alt">20</div>
+      <div class="reel-head"><div class="reel-title">Explain it like they're five (Feynman)</div>
+      <div class="reel-cite">The Feynman technique</div></div></div>
+    <div class="reel-body">
+      <p class="do"><b>Do this:</b> rewrite the concept in dead-simple words, no jargon. The bits you fumble = the bits you don't get yet.</p>
+      <p class="vo">"Final one. Take whatever you're learning and explain it like you're talking to a five-year-old — no jargon allowed. The moment you reach for a fancy word to hide behind, you've found the bit you don't actually understand. Simple language is the ultimate test of real knowledge."</p>
+      <div class="reel-foot"><span class="tag">ON-SCREEN <b>"Simple = mastery"</b></span>
+      <button class="copybtn" data-copy="r20">⧉ Copy Flow prompt</button></div>
+      <div class="hidden-prompt" id="r20">Bright flat-design 2D cartoon explainer animation, bold clean outlines, vibrant saturated colours, smooth energetic motion, friendly modern educational style, 9:16 vertical reel. Host: "Tim", mid-30s, ginger hair + sculpted ginger beard, smart-casual. VOICE: upbeat MALE AUSTRALIAN narrator, ~20s. SCENE: a tangle of jargon words gets fed through a friendly "SIMPLIFY" machine and comes out as plain clear words a cartoon five-year-old happily understands; a jargon word the student tries to hide behind cracks to reveal a knowledge gap, which they then fix. On-screen text: "EXPLAIN IT SIMPLY". Citation: "The Feynman technique". End on EQC series card. NARRATOR: "Final one. Take whatever you're learning and explain it like you're talking to a five-year-old, no jargon allowed. The moment you reach for a fancy word to hide behind, you've found the bit you don't actually understand. Simple language is the ultimate test of real knowledge."</div>
+    </div>
+  </div>
+
+  <div class="section-label">Run Notes</div>
+  <div class="footer-grid">
+    <div class="fcard">
+      <h3>Production tips</h3>
+      <ul>
+        <li>Each reel is self-contained — generate, post, repeat. No fixed order after the first four.</li>
+        <li>Keep Tim's ginger beard + look identical across all 20 so the series reads as one set.</li>
+        <li>If Flow won't take the voice from the prompt, set a <b>male Australian English</b> voice in audio settings.</li>
+        <li>Open every episode with the same 1-second "Tips for Learning by Tim" title card for instant recognition.</li>
+      </ul>
+    </div>
+    <div class="fcard">
+      <h3>Honesty notes</h3>
+      <ul>
+        <li>Episodes 1–4, 8 cite specific named studies I verified.</li>
+        <li>Others use the established effect name (Zeigarnik, generation, etc.) — all real, well-documented effects.</li>
+        <li>Memory-specific gum claims kept soft on purpose; that evidence is mixed.</li>
+        <li>Want exact paper + year on any card's on-screen text? Say which and I'll lock the citation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="endnote">— Tips for Learning by Tim · EQC Institute of Technology · 20 episodes —</p>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.getAttribute('data-copy'));
+      var text=el?el.innerText:'';
+      var done=function(){var o=btn.innerHTML;btn.classList.add('copied');btn.innerHTML='✓ Copied!';setTimeout(function(){btn.classList.remove('copied');btn.innerHTML=o;},1400);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(function(){fb(text,done);});}else{fb(text,done);}
+    });
+  });
+  function fb(text,cb){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);cb();}
+</script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources · 26B Class Hub</title>
+<meta name="description" content="Curated learning resources for EQC Intake 26B — games, templates, repos, design tools, inspiration sites, and cheat sheets for front-end web development students.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="Resources · 26B Class Hub">
+<meta property="og:description" content="Games, templates, repos, design tools and cheat sheets for front-end web dev students.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.svg">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="topnav-brand">
+      <img src="assets/logo.svg" alt="26B Class Hub" width="220" height="56">
+      <div class="topnav-brand-text">
+        <span class="sr-only">26B Class Hub</span>
+      </div>
+    </a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link"><i class="bi bi-house-door"></i><span>Hub</span></a>
+      <a href="lessons/" class="topnav-link"><i class="bi bi-journal-text"></i><span>Lessons</span></a>
+      <a href="resources.html" class="topnav-link active"><i class="bi bi-bookmark-star"></i><span>Resources</span></a>
+      <a href="downloads.html" class="topnav-link"><i class="bi bi-download"></i><span>Downloads</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HEADER ============ -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow"><span class="dot"></span> CURATED FOR INTAKE 26B</div>
+    <h1 class="page-title">Front-End <span class="accent">Resources</span></h1>
+    <p class="page-subtitle">
+      The kit. Games to practise, templates to fork, repos to read, tools to use daily,
+      sites to draw inspiration from, and docs to bookmark instead of asking AI.
+    </p>
+  </div>
+</header>
+
+<!-- ============ CONTENT ============ -->
+<main class="container">
+
+  <!-- ============ GAMES ============ -->
+  <section class="section" id="games">
+    <div class="section-head">
+      <div class="section-icon">🎮</div>
+      <div>
+        <h2 class="section-title">Practice Games</h2>
+        <p class="section-blurb">Sneaky, fun ways to drill CSS selectors, flexbox, and grid until they feel automatic.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="https://flexboxfroggy.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-controller"></i></div>
+          <span class="card-tag">FLEXBOX</span>
+        </div>
+        <div class="card-title">Flexbox Froggy</div>
+        <p class="card-desc">Help frogs find their lily pads by writing real flexbox CSS. 24 levels, takes ~30 min. Best intro to flexbox there is.</p>
+        <div class="card-meta">flexboxfroggy.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://cssgridgarden.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-grid-3x3"></i></div>
+          <span class="card-tag">CSS GRID</span>
+        </div>
+        <div class="card-title">Grid Garden</div>
+        <p class="card-desc">Water carrots and not weeds using CSS Grid properties. Same team as Froggy. 28 levels.</p>
+        <div class="card-meta">cssgridgarden.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://flukeout.github.io" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-egg-fried"></i></div>
+          <span class="card-tag">SELECTORS</span>
+        </div>
+        <div class="card-title">CSS Diner</div>
+        <p class="card-desc">Learn every CSS selector by serving the right plates. 32 increasingly tricky levels.</p>
+        <div class="card-meta">flukeout.github.io <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://service.typing.academy/en/" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon yellow"><i class="bi bi-keyboard"></i></div>
+          <span class="card-tag">TYPING</span>
+        </div>
+        <div class="card-title">Typing Academy</div>
+        <p class="card-desc">Build code-speed. The faster your fingers, the more time you spend thinking instead of hunting keys.</p>
+        <div class="card-meta">service.typing.academy <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://monkeytype.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon yellow"><i class="bi bi-keyboard-fill"></i></div>
+          <span class="card-tag">TYPING</span>
+        </div>
+        <div class="card-title">Monkeytype</div>
+        <p class="card-desc">Minimal typing-test site dev favourites swear by. Track your WPM and accuracy over time.</p>
+        <div class="card-meta">monkeytype.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.frontendmentor.io/challenges?difficulty=1&type=free" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon orange"><i class="bi bi-trophy"></i></div>
+          <span class="card-tag">CHALLENGES</span>
+        </div>
+        <div class="card-title">Frontend Mentor</div>
+        <p class="card-desc">Real-world UI challenges with provided designs. Build it, submit it, get community feedback. Start with "Newbie".</p>
+        <div class="card-meta">frontendmentor.io <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.codewars.com/?language=javascript" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon red"><i class="bi bi-shield"></i></div>
+          <span class="card-tag">JAVASCRIPT</span>
+        </div>
+        <div class="card-title">Codewars</div>
+        <p class="card-desc">Bite-size programming "katas" ranked by difficulty. Pick JS, start at 8 kyu (easiest). Builds logic muscle.</p>
+        <div class="card-meta">codewars.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://codecombat.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-joystick"></i></div>
+          <span class="card-tag">GAME</span>
+        </div>
+        <div class="card-title">CodeCombat</div>
+        <p class="card-desc">Move your hero around a fantasy map by writing real code. Surprisingly addictive way to learn JS basics.</p>
+        <div class="card-meta">codecombat.com <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ TEMPLATES ============ -->
+  <section class="section" id="templates">
+    <div class="section-head">
+      <div class="section-icon">📦</div>
+      <div>
+        <h2 class="section-title">Templates &amp; Starters</h2>
+        <p class="section-blurb">Clean starting points you can fork. Pick one, gut what you don't need, build on top.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="https://html5boilerplate.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-code-slash"></i></div>
+          <span class="card-tag">HTML</span>
+        </div>
+        <div class="card-title">HTML5 Boilerplate</div>
+        <p class="card-desc">The industry-standard clean HTML/CSS/JS starter. Includes everything you need, nothing you don't.</p>
+        <div class="card-meta">html5boilerplate.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-bootstrap"></i></div>
+          <span class="card-tag">BOOTSTRAP</span>
+        </div>
+        <div class="card-title">Bootstrap Examples</div>
+        <p class="card-desc">Free Bootstrap 5 starter templates — dashboards, landing pages, blogs. Copy, paste, edit.</p>
+        <div class="card-meta">getbootstrap.com/docs/5.3/examples <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://startbootstrap.com/themes" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-bootstrap-reboot"></i></div>
+          <span class="card-tag">BOOTSTRAP</span>
+        </div>
+        <div class="card-title">Start Bootstrap</div>
+        <p class="card-desc">100+ free Bootstrap templates — portfolios, agencies, restaurants. Great variety for your S2 build.</p>
+        <div class="card-meta">startbootstrap.com/themes <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://html5up.net" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-layout-text-window"></i></div>
+          <span class="card-tag">HTML</span>
+        </div>
+        <div class="card-title">HTML5 UP</div>
+        <p class="card-desc">Beautiful free responsive HTML templates. Pure HTML/CSS, easy to learn from and customise.</p>
+        <div class="card-meta">html5up.net <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://tailwindui.com/templates" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-palette"></i></div>
+          <span class="card-tag">TAILWIND</span>
+        </div>
+        <div class="card-title">Tailwind UI Templates</div>
+        <p class="card-desc">Premium Tailwind templates (paid). Worth studying for free even if you don't buy — modern patterns.</p>
+        <div class="card-meta">tailwindui.com/templates <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://tailblocks.cc" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-grid-1x2"></i></div>
+          <span class="card-tag">TAILWIND</span>
+        </div>
+        <div class="card-title">Tailblocks</div>
+        <p class="card-desc">Ready-to-use Tailwind CSS blocks — heroes, features, pricing, contact. Free, copy-paste.</p>
+        <div class="card-meta">tailblocks.cc <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.codewell.cc/challenges?type=html-and-css" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-file-earmark-zip"></i></div>
+          <span class="card-tag">DESIGN FILES</span>
+        </div>
+        <div class="card-title">Codewell Templates</div>
+        <p class="card-desc">Free design templates (Figma + assets) for you to build. Like Frontend Mentor but with cleaner files.</p>
+        <div class="card-meta">codewell.cc <span class="arrow">→</span></div>
+      </a>
+
+      <a href="downloads/code/bin-chicken-bistro.zip" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-file-earmark-zip-fill"></i></div>
+          <span class="card-tag">OUR EXAMPLE</span>
+        </div>
+        <div class="card-title">Bin Chicken Bistro</div>
+        <p class="card-desc">Tim's complete site example from class. Download, unzip, read the code. See how a small site fits together.</p>
+        <div class="card-meta">Local download <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ REPOS / REFERENCES ============ -->
+  <section class="section" id="repos">
+    <div class="section-head">
+      <div class="section-icon">📚</div>
+      <div>
+        <h2 class="section-title">Repos &amp; Code References</h2>
+        <p class="section-blurb">Real code to read. Reading other people's code is half of learning to write good code.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="examples/website-build/index.html" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-globe2"></i></div>
+          <span class="card-tag">CLASS DEMO</span>
+        </div>
+        <div class="card-title">Website Build Example</div>
+        <p class="card-desc">The complete worked example site we used in Subject 1. View source, see the HTML/CSS pattern.</p>
+        <div class="card-meta">examples/website-build <span class="arrow">→</span></div>
+      </a>
+
+      <a href="examples/yearbook-wall/index.html" class="card">
+        <div class="card-top">
+          <div class="card-icon orange"><i class="bi bi-people"></i></div>
+          <span class="card-tag">CLASS DEMO</span>
+        </div>
+        <div class="card-title">Yearbook Wall</div>
+        <p class="card-desc">Your 26B yearbook page — see how a JSON data file drives a dynamic HTML wall.</p>
+        <div class="card-meta">examples/yearbook-wall <span class="arrow">→</span></div>
+      </a>
+
+      <a href="examples/trivia/index.html" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-question-circle"></i></div>
+          <span class="card-tag">CLASS DEMO</span>
+        </div>
+        <div class="card-title">26B Trivia App</div>
+        <p class="card-desc">Play a trivia game built in plain HTML/JS — questions sourced from an XLSX. Open and inspect to learn.</p>
+        <div class="card-meta">examples/trivia <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-book"></i></div>
+          <span class="card-tag">REFERENCE</span>
+        </div>
+        <div class="card-title">MDN HTML Element Index</div>
+        <p class="card-desc">Every HTML tag, what it's for, attributes, examples. The single most-used reference for working web devs.</p>
+        <div class="card-meta">developer.mozilla.org <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://github.com/freeCodeCamp/freeCodeCamp" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-github"></i></div>
+          <span class="card-tag">CURRICULUM</span>
+        </div>
+        <div class="card-title">freeCodeCamp</div>
+        <p class="card-desc">The biggest free learn-to-code project on GitHub. Their HTML/CSS curriculum reinforces what we cover.</p>
+        <div class="card-meta">github.com/freeCodeCamp <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-question-square"></i></div>
+          <span class="card-tag">INTERVIEW</span>
+        </div>
+        <div class="card-title">Front-End Interview Qs</div>
+        <p class="card-desc">Real questions junior devs get asked. Start reading now — you'll learn what concepts matter.</p>
+        <div class="card-meta">github.com/h5bp <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://github.com/mdn/learning-area" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-mortarboard"></i></div>
+          <span class="card-tag">EXAMPLES</span>
+        </div>
+        <div class="card-title">MDN Learning Area</div>
+        <p class="card-desc">Hundreds of small, working HTML/CSS/JS examples. Read, fork, modify. Aligned with their docs.</p>
+        <div class="card-meta">github.com/mdn/learning-area <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://github.com/topics/portfolio-website" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-person-bounding-box"></i></div>
+          <span class="card-tag">DISCOVERY</span>
+        </div>
+        <div class="card-title">Portfolio Repos</div>
+        <p class="card-desc">Browse hundreds of dev portfolios on GitHub. Pick one you like, read the code, copy what works.</p>
+        <div class="card-meta">github.com/topics/portfolio-website <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ DESIGN TOOLS ============ -->
+  <section class="section" id="tools">
+    <div class="section-head">
+      <div class="section-icon">🛠️</div>
+      <div>
+        <h2 class="section-title">Design &amp; Build Tools</h2>
+        <p class="section-blurb">The daily kit. Wireframe, pick colours, choose fonts, find icons.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="https://excalidraw.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-pencil-square"></i></div>
+          <span class="card-tag">WIREFRAME</span>
+        </div>
+        <div class="card-title">Excalidraw</div>
+        <p class="card-desc">Sketchy, hand-drawn-style wireframing. Free, no account. Best low-fidelity tool for ideating layouts.</p>
+        <div class="card-meta">excalidraw.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.figma.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-bezier"></i></div>
+          <span class="card-tag">DESIGN</span>
+        </div>
+        <div class="card-title">Figma</div>
+        <p class="card-desc">Industry-standard interface design tool. Free tier is generous. Great for hi-fi mockups + component libraries.</p>
+        <div class="card-meta">figma.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://penpot.app" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-vector-pen"></i></div>
+          <span class="card-tag">DESIGN</span>
+        </div>
+        <div class="card-title">Penpot</div>
+        <p class="card-desc">Open-source Figma alternative. Browser-based, free forever. Worth a look if you dislike Figma's model.</p>
+        <div class="card-meta">penpot.app <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://coolors.co" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon orange"><i class="bi bi-palette-fill"></i></div>
+          <span class="card-tag">COLOUR</span>
+        </div>
+        <div class="card-title">Coolors</div>
+        <p class="card-desc">Generate beautiful colour palettes by hitting spacebar. Lock the colours you like, regenerate the rest.</p>
+        <div class="card-meta">coolors.co <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://realtimecolors.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon orange"><i class="bi bi-eyedropper"></i></div>
+          <span class="card-tag">COLOUR</span>
+        </div>
+        <div class="card-title">Realtime Colors</div>
+        <p class="card-desc">See your colour palette applied to a real mock website instantly. Brilliant for testing combos before you commit.</p>
+        <div class="card-meta">realtimecolors.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://fonts.google.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-fonts"></i></div>
+          <span class="card-tag">TYPOGRAPHY</span>
+        </div>
+        <div class="card-title">Google Fonts</div>
+        <p class="card-desc">1,600+ free web fonts. Copy the link tag, paste in your head, you're done. Use for every project.</p>
+        <div class="card-meta">fonts.google.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.fontshare.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-type"></i></div>
+          <span class="card-tag">TYPOGRAPHY</span>
+        </div>
+        <div class="card-title">Fontshare</div>
+        <p class="card-desc">Indian Type Foundry's free fonts. Smaller, sharper curation than Google Fonts. Premium-feeling for free.</p>
+        <div class="card-meta">fontshare.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://icons.getbootstrap.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-emoji-smile"></i></div>
+          <span class="card-tag">ICONS</span>
+        </div>
+        <div class="card-title">Bootstrap Icons</div>
+        <p class="card-desc">2,000+ free open-source icons. SVG or icon font. Used by this whole hub.</p>
+        <div class="card-meta">icons.getbootstrap.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://heroicons.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-stars"></i></div>
+          <span class="card-tag">ICONS</span>
+        </div>
+        <div class="card-title">Heroicons</div>
+        <p class="card-desc">Hand-drawn SVG icons from the Tailwind team. Clean, modern, free.</p>
+        <div class="card-meta">heroicons.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://unsplash.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-image"></i></div>
+          <span class="card-tag">PHOTOS</span>
+        </div>
+        <div class="card-title">Unsplash</div>
+        <p class="card-desc">Free high-quality stock photos for your site. Search, download, no attribution required.</p>
+        <div class="card-meta">unsplash.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.pexels.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-camera"></i></div>
+          <span class="card-tag">PHOTOS</span>
+        </div>
+        <div class="card-title">Pexels</div>
+        <p class="card-desc">More free stock photos + videos. Often has shots Unsplash doesn't. Used in our class examples.</p>
+        <div class="card-meta">pexels.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://heropatterns.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+          <span class="card-tag">PATTERNS</span>
+        </div>
+        <div class="card-title">Hero Patterns</div>
+        <p class="card-desc">Free repeatable SVG background patterns. Drop into your CSS for instant texture.</p>
+        <div class="card-meta">heropatterns.com <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ INSPIRATION ============ -->
+  <section class="section" id="inspiration">
+    <div class="section-head">
+      <div class="section-icon">✨</div>
+      <div>
+        <h2 class="section-title">Inspiration &amp; Galleries</h2>
+        <p class="section-blurb">When you're staring at a blank page, copy the masters. Study before you steal.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="https://www.awwwards.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-award"></i></div>
+          <span class="card-tag">GALLERY</span>
+        </div>
+        <div class="card-title">Awwwards</div>
+        <p class="card-desc">The premier "best of the web" gallery. Look at "Site of the Day" daily for a year and your eye improves dramatically.</p>
+        <div class="card-meta">awwwards.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://land-book.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-collection"></i></div>
+          <span class="card-tag">LANDING</span>
+        </div>
+        <div class="card-title">Land-book</div>
+        <p class="card-desc">Curated gallery of landing pages. Filter by category, style, colour. Best place for landing-page inspiration.</p>
+        <div class="card-meta">land-book.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://godly.website" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-lightning"></i></div>
+          <span class="card-tag">CURATED</span>
+        </div>
+        <div class="card-title">Godly</div>
+        <p class="card-desc">Daily inspiration: bold, unusual, beautifully-crafted websites. Strong taste, narrow filter.</p>
+        <div class="card-meta">godly.website <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://www.siteinspire.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-image-fill"></i></div>
+          <span class="card-tag">GALLERY</span>
+        </div>
+        <div class="card-title">SiteInspire</div>
+        <p class="card-desc">Long-running web design gallery. Browse by industry or style — useful for client work inspiration.</p>
+        <div class="card-meta">siteinspire.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://mobbin.com/browse/web" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-phone"></i></div>
+          <span class="card-tag">UI PATTERNS</span>
+        </div>
+        <div class="card-title">Mobbin</div>
+        <p class="card-desc">Library of UX patterns from real apps. Browse "How does Airbnb handle X?" — instant answers.</p>
+        <div class="card-meta">mobbin.com <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://oneminutewebsite.com" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon fuchsia"><i class="bi bi-stopwatch"></i></div>
+          <span class="card-tag">QUICK BUILDS</span>
+        </div>
+        <div class="card-title">One Minute Website</div>
+        <p class="card-desc">Single-section sites you can build in 60 seconds. Great for studying tight, focused layouts.</p>
+        <div class="card-meta">oneminutewebsite.com <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEETS / DOCS ============ -->
+  <section class="section" id="docs">
+    <div class="section-head">
+      <div class="section-icon">📖</div>
+      <div>
+        <h2 class="section-title">Cheat Sheets &amp; Docs</h2>
+        <p class="section-blurb">Bookmark these instead of asking AI for syntax. Build the muscle of consulting authoritative sources.</p>
+      </div>
+    </div>
+    <div class="card-grid">
+
+      <a href="https://developer.mozilla.org" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-book-half"></i></div>
+          <span class="card-tag">DOCS</span>
+        </div>
+        <div class="card-title">MDN Web Docs</div>
+        <p class="card-desc">The bible. HTML, CSS, JS, web APIs — Mozilla's docs are the canonical reference for the entire web.</p>
+        <div class="card-meta">developer.mozilla.org <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://devdocs.io" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-search"></i></div>
+          <span class="card-tag">DOCS</span>
+        </div>
+        <div class="card-title">DevDocs</div>
+        <p class="card-desc">Fast, instant-search docs for HTML/CSS/JS/Bootstrap/jQuery and dozens more. Works offline. Bookmark.</p>
+        <div class="card-meta">devdocs.io <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://css-tricks.com/almanac/" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-journal-richtext"></i></div>
+          <span class="card-tag">CSS</span>
+        </div>
+        <div class="card-title">CSS-Tricks Almanac</div>
+        <p class="card-desc">Every CSS selector, property, and concept with examples. Better written than MDN for browsing/learning.</p>
+        <div class="card-meta">css-tricks.com/almanac <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://devhints.io" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-file-earmark-text"></i></div>
+          <span class="card-tag">CHEAT SHEETS</span>
+        </div>
+        <div class="card-title">Devhints</div>
+        <p class="card-desc">One-page cheat sheets for everything — flexbox, grid, git, markdown, regex. Print the ones you use daily.</p>
+        <div class="card-meta">devhints.io <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://flexbox.malven.co" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-arrows-fullscreen"></i></div>
+          <span class="card-tag">FLEXBOX</span>
+        </div>
+        <div class="card-title">Flexbox Cheatsheet</div>
+        <p class="card-desc">Visual one-page flexbox reference by Malven. Every property with a picture. Worth printing.</p>
+        <div class="card-meta">flexbox.malven.co <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://grid.malven.co" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-grid"></i></div>
+          <span class="card-tag">CSS GRID</span>
+        </div>
+        <div class="card-title">Grid Cheatsheet</div>
+        <p class="card-desc">Same idea, for CSS Grid. Pin to your wall. Saves you Googling "grid-template-columns syntax" every time.</p>
+        <div class="card-meta">grid.malven.co <span class="arrow">→</span></div>
+      </a>
+
+      <a href="https://htmlreference.io" target="_blank" rel="noopener" class="card">
+        <div class="card-top">
+          <div class="card-icon"><i class="bi bi-filetype-html"></i></div>
+          <span class="card-tag">HTML</span>
+        </div>
+        <div class="card-title">HTML Reference</div>
+        <p class="card-desc">Visual cheat sheet for every HTML element. Click a tag, see examples + browser support at a glance.</p>
+        <div class="card-meta">htmlreference.io <span class="arrow">→</span></div>
+      </a>
+
+      <a href="downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" class="card">
+        <div class="card-top">
+          <div class="card-icon green"><i class="bi bi-terminal"></i></div>
+          <span class="card-tag">OUR PDF</span>
+        </div>
+        <div class="card-title">Terminal Commands (26B)</div>
+        <p class="card-desc">Tim's own terminal cheat sheet for class — cd, ls, mkdir, git basics. Print this if you take nothing else.</p>
+        <div class="card-meta">PDF download <span class="arrow">→</span></div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    26B Class Hub · EQC · Front-End Web Dev
+    <span class="dot-row"><span></span><span></span><span></span></span>
+    Built for <a href="index.html">Intake 26B</a> · Perth WA
+  </div>
+</footer>
+
+</body>
+</html>

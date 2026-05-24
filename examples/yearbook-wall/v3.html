@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26B · The Yearbook Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,700;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Major+Mono+Display&family=Syne:wght@400;700;800&family=DM+Serif+Display&family=Rubik+Mono+One&family=Caveat:wght@400;700&family=Archivo+Black&family=Anton&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Rozha+One&family=Monoton&family=Shrikhand&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --bg:#ffffff;
+    --bg-alt:#f6f6f4;
+    --border:#1a1a1a;
+    --border-soft:#d9d9d5;
+    --green:#0a6b2e;
+    --green-light:#d9ecdf;
+    --muted:#5c5c5a;
+    --faint:#9a9a96;
+    --red:#b8311c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+  body{padding:32px 28px 80px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+  .shell{max-width:1680px;margin:0 auto}
+
+  header{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 0 22px;margin-bottom:28px}
+  .meta-row{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--border-soft);margin-bottom:18px;
+  }
+  .meta-row .issue{color:var(--green);font-weight:600}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(44px,7vw,80px);line-height:1;letter-spacing:-0.025em}
+  .kicker{font-family:'Inter',sans-serif;font-size:17px;color:var(--muted);margin-top:10px;max-width:780px;line-height:1.5}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:24px}
+  .stats{display:flex;gap:18px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase}
+  .stats strong{color:var(--green);font-weight:600;font-size:15px}
+  .stats .sep{color:var(--faint)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{
+    font-family:'JetBrains Mono';font-size:11px;padding:10px 14px;border:1px solid var(--border);
+    background:var(--bg);color:var(--ink);border-radius:2px;cursor:pointer;font-weight:500;
+    text-transform:uppercase;letter-spacing:0.08em;transition:all 0.15s;
+  }
+  .btn:hover{background:var(--ink);color:var(--bg)}
+  .btn.primary{background:var(--ink);color:var(--bg)}
+  .btn.primary:hover{background:var(--green);border-color:var(--green)}
+  .btn.danger{border-color:var(--red);color:var(--red)}
+  .btn.danger:hover{background:var(--red);color:var(--bg)}
+
+  .live-indicator{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:11px;color:var(--green);font-weight:600}
+  .live-indicator .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px}
+
+  .tile{
+    position:relative;border:1.5px solid var(--border);border-radius:3px;padding:24px;min-height:320px;
+    display:flex;flex-direction:column;cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tile:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.1)}
+  .tile.new{animation:tileIn 0.45s cubic-bezier(0.4,0,0.2,1) backwards}
+  @keyframes tileIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+  .tile-controls{position:absolute;top:8px;right:8px;display:flex;gap:4px;z-index:5;opacity:0;transition:opacity 0.15s ease}
+  .tile:hover .tile-controls{opacity:1}
+  .tile-ctrl{
+    width:28px;height:28px;border:1px solid var(--border);background:var(--bg);color:var(--ink);
+    border-radius:2px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono';font-weight:600;transition:all 0.15s;
+  }
+  .tile-ctrl:hover{background:var(--ink);color:var(--bg)}
+  .tile-ctrl.remove:hover{background:var(--red);border-color:var(--red);color:var(--bg)}
+
+  .tile-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
+  .tile-avatar{
+    width:96px;height:96px;border-radius:3px;background:rgba(255,255,255,0.25);
+    border:1px solid rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;
+    font-size:38px;overflow:hidden;flex-shrink:0;
+  }
+  .tile-avatar img{width:100%;height:100%;object-fit:cover}
+  .tile-head-text{min-width:0;flex:1}
+  .tile-name{font-size:30px;font-weight:700;line-height:1.05;letter-spacing:-0.015em;word-break:break-word;margin-bottom:6px}
+  .tile-bio{font-size:15.5px;line-height:1.5;opacity:0.9}
+
+  .tile-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .tile-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;border:1px solid;line-height:1.2}
+
+  .tile-facts{display:flex;flex-direction:column;gap:9px;flex:1}
+  .fact{
+    padding:13px 15px;border-radius:3px;background:rgba(0,0,0,0.13);font-size:15px;line-height:1.45;
+    position:relative;transition:background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .tile.revealed .fact[data-truth="true"]{background:rgba(10,107,46,0.22);box-shadow:inset 3px 0 0 var(--green)}
+  .tile.revealed .fact[data-truth="false"]{
+    background:rgba(184,49,28,0.25);box-shadow:inset 3px 0 0 var(--red);animation:shake 0.45s ease;
+  }
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+  .fact-label{
+    position:absolute;top:8px;right:10px;font-family:'JetBrains Mono';font-size:9px;
+    padding:2px 7px;border-radius:2px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;
+    opacity:0;transition:opacity 0.35s ease 0.15s;
+  }
+  .tile.revealed .fact-label{opacity:1}
+  .fact[data-truth="true"] .fact-label{background:var(--green);color:var(--bg)}
+  .fact[data-truth="false"] .fact-label{background:var(--red);color:var(--bg)}
+
+  .tile-foot{
+    font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+    margin-top:14px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.18);
+    display:flex;justify-content:space-between;opacity:0.75;font-weight:500;
+  }
+
+  .empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;border:1px dashed var(--border);border-radius:3px;background:var(--bg-alt)}
+  .empty-state h3{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:8px}
+  .empty-state p{color:var(--muted);font-size:15px}
+
+  /* HELP */
+  .help-float{
+    position:fixed;bottom:24px;right:24px;z-index:50;width:48px;height:48px;border-radius:50%;
+    background:var(--ink);color:var(--bg);border:0;cursor:pointer;
+    font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,0.15);transition:all 0.15s;
+  }
+  .help-float:hover{background:var(--green);transform:scale(1.05)}
+  .help-float.active{background:var(--green)}
+
+  .help-panel{
+    position:fixed;bottom:84px;right:24px;z-index:49;
+    width:min(420px,calc(100vw - 48px));max-height:calc(100vh - 120px);overflow-y:auto;
+    background:var(--bg);border:1.5px solid var(--border);border-radius:3px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.15);padding:22px;
+    opacity:0;transform:translateY(8px) scale(0.98);pointer-events:none;transition:opacity 0.2s, transform 0.2s;
+  }
+  .help-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .help-panel h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px;letter-spacing:-0.01em}
+  .help-panel .lede{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+
+  .help-section{margin-bottom:18px}
+  .help-section:last-child{margin-bottom:0}
+  .help-section h4{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:10px;font-weight:600}
+
+  .key-grid{display:flex;flex-direction:column;gap:5px}
+  .key-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink)}
+  .key-swatch{width:80px;flex-shrink:0;text-align:center;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid;line-height:1.3}
+  .key-label{color:var(--muted)}
+
+  .help-instr{font-size:13px;line-height:1.6;color:var(--ink)}
+  .help-instr ul{list-style:none;padding:0;margin:0}
+  .help-instr li{padding:5px 0;display:flex;gap:8px;align-items:flex-start}
+  .help-instr li::before{content:"→";color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+  .help-instr code{background:var(--bg-alt);border:1px solid var(--border-soft);padding:1px 5px;border-radius:2px;font-family:'JetBrains Mono';font-size:12px}
+  .help-instr kbd{background:var(--bg-alt);border:1px solid var(--border);padding:1px 6px;border-radius:2px;font-family:'JetBrains Mono';font-size:11px;font-weight:600}
+
+  /* MODALS */
+  .modal-bg{position:fixed;inset:0;background:rgba(10,10,10,0.5);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:60px 20px;z-index:100;overflow-y:auto}
+  .modal-bg.open{display:flex;animation:fadeIn 0.2s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{background:var(--bg);border:1.5px solid var(--border);border-radius:3px;max-width:780px;width:100%;padding:26px;animation:modalUp 0.25s ease}
+  @keyframes modalUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px;letter-spacing:-0.015em}
+  .modal p.hint{color:var(--muted);margin-bottom:18px;font-size:14px;line-height:1.5}
+  .modal textarea{width:100%;min-height:320px;font-family:'JetBrains Mono';font-size:13px;line-height:1.6;padding:14px;background:#0a0a0a;border:1px solid var(--border);border-radius:2px;color:#e8e0c0;resize:vertical}
+  .modal textarea:focus{outline:none;box-shadow:0 0 0 2px var(--green)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:var(--ink);color:var(--bg);padding:11px 22px;border-radius:2px;font-size:12px;
+    font-family:'JetBrains Mono';font-weight:500;text-transform:uppercase;letter-spacing:0.1em;
+    opacity:0;pointer-events:none;transition:all 0.25s;z-index:200;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.error{background:var(--red)}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <div class="meta-row">
+      <span>EQC · Intake 26B</span>
+      <span class="issue">Yearbook / Issue 01</span>
+      <span class="live-indicator"><span class="dot"></span>LIVE · <span id="liveDate">—</span></span>
+    </div>
+    <h1>The Yearbook Wall.</h1>
+    <p class="kicker">Three facts each. Two true, one a lie. Click a tile to reveal — after we've all had a guess.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="stats">
+      <span><strong id="tileCount">0</strong> tiles</span>
+      <span class="sep">·</span>
+      <span><strong id="revealedCount">0</strong> revealed</span>
+    </div>
+    <div class="actions">
+      <button class="btn" id="hideAllBtn" type="button">Hide all</button>
+      <button class="btn" id="addManualBtn" type="button">+ Paste code</button>
+      <button class="btn danger" id="clearBtn" type="button">Clear wall</button>
+    </div>
+  </div>
+
+  <div class="wall" id="wall">
+    <div class="empty-state" id="emptyState">
+      <h3>The wall is waiting.</h3>
+      <p>Tiles will appear here as students hit submit.</p>
+    </div>
+  </div>
+
+</div>
+
+<button class="help-float" id="helpBtn" type="button" title="Help / Key">?</button>
+<div class="help-panel" id="helpPanel">
+  <h3>Badge key &amp; controls</h3>
+  <p class="lede">Quick reference for what's what on the wall.</p>
+
+  <div class="help-section">
+    <h4>Badge categories</h4>
+    <div class="key-grid" id="keyGrid"></div>
+  </div>
+
+  <div class="help-section">
+    <h4>Tile controls</h4>
+    <div class="help-instr">
+      <ul>
+        <li><strong>Click tile</strong> — toggle reveal (shows which fact is the lie)</li>
+        <li><strong>Hover tile</strong> — top-right shows <code>&lt;/&gt;</code> edit and <code>×</code> remove</li>
+        <li><strong>Edit code</strong> — full tile HTML opens in a modal, tweak and update</li>
+        <li><strong>Remove</strong> — deletes from the wall (with confirm)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="help-section">
+    <h4>Toolbar</h4>
+    <div class="help-instr">
+      <ul>
+        <li><strong>Hide all</strong> — resets reveals to hidden (for a new reveal round)</li>
+        <li><strong>+ Paste code</strong> — manually add a tile from pasted HTML</li>
+        <li><strong>Clear wall</strong> — nukes everything (end of term)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="help-section">
+    <h4>Keyboard</h4>
+    <div class="help-instr">
+      <ul>
+        <li><kbd>Esc</kbd> closes any open modal</li>
+        <li><kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> submits an open modal</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="pasteModal">
+  <div class="modal">
+    <h2>Paste tile code</h2>
+    <p class="hint">Drop the HTML block a student sent you. You can paste multiple tiles at once.</p>
+    <textarea id="pasteArea" placeholder="<!-- 26B tile: ... -->
+<div class='tile' data-name='...'>
+  ...
+</div>"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="pasteCancelBtn" type="button">Cancel</button>
+      <button class="btn primary" id="pasteAddBtn" type="button">Add to wall</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <h2>Edit tile code</h2>
+    <p class="hint">Tweak the HTML directly. Changes save to the wall when you hit update.</p>
+    <textarea id="editArea"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="editCancelBtn" type="button">Cancel</button>
+      <button class="btn primary" id="editSaveBtn" type="button">Update tile</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "REPLACE_WITH_YOUR_API_KEY",
+    authDomain: "REPLACE.firebaseapp.com",
+    databaseURL: "https://REPLACE-default-rtdb.firebaseio.com",
+    projectId: "REPLACE",
+  };
+
+  window.__firebase = { initializeApp, getDatabase, ref, set, onValue, remove, config: firebaseConfig };
+  window.__firebaseReady = true;
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<script>
+(() => {
+  const TILE_PATH_ROOT = 'yearbook26b/tiles';
+  const LOCAL_KEY = 'yearbook26b:wall';
+  const REVEAL_KEY = 'yearbook26b:revealed';
+
+  const TAG_CATEGORIES = [
+    {id:'learn',       label:'I want to learn',     prefix:'📚',  bg:'#e3efd9', border:'#4a9956', text:'#1e4a28'},
+    {id:'know',        label:'I already know',      prefix:'✓',   bg:'#d1e7ff', border:'#2b6cb0', text:'#1a3a5e'},
+    {id:'dream-job',   label:'Dream job',           prefix:'★',   bg:'#ffe4b5', border:'#c97c2e', text:'#6b3d0d'},
+    {id:'working-on',  label:"I'm working on",      prefix:'●',   bg:'#ffd6d6', border:'#c44040', text:'#6e1b1b'},
+    {id:'class-hub',   label:'For the class hub',   prefix:'#',   bg:'#e8dcff', border:'#7040c4', text:'#3a1e6b'},
+    {id:'learn-style', label:'How I learn',         prefix:'⌁',   bg:'#d0f0ee', border:'#1f8074', text:'#0d3a34'},
+    {id:'tool',        label:'Tool I love',         prefix:'◈',   bg:'#ffe8f0', border:'#b84778', text:'#5e1a38'},
+    {id:'interests',   label:'Outside of tech',     prefix:'♡',   bg:'#f0e4d0', border:'#8b5e2b', text:'#3e2a13'},
+    {id:'vibe',        label:'My vibe',             prefix:'◉',   bg:'#fff3a3', border:'#a08420', text:'#40360a'},
+    {id:'goal',        label:'End of course goal',  prefix:'→',   bg:'#d8f0ff', border:'#2e7db8', text:'#124361'},
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  let tiles = {};
+  let revealed = {};
+  let editingId = null;
+  let lastRenderSignature = '';
+  const seenIds = new Set();
+
+  $('liveDate').textContent = new Date().toLocaleDateString('en-AU', {day:'numeric', month:'long', year:'numeric'}).toUpperCase();
+
+  const keyGrid = $('keyGrid');
+  TAG_CATEGORIES.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'key-row';
+    row.innerHTML = `
+      <span class="key-swatch" style="background:${c.bg};border-color:${c.border};color:${c.text}">${c.prefix} Tag</span>
+      <span class="key-label">${c.label}</span>
+    `;
+    keyGrid.appendChild(row);
+  });
+
+  try { revealed = JSON.parse(localStorage.getItem(REVEAL_KEY) || '{}'); } catch(e){ revealed = {}; }
+  function saveReveal(){ localStorage.setItem(REVEAL_KEY, JSON.stringify(revealed)); }
+
+  function escapeHTML(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function renderBioHtml(raw){
+    let s = escapeHTML(raw);
+    s = s.replace(/&lt;(\/?)(b|i|u)&gt;/g, '<$1$2>');
+    return s;
+  }
+
+  function boot(){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, onValue } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      onValue(ref(db, TILE_PATH_ROOT), (snap) => {
+        tiles = snap.val() || {};
+        render();
+      });
+    } else {
+      // localStorage fallback — only re-render if data actually changed
+      function poll(){
+        let next;
+        try { next = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}') || {}; }
+        catch(e){ next = {}; }
+        const sig = JSON.stringify(next);
+        if (sig !== lastRenderSignature){
+          tiles = next;
+          render();
+        }
+      }
+      poll();
+      setInterval(poll, 2000);
+    }
+  }
+
+  function parsePaste(raw){
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = raw.trim();
+    const parsed = [];
+    wrapper.querySelectorAll('.tile').forEach(el => {
+      const name = el.getAttribute('data-name') || 'Unknown';
+      const slug = el.getAttribute('data-slug') || name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+      const photo = el.getAttribute('data-photo') || null;
+      const bg = el.getAttribute('data-bg') || '#f9d84a';
+      const fontTitle = el.getAttribute('data-font-title') || 'Space Grotesk';
+      const fontBody = el.getAttribute('data-font-body') || 'Inter';
+      const headerColor = el.getAttribute('data-header-color') || '#0a0a0a';
+      const bodyColor = el.getAttribute('data-body-color') || '#1a1a1a';
+      const bio = el.getAttribute('data-bio') || '';
+      const tags = [];
+      el.querySelectorAll('.tag').forEach(t => {
+        const txt = t.textContent.trim();
+        tags.push({
+          text: txt.replace(/^\S+\s+/, ''),
+          prefix: (txt.match(/^\S+/) || [''])[0],
+          category: t.getAttribute('data-category') || 'learn',
+          bg: t.getAttribute('data-bg') || '#e3efd9',
+          border: t.getAttribute('data-border') || '#4a9956',
+          color: t.getAttribute('data-color') || '#1e4a28',
+        });
+      });
+      const facts = [];
+      el.querySelectorAll('.fact').forEach(f => {
+        const truth = f.getAttribute('data-truth');
+        facts.push({ text: f.textContent.trim(), isTruth: truth === 'true' ? true : truth === 'false' ? false : null });
+      });
+      parsed.push({
+        id: slug + '-' + Date.now() + Math.random().toString(36).slice(2,5),
+        name, slug, photo, bg, fontTitle, fontBody, headerColor, bodyColor, bio, tags, facts,
+        submittedAt: Date.now(),
+      });
+    });
+    return parsed;
+  }
+
+  async function saveTile(tile){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, set } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await set(ref(db, `${TILE_PATH_ROOT}/${tile.id}`), tile);
+    } else {
+      const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      all[tile.id] = tile;
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+      tiles = all;
+      render();
+    }
+  }
+
+  async function removeTile(id){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, remove } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await remove(ref(db, `${TILE_PATH_ROOT}/${id}`));
+    } else {
+      const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      delete all[id];
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+      tiles = all;
+      render();
+    }
+    delete revealed[id];
+    saveReveal();
+    seenIds.delete(id);
+  }
+
+  async function clearAllTiles(){
+    if (window.__firebaseReady && window.__firebase.config.apiKey !== 'REPLACE_WITH_YOUR_API_KEY'){
+      const { initializeApp, getDatabase, ref, set } = window.__firebase;
+      const app = initializeApp(window.__firebase.config);
+      const db = getDatabase(app);
+      await set(ref(db, TILE_PATH_ROOT), null);
+    } else {
+      localStorage.setItem(LOCAL_KEY, '{}');
+      tiles = {};
+      render();
+    }
+    revealed = {};
+    saveReveal();
+    seenIds.clear();
+  }
+
+  function render(){
+    const sig = JSON.stringify(tiles);
+    const sortedIds = Object.keys(tiles).sort((a,b) => (tiles[a].submittedAt||0) - (tiles[b].submittedAt||0));
+    const wall = $('wall');
+    const empty = $('emptyState');
+
+    $('tileCount').textContent = sortedIds.length;
+    $('revealedCount').textContent = sortedIds.filter(id => revealed[id]).length;
+
+    if (sortedIds.length === 0){
+      empty.style.display = 'block';
+      wall.querySelectorAll('.tile').forEach(n => n.remove());
+      lastRenderSignature = sig;
+      return;
+    }
+    empty.style.display = 'none';
+
+    const currentEls = {};
+    wall.querySelectorAll('.tile').forEach(el => { currentEls[el.dataset.tileId] = el; });
+
+    Object.keys(currentEls).forEach(id => {
+      if (!(id in tiles)){
+        currentEls[id].remove();
+        delete currentEls[id];
+      }
+    });
+
+    sortedIds.forEach((id, idx) => {
+      const t = tiles[id];
+      let el = currentEls[id];
+      const isNew = !el;
+
+      if (isNew){
+        el = document.createElement('div');
+        el.className = 'tile';
+        el.dataset.tileId = id;
+        if (!seenIds.has(id)){
+          el.classList.add('new');
+          seenIds.add(id);
+        }
+        wall.appendChild(el);
+      }
+
+      updateTileContent(el, t, id, idx);
+    });
+
+    lastRenderSignature = sig;
+  }
+
+  function updateTileContent(el, t, id, idx){
+    const sig = JSON.stringify({t, rev: !!revealed[id], idx});
+    if (el.dataset.sig === sig) return;
+    el.dataset.sig = sig;
+
+    el.classList.toggle('revealed', !!revealed[id]);
+    el.style.background = t.bg;
+    el.style.color = t.bodyColor;
+
+    const avatarHTML = t.photo
+      ? `<div class="tile-avatar"><img src="${t.photo}" alt=""></div>`
+      : `<div class="tile-avatar">👋</div>`;
+
+    const tagsHTML = (t.tags || []).map(tag =>
+      `<span class="tile-tag" style="background:${tag.bg};border-color:${tag.border};color:${tag.color}">${escapeHTML(tag.prefix||'')} ${escapeHTML(tag.text||'')}</span>`
+    ).join('');
+
+    const factsHTML = (t.facts || []).map(f => {
+      const truth = f.isTruth === true ? 'true' : f.isTruth === false ? 'false' : 'unset';
+      const label = f.isTruth === true ? 'TRUTH' : 'LIE';
+      return `<div class="fact" data-truth="${truth}" style="font-family:'${t.fontBody}',sans-serif">
+        ${escapeHTML(f.text)}
+        <span class="fact-label">${label}</span>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = `
+      <div class="tile-controls">
+        <button class="tile-ctrl edit" title="Edit code" data-action="edit">&lt;/&gt;</button>
+        <button class="tile-ctrl remove" title="Remove" data-action="remove">×</button>
+      </div>
+      <div class="tile-head">
+        ${avatarHTML}
+        <div class="tile-head-text">
+          <h3 class="tile-name" style="font-family:'${t.fontTitle}',serif;color:${t.headerColor}">${escapeHTML(t.name)}</h3>
+          ${t.bio ? `<p class="tile-bio" style="font-family:'${t.fontBody}',sans-serif">${renderBioHtml(t.bio)}</p>` : ''}
+        </div>
+      </div>
+      ${tagsHTML ? `<div class="tile-tags">${tagsHTML}</div>` : ''}
+      <div class="tile-facts">${factsHTML}</div>
+      <div class="tile-foot">
+        <span>№ ${String(idx+1).padStart(2,'0')}</span>
+        <span>${revealed[id] ? 'Revealed' : 'Tap to reveal'}</span>
+      </div>
+    `;
+
+    el.onclick = (e) => {
+      if (e.target.closest('.tile-ctrl')) return;
+      revealed[id] = !revealed[id];
+      saveReveal();
+      updateTileContent(el, t, id, idx);
+    };
+
+    el.querySelectorAll('.tile-ctrl').forEach(btn => {
+      btn.onclick = async (e) => {
+        e.stopPropagation();
+        const action = btn.dataset.action;
+        if (action === 'remove'){
+          if (confirm(`Remove ${t.name}'s tile?`)){
+            await removeTile(id);
+            showToast('Tile removed');
+          }
+        } else if (action === 'edit'){
+          editingId = id;
+          $('editArea').value = tileToCode(tiles[id]);
+          $('editModal').classList.add('open');
+        }
+      };
+    });
+  }
+
+  function tileToCode(t){
+    const tagsStr = (t.tags || []).map(tag =>
+      `    <span class="tag" data-category="${escapeHTML(tag.category)}" data-bg="${escapeHTML(tag.bg)}" data-border="${escapeHTML(tag.border)}" data-color="${escapeHTML(tag.color)}">${escapeHTML(tag.prefix||'')} ${escapeHTML(tag.text||'')}</span>`
+    ).join('\n');
+    const factsStr = (t.facts || []).map(f => {
+      const truth = f.isTruth === true ? 'true' : f.isTruth === false ? 'false' : 'unset';
+      return `    <div class="fact" data-truth="${truth}">${escapeHTML(f.text)}</div>`;
+    }).join('\n');
+    const photoAttr = t.photo ? ` data-photo="${t.photo}"` : '';
+    return `<!-- 26B tile: ${escapeHTML(t.name)} -->
+<div class="tile" data-name="${escapeHTML(t.name)}" data-slug="${escapeHTML(t.slug||'')}"${photoAttr}
+     data-bg="${t.bg}" data-font-title="${t.fontTitle}" data-font-body="${t.fontBody}"
+     data-header-color="${t.headerColor}" data-body-color="${t.bodyColor}"
+     data-bio="${escapeHTML(t.bio||'')}">
+  <h3 class="tile-name">${escapeHTML(t.name)}</h3>
+  <p class="tile-bio">${renderBioHtml(t.bio||'')}</p>
+  <div class="tile-tags">
+${tagsStr}
+  </div>
+  <div class="tile-facts">
+${factsStr}
+  </div>
+</div>`;
+  }
+
+  $('addManualBtn').addEventListener('click', () => {
+    $('pasteArea').value = '';
+    $('pasteModal').classList.add('open');
+    setTimeout(() => $('pasteArea').focus(), 100);
+  });
+  $('pasteCancelBtn').addEventListener('click', () => $('pasteModal').classList.remove('open'));
+  $('pasteAddBtn').addEventListener('click', async () => {
+    const raw = $('pasteArea').value.trim();
+    if (!raw){ showToast('Paste some code first', true); return; }
+    const parsed = parsePaste(raw);
+    if (parsed.length === 0){ showToast('No valid tiles found', true); return; }
+    for (const tile of parsed){ await saveTile(tile); }
+    $('pasteModal').classList.remove('open');
+    showToast(`Added ${parsed.length} tile${parsed.length > 1 ? 's' : ''}`);
+  });
+
+  $('editCancelBtn').addEventListener('click', () => { $('editModal').classList.remove('open'); editingId = null; });
+  $('editSaveBtn').addEventListener('click', async () => {
+    const raw = $('editArea').value.trim();
+    const parsed = parsePaste(raw);
+    if (parsed.length === 0){ showToast('Invalid tile code', true); return; }
+    const fresh = parsed[0];
+    fresh.id = editingId;
+    fresh.submittedAt = tiles[editingId]?.submittedAt || Date.now();
+    await saveTile(fresh);
+    $('editModal').classList.remove('open');
+    editingId = null;
+    showToast('Tile updated');
+  });
+
+  $('hideAllBtn').addEventListener('click', () => {
+    revealed = {};
+    saveReveal();
+    document.querySelectorAll('.tile').forEach(el => el.dataset.sig = '');
+    render();
+    showToast('All tiles hidden');
+  });
+  $('clearBtn').addEventListener('click', async () => {
+    const count = Object.keys(tiles).length;
+    if (count === 0) return;
+    if (confirm(`Clear all ${count} tiles? This cannot be undone.`)){
+      await clearAllTiles();
+      showToast('Wall cleared');
+    }
+  });
+
+  $('helpBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    $('helpBtn').classList.toggle('active');
+    $('helpPanel').classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#helpPanel') && !e.target.closest('#helpBtn')){
+      $('helpPanel').classList.remove('open');
+      $('helpBtn').classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){
+      $('pasteModal').classList.remove('open');
+      $('editModal').classList.remove('open');
+      $('helpPanel').classList.remove('open');
+      $('helpBtn').classList.remove('active');
+      editingId = null;
+    }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){
+      if ($('pasteModal').classList.contains('open')){ e.preventDefault(); $('pasteAddBtn').click(); }
+      if ($('editModal').classList.contains('open')){ e.preventDefault(); $('editSaveBtn').click(); }
+    }
+  });
+
+  let toastTm;
+  function showToast(msg, isError){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.toggle('error', !!isError);
+    t.classList.add('show');
+    clearTimeout(toastTm);
+    toastTm = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  boot();
+})();
+</script>
+
+</body>
+</html>

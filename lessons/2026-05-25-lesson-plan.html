@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intake 26B — Lesson Plan — Mon 25 May 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #1a4a3a;
+    --green-mid:  #2a6b52;
+    --green-light:#3d8c6a;
+    --cream:      #f5f0e8;
+    --red:        #e63946;
+    --slate:      #2d3748;
+    --muted:      #718096;
+    --purple:     #6b46c1;
+    --purple-2:   #7c3aed;
+    --purple-3:   #a78bfa;
+    --ink:        #0f1220;
+    --ink-2:      #1e1040;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #111;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 20px; gap: 20px;
+  }
+
+  .slideshow {
+    width: 100%; max-width: 960px;
+    aspect-ratio: 16/9; position: relative;
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+
+  .slide {
+    position: absolute; inset: 0; opacity: 0;
+    transition: opacity 0.5s ease; pointer-events: none;
+  }
+  .slide.active { opacity: 1; pointer-events: all; }
+
+  /* ============ SLIDE 1: QR ATTENDANCE ============ */
+  .slide-1 {
+    background: linear-gradient(135deg, #1a4a3a 0%, #0f2d22 50%, #1a4a3a 100%);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 24px; overflow: hidden;
+  }
+  .slide-1::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 40px,
+      rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+  }
+  .corner { position: absolute; width: 120px; height: 120px; border: 3px solid rgba(255,255,255,0.1); }
+  .corner.tl { top:20px; left:20px;  border-right:none; border-bottom:none; }
+  .corner.br { bottom:20px; right:20px; border-left:none;  border-top:none; }
+
+  .slide-1 h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px,5vw,52px);
+    color: white; letter-spacing: 6px; text-align: center;
+    position: relative; z-index:1;
+  }
+  .qr-box {
+    background: white; border-radius: 16px; padding: 20px;
+    z-index:1; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .qr-box img { width: clamp(120px,18vw,200px); height: clamp(120px,18vw,200px); display: block; }
+  .qr-fallback {
+    width: 160px; height: 160px; background: #eee;
+    display: none; place-items: center;
+    font-family: monospace; font-size: 11px;
+    color: #999; text-align: center; border-radius: 8px;
+  }
+  .qr-box img.hidden { display: none; }
+  .qr-box img.hidden + .qr-fallback { display: grid; }
+  .slide-1 .sub {
+    font-size: clamp(10px,1.6vw,16px); color: rgba(255,255,255,0.7);
+    letter-spacing: 4px; text-transform: uppercase; z-index:1;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .slide-1 .sub::before,.slide-1 .sub::after {
+    content:''; display:block; width:40px; height:1px; background:rgba(255,255,255,0.3);
+  }
+  .slide-1 .badge {
+    position:absolute; bottom:24px; right:28px;
+    font-family:'DM Mono',monospace; font-size:13px;
+    color:rgba(255,255,255,0.4); letter-spacing:2px; z-index:1;
+  }
+
+  /* ============ SLIDE 2: 3-WEEK SCHEDULE ============ */
+  .slide-2 { background: var(--cream); display: grid; grid-template-columns: 190px 1fr; overflow:hidden; }
+  .sidebar {
+    background: var(--green-dark); display:flex; flex-direction:column;
+    justify-content:center; padding:28px 22px; gap:8px;
+  }
+  .sidebar .label {
+    font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,0.4);
+    letter-spacing:3px; text-transform:uppercase; margin-bottom:4px;
+  }
+  .sidebar h2 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,3.5vw,38px);
+    color:white; line-height:1; letter-spacing:2px;
+  }
+  .intake-tag {
+    margin-top:16px; background:rgba(255,255,255,0.1); border-radius:6px;
+    padding:6px 10px; font-family:'DM Mono',monospace; font-size:11px;
+    color:rgba(255,255,255,0.6); letter-spacing:2px; width:fit-content;
+  }
+  .s-main { padding:16px 20px; display:flex; flex-direction:column; gap:9px; overflow-y:auto; }
+
+  .wb { border-radius:10px; overflow:hidden; border:1px solid rgba(0,0,0,0.08); }
+  .wh {
+    padding:7px 14px; font-family:'Bebas Neue',sans-serif; font-size:13px;
+    letter-spacing:3px; color:white; display:flex; align-items:center; gap:8px;
+  }
+  .wh.w1 { background:var(--green-dark); }
+  .wh.w2 { background:var(--green-mid); }
+  .wh.w3 { background:var(--slate); }
+  .wh .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.5); }
+  .wh .dot.live { background:#7fffb4; animation:pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .dr { display:grid; grid-template-columns:80px 1fr; }
+  .dl {
+    font-family:'DM Mono',monospace; font-size:10px; font-weight:500;
+    color:var(--green-dark); letter-spacing:1px; text-transform:uppercase;
+    padding:9px 14px; border-top:1px solid rgba(0,0,0,0.06);
+    background:rgba(26,74,58,0.04); display:flex; align-items:flex-start;
+  }
+  .dc {
+    font-size:11px; color:var(--slate); line-height:1.5;
+    padding:8px 14px; border-top:1px solid rgba(0,0,0,0.06);
+  }
+
+  .chip {
+    display:inline-block; border-radius:4px;
+    font-family:'DM Mono',monospace; font-size:9px;
+    padding:2px 7px; margin-right:5px; letter-spacing:1px;
+    vertical-align:middle; position:relative; top:-1px;
+  }
+  .c-build  { background:rgba(244,162,97,0.12); color:#b45a1f; border:1px solid rgba(244,162,97,0.4); }
+  .c-plan   { background:rgba(26,74,58,0.1); color:var(--green-dark); border:1px solid rgba(26,74,58,0.25); }
+  .c-holiday{ background:rgba(230,57,70,0.1); color:var(--red); border:1px solid rgba(230,57,70,0.3); }
+  .c-review { background:rgba(107,70,193,0.12); color:var(--purple); border:1px solid rgba(107,70,193,0.3); }
+
+  /* ============ SLIDE 3: TODAY FOCUS ============ */
+  .slide-3 {
+    background:var(--ink); display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .slide-3::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width:360px; height:360px;
+    background:radial-gradient(circle, rgba(107,70,193,0.15) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .topbar {
+    background:var(--ink-2); padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(107,70,193,0.3);
+  }
+  .topbar h2 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(16px,2.8vw,26px);
+    color:white; letter-spacing:3px;
+  }
+  .daychip {
+    background:var(--purple-2); color:white;
+    font-family:'DM Mono',monospace; font-size:11px;
+    font-weight:500; letter-spacing:2px;
+    padding:5px 14px; border-radius:20px;
+  }
+  .tcontent { flex:1; padding:20px 32px; display:flex; flex-direction:column; gap:12px; }
+  .drow {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; padding:14px 18px;
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .drow .ico { font-size:20px; min-width:28px; text-align:center; line-height:1.4; }
+  .drow .inf h3 {
+    font-family:'DM Mono',monospace; font-size:11px;
+    color:var(--purple-3); letter-spacing:1px; margin-bottom:5px;
+  }
+  .drow .inf p { font-size:11.5px; color:rgba(255,255,255,0.55); line-height:1.6; }
+  .drow .inf p strong { color:rgba(255,255,255,0.85); }
+  .bnote {
+    padding:0 32px 16px;
+    font-family:'DM Mono',monospace; font-size:10px;
+    color:rgba(255,255,255,0.2); letter-spacing:2px;
+  }
+
+  /* ============ SHARED DARK CONTENT SLIDE ============ */
+  .slide-dark {
+    background: var(--ink); color: white;
+    padding: 32px 44px; display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .slide-dark::after {
+    content:''; position:absolute; bottom:-100px; left:-80px;
+    width:300px; height:300px;
+    background:radial-gradient(circle, rgba(107,70,193,0.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .slide-dark .stag {
+    font-family:'DM Mono',monospace; font-size:10px;
+    color:var(--purple-3); letter-spacing:3px; text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .slide-dark h2 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(28px,4.2vw,42px);
+    color:white; letter-spacing:2px; margin-bottom:20px; line-height:1;
+  }
+  .slide-dark h2 .acc { color: var(--purple-3); }
+
+  /* SLIDE 4: WIREFRAME → CODE BRIDGE */
+  .bridge-grid {
+    display: grid; grid-template-columns: 1fr 50px 1fr; gap: 16px;
+    flex:1; align-items:stretch;
+  }
+  .bridge-col {
+    background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px 16px; display:flex; flex-direction:column; gap:10px;
+  }
+  .bridge-col .col-head {
+    font-family:'DM Mono',monospace; font-size:10px;
+    color:var(--purple-3); letter-spacing:2px; text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .wire-block {
+    border: 2px dashed rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 6px 10px; font-family:'DM Mono',monospace; font-size:10px;
+    color: rgba(255,255,255,0.6); letter-spacing:1px;
+  }
+  .wire-block.tall { padding:14px 10px; }
+  .code-block {
+    background: rgba(0,0,0,0.4); border-radius: 4px;
+    padding: 6px 10px; font-family:'DM Mono',monospace; font-size:10.5px;
+    color: #7fffb4; border-left: 2px solid var(--purple-2);
+  }
+  .code-block .tag { color: #ff8a3d; }
+  .arrow-col {
+    display:flex; align-items:center; justify-content:center;
+    font-size: 28px; color: var(--purple-3);
+  }
+
+  /* SLIDE 5: LIVE DEMO PLAN */
+  .demo-steps { display:flex; flex-direction:column; gap:8px; flex:1; }
+  .demo-step {
+    display:grid; grid-template-columns: 36px 1fr;
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px; padding: 10px 14px; gap:12px;
+    align-items:flex-start;
+  }
+  .demo-step .num {
+    font-family:'Bebas Neue',sans-serif; font-size: 24px;
+    color: var(--purple-3); line-height:1;
+  }
+  .demo-step .body h4 {
+    font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600;
+    color: white; margin-bottom: 2px;
+  }
+  .demo-step .body p {
+    font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5;
+  }
+  .placeholder {
+    margin-top: 10px;
+    background: rgba(252,176,69,0.08);
+    border: 1px dashed rgba(252,176,69,0.4);
+    border-radius: 6px; padding: 8px 12px;
+    font-family:'DM Mono',monospace; font-size: 10px;
+    color: #fcb045; letter-spacing: 1px;
+  }
+
+  /* SLIDE 6: ACTIVITY */
+  .act-grid {
+    display:grid; grid-template-columns: 1fr 1fr; gap: 14px; flex:1;
+  }
+  .act-card {
+    background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; padding: 14px 16px;
+    display:flex; flex-direction:column; gap: 8px;
+  }
+  .act-card h3 {
+    font-family:'DM Mono',monospace; font-size: 10px;
+    color: var(--purple-3); letter-spacing:2px; text-transform:uppercase;
+  }
+  .act-card ol { list-style: none; counter-reset: stp; }
+  .act-card ol li {
+    counter-increment: stp;
+    font-size: 11.5px; color: rgba(255,255,255,0.7);
+    padding: 4px 0 4px 24px; position: relative; line-height: 1.5;
+  }
+  .act-card ol li::before {
+    content: counter(stp);
+    position:absolute; left:0; top:3px;
+    width:18px; height:18px; border-radius:50%;
+    background: var(--purple-2); color: white;
+    font-family:'DM Mono',monospace; font-size:10px;
+    display: grid; place-items: center;
+  }
+  .timebox {
+    display:flex; gap:8px; align-items:center;
+    background: rgba(127,255,180,0.06);
+    border: 1px solid rgba(127,255,180,0.2);
+    border-radius: 6px; padding: 8px 12px; margin-top: auto;
+  }
+  .timebox .label {
+    font-family:'DM Mono',monospace; font-size:10px;
+    color:#7fffb4; letter-spacing:2px;
+  }
+  .timebox .val {
+    font-size: 11px; color: rgba(255,255,255,0.8);
+  }
+
+  /* SLIDE 7: SUCCESS + STUCK */
+  .ss-grid {
+    display:grid; grid-template-columns: 1fr 1fr; gap: 14px; flex:1;
+  }
+  .ss-card {
+    border-radius:10px; padding: 14px 16px;
+    display:flex; flex-direction:column; gap: 8px;
+  }
+  .ss-card.pass {
+    background: rgba(127,255,180,0.06);
+    border: 1px solid rgba(127,255,180,0.25);
+  }
+  .ss-card.stuck {
+    background: rgba(252,176,69,0.06);
+    border: 1px solid rgba(252,176,69,0.25);
+  }
+  .ss-card h3 {
+    font-family:'Bebas Neue',sans-serif; font-size: 18px;
+    letter-spacing: 2px; margin-bottom: 2px;
+  }
+  .ss-card.pass h3 { color: #7fffb4; }
+  .ss-card.stuck h3 { color: #fcb045; }
+  .ss-card ul { list-style:none; }
+  .ss-card ul li {
+    font-size: 11.5px; color: rgba(255,255,255,0.75);
+    padding: 4px 0 4px 16px; position:relative; line-height: 1.5;
+  }
+  .ss-card.pass ul li::before {
+    content:'✓'; position:absolute; left:0; color:#7fffb4; font-weight:bold;
+  }
+  .ss-card.stuck ul li::before {
+    content:'→'; position:absolute; left:0; color:#fcb045; font-weight:bold;
+  }
+
+  /* ============ CONTROLS ============ */
+  .controls { display:flex; align-items:center; gap:20px; }
+  .btn {
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+    color:white; font-family:'DM Sans',sans-serif; font-size:13px;
+    padding:10px 24px; border-radius:8px; cursor:pointer;
+    transition:all 0.2s; letter-spacing:1px;
+  }
+  .btn:hover { background:rgba(255,255,255,0.18); }
+  .btn:disabled { opacity:0.3; cursor:not-allowed; }
+  .sdots { display:flex; gap:8px; align-items:center; }
+  .dotb {
+    width:8px; height:8px; border-radius:50%;
+    background:rgba(255,255,255,0.25); border:none;
+    cursor:pointer; transition:all 0.2s; padding:0;
+  }
+  .dotb.on { background:white; width:22px; border-radius:4px; }
+  .sctr { font-family:'DM Mono',monospace; font-size:12px; color:rgba(255,255,255,0.4); letter-spacing:2px; }
+</style>
+</head>
+<body>
+
+<div class="slideshow" id="deck">
+
+  <!-- ============ SLIDE 1: QR ATTENDANCE ============ -->
+  <div class="slide slide-1 active">
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+    <h1>Scan the QR Code</h1>
+    <div class="qr-box">
+      <img id="qrImg" src="26b.png" alt="Attendance QR Code"/>
+      <div class="qr-fallback">QR CODE<br>HERE</div>
+    </div>
+    <div class="sub">To submit your attendance</div>
+    <div class="badge">26.B · CLASS 17</div>
+  </div>
+
+  <!-- ============ SLIDE 2: 3-WEEK SCHEDULE ============ -->
+  <div class="slide slide-2">
+    <div class="sidebar">
+      <div class="label">Upcoming</div>
+      <h2>3-Week Schedule</h2>
+      <div class="intake-tag">INTAKE 26B</div>
+    </div>
+    <div class="s-main">
+
+      <div class="wb">
+        <div class="wh w1"><div class="dot live"></div>WEEK 9 — THIS WEEK</div>
+        <div class="dr">
+          <div class="dl">MON</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Prototype &amp; begin website — wireframe → code translation</div>
+          <div class="dl">WED</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Continue building original website</div>
+          <div class="dl">THU</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Build time — continue your site</div>
+        </div>
+      </div>
+
+      <div class="wb">
+        <div class="wh w2"><div class="dot"></div>WEEK 10 — NEXT WEEK</div>
+        <div class="dr">
+          <div class="dl">MON</div>
+          <div class="dc"><span class="chip c-holiday">HOLIDAY</span>WA Day — no class</div>
+          <div class="dl">WED</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Continue building your website</div>
+          <div class="dl">THU</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Build time</div>
+        </div>
+      </div>
+
+      <div class="wb">
+        <div class="wh w3"><div class="dot"></div>WEEK 11</div>
+        <div class="dr">
+          <div class="dl">MON</div>
+          <div class="dc"><span class="chip c-build">BUILD</span>Continue website build</div>
+          <div class="dl">WED</div>
+          <div class="dc"><span class="chip c-review">REVIEW</span>Peer feedback round — show your progress</div>
+          <div class="dl">THU</div>
+          <div class="dc" style="color:var(--muted);font-style:italic;">TBA</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 3: TODAY FOCUS ============ -->
+  <div class="slide slide-3">
+    <div class="topbar">
+      <h2>Today — From Wireframe to Working Code</h2>
+      <div class="daychip">MONDAY · 25 MAY</div>
+    </div>
+    <div class="tcontent">
+      <div class="drow">
+        <div class="ico">🎯</div>
+        <div class="inf">
+          <h3>Today's Goal</h3>
+          <p>Take your <strong>wireframe</strong> and translate <strong>at least one section</strong> into real HTML &amp; CSS. By the end of class your site should be visible in a browser — even if it's rough.</p>
+        </div>
+      </div>
+      <div class="drow">
+        <div class="ico">⏱️</div>
+        <div class="inf">
+          <h3>How class runs</h3>
+          <p>
+            <strong>0:00 – 0:10</strong> &nbsp; Attendance + recap of wireframes<br>
+            <strong>0:10 – 0:30</strong> &nbsp; Live demo — wireframe → code translation<br>
+            <strong>0:30 – 1:30</strong> &nbsp; Build time (you code your section)<br>
+            <strong>1:30 – 1:45</strong> &nbsp; Show-and-tell, wrap up
+          </p>
+        </div>
+      </div>
+      <div class="drow">
+        <div class="ico">💡</div>
+        <div class="inf">
+          <h3>The big idea</h3>
+          <p>Every shape on your wireframe is a <strong>tag</strong>. Every group of shapes is a <strong>container</strong>. You already designed it — now you're just naming it in HTML.</p>
+        </div>
+      </div>
+    </div>
+    <div class="bnote">INTAKE 26B · WEEK 9 · CLASS 17 · S02 STEP 1</div>
+  </div>
+
+  <!-- ============ SLIDE 4: WIREFRAME → CODE BRIDGE ============ -->
+  <div class="slide slide-dark">
+    <div class="stag">The Translation</div>
+    <h2>Every Rectangle <span class="acc">→</span> Has a Tag</h2>
+
+    <div class="bridge-grid">
+      <div class="bridge-col">
+        <div class="col-head">Your Wireframe</div>
+        <div class="wire-block">▭ Top bar with logo + menu</div>
+        <div class="wire-block tall">▭ Big hero area with headline</div>
+        <div class="wire-block">▭ Three feature boxes</div>
+        <div class="wire-block">▭ Footer with contact</div>
+      </div>
+
+      <div class="arrow-col">→</div>
+
+      <div class="bridge-col">
+        <div class="col-head">Semantic HTML</div>
+        <div class="code-block">&lt;<span class="tag">header</span>&gt; … &lt;/<span class="tag">header</span>&gt;</div>
+        <div class="code-block">&lt;<span class="tag">section</span> class="hero"&gt;<br>&nbsp;&nbsp;&lt;<span class="tag">h1</span>&gt;…&lt;/<span class="tag">h1</span>&gt;<br>&lt;/<span class="tag">section</span>&gt;</div>
+        <div class="code-block">&lt;<span class="tag">section</span> class="features"&gt;<br>&nbsp;&nbsp;&lt;<span class="tag">article</span>&gt; × 3<br>&lt;/<span class="tag">section</span>&gt;</div>
+        <div class="code-block">&lt;<span class="tag">footer</span>&gt; … &lt;/<span class="tag">footer</span>&gt;</div>
+      </div>
+    </div>
+
+    <div class="bnote" style="padding: 14px 0 0;">RULE OF THUMB: STRUCTURE FIRST · COLOURS LATER</div>
+  </div>
+
+  <!-- ============ SLIDE 5: LIVE DEMO PLAN ============ -->
+  <div class="slide slide-dark">
+    <div class="stag">Live Demo · ~20 min</div>
+    <h2>Watch Me Do <span class="acc">One Section</span></h2>
+
+    <div class="demo-steps">
+      <div class="demo-step">
+        <div class="num">1</div>
+        <div class="body">
+          <h4>Open the wireframe and the editor side by side</h4>
+          <p>VS Code on the left, wireframe (Excalidraw / Figma / paper photo) on the right. Eyes flick between the two.</p>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="num">2</div>
+        <div class="body">
+          <h4>Name the section out loud</h4>
+          <p>"This is a header. It holds a logo and a nav." → that becomes <code style="color:#7fffb4;font-family:'DM Mono'">&lt;header&gt;</code>, <code style="color:#7fffb4;font-family:'DM Mono'">&lt;nav&gt;</code>.</p>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="num">3</div>
+        <div class="body">
+          <h4>Type the HTML skeleton — no styles yet</h4>
+          <p>Get the tags in. Save. Refresh browser. It will look <strong>ugly</strong>. That's correct.</p>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="num">4</div>
+        <div class="body">
+          <h4>Add ~5 lines of CSS to roughly match the wireframe</h4>
+          <p>Background colour, padding, flexbox for layout. Just enough so a stranger could match the page to the wireframe.</p>
+        </div>
+      </div>
+
+      <!-- TIM: fill this in with the SPECIFIC section you'll demo -->
+      <div class="placeholder">
+        ▸ TIM: SPECIFIC SECTION I'M DEMOING TODAY = ________________
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 6: YOUR ACTIVITY ============ -->
+  <div class="slide slide-dark">
+    <div class="stag">Your Turn · 60 min build</div>
+    <h2>Translate <span class="acc">Your</span> Wireframe</h2>
+
+    <div class="act-grid">
+      <div class="act-card">
+        <h3>Steps</h3>
+        <ol>
+          <li>Open your wireframe + your project folder in VS Code</li>
+          <li>Pick <strong>one</strong> section to start with (header is easiest)</li>
+          <li>Write the HTML skeleton — semantic tags, no styles</li>
+          <li>Save, open in browser, confirm it shows up</li>
+          <li>Add basic CSS to roughly match the wireframe</li>
+          <li>Move to the next section &mdash; rinse, repeat</li>
+        </ol>
+        <div class="timebox">
+          <span class="label">CHECK-IN</span>
+          <span class="val">Hand up at 30 min — I'll come round</span>
+        </div>
+      </div>
+
+      <div class="act-card">
+        <h3>Rules of Play</h3>
+        <ol>
+          <li><strong>HTML first, CSS second.</strong> Structure before colour.</li>
+          <li><strong>Save + refresh every 2 minutes.</strong> See what you just changed.</li>
+          <li><strong>Don't copy-paste from AI yet.</strong> Type it. Muscle memory matters.</li>
+          <li><strong>Ugly is fine.</strong> Working &gt; pretty today.</li>
+          <li><strong>Ask your neighbour first</strong>, then me.</li>
+        </ol>
+        <div class="timebox">
+          <span class="label">DEMO ROUND</span>
+          <span class="val">Last 15 min — 30 sec show per person</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 7: SUCCESS + STUCK ============ -->
+  <div class="slide slide-dark">
+    <div class="stag">Done &amp; Stuck</div>
+    <h2>How to Know You're <span class="acc">Winning</span></h2>
+
+    <div class="ss-grid">
+      <div class="ss-card pass">
+        <h3>✓ SUCCESS LOOKS LIKE</h3>
+        <ul>
+          <li>Your <code style="color:#7fffb4;font-family:'DM Mono'">index.html</code> opens in a browser</li>
+          <li>At least <strong>one full section</strong> from your wireframe is visible</li>
+          <li>Tags are <strong>semantic</strong> (header / main / section / footer) — not all divs</li>
+          <li>CSS is in its own file, linked in the head</li>
+          <li>You can point at the screen and at the wireframe and they match</li>
+        </ul>
+      </div>
+
+      <div class="ss-card stuck">
+        <h3>→ STUCK? TRY THIS ORDER</h3>
+        <ul>
+          <li>Re-read the last 5 lines you typed — out loud</li>
+          <li>Check the browser console (F12) for red text</li>
+          <li>Ask your neighbour to spot the typo</li>
+          <li>Check the cheat sheets folder on the hub</li>
+          <li>Wave me over — bring a specific question</li>
+          <!-- TIM: add 1-2 of your own go-to "stuck" prompts here -->
+        </ul>
+      </div>
+    </div>
+
+    <div class="bnote" style="padding: 14px 0 0;">WEEK 9 · CLASS 17 · YOUR SITE BEGINS TODAY 🚀</div>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="btn" id="prev" onclick="goTo(current-1)" disabled>← Prev</button>
+  <div class="sdots" id="dots"></div>
+  <div class="sctr" id="counter">1 / 7</div>
+  <button class="btn" id="next" onclick="goTo(current+1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dotb' + (i === 0 ? ' on' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    document.querySelectorAll('.dotb')[current].classList.remove('on');
+    current = n;
+    slides[current].classList.add('active');
+    document.querySelectorAll('.dotb')[current].classList.add('on');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === slides.length - 1;
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // Safe QR fallback — no innerHTML
+  const qr = document.getElementById('qrImg');
+  if (qr) qr.addEventListener('error', () => qr.classList.add('hidden'));
+</script>
+</body>
+</html>

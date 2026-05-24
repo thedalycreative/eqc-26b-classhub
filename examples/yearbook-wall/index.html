@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26B · The Yearbook Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#F26522;
+    --teal:#00A0A0;
+    --dark:#1a1a1a;
+    --cream:#faf7f2;
+    --paper:#ffffff;
+    --ink:#1a1a1a;
+    --muted:#6b6b6b;
+    --line:#e8e4db;
+    --line-strong:#d0cac0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh}
+  body{padding:32px 20px 80px;line-height:1.5}
+
+  /* ==== MASTHEAD ==== */
+  .masthead{max-width:1200px;margin:0 auto 28px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+  .masthead-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-family:'Space Grotesk';font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
+  .masthead-top span{display:inline-block}
+  .masthead h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:0.95;letter-spacing:-0.02em;margin:14px 0 8px}
+  .masthead h1 em{font-style:italic;color:var(--orange)}
+  .masthead .dek{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--muted);max-width:720px}
+
+  /* ==== TOOLBAR ==== */
+  .toolbar{max-width:1200px;margin:0 auto 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .count{font-family:'Fraunces',serif;font-size:16px;color:var(--muted)}
+  .count strong{color:var(--ink);font-weight:500}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{font-family:'Space Grotesk';font-size:13px;font-weight:500;letter-spacing:0.02em;padding:10px 16px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:999px;cursor:pointer;transition:all 0.15s;text-transform:uppercase}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn.primary{background:var(--orange);border-color:var(--orange);color:white}
+  .btn.primary:hover{background:var(--ink);border-color:var(--ink)}
+  .btn.ghost{border-color:var(--line-strong);color:var(--muted)}
+  .btn.ghost:hover{background:var(--line);color:var(--ink)}
+
+  /* ==== GRID ==== */
+  .wall{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+
+  .tile{position:relative;background:var(--paper);border:1px solid var(--line-strong);border-radius:10px;padding:20px;min-height:280px;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;cursor:pointer}
+  .tile:hover{transform:translateY(-3px);box-shadow:0 12px 28px -12px rgba(0,0,0,0.18);border-color:var(--ink)}
+  .tile-empty{background:transparent;border:2px dashed var(--line-strong);color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center;min-height:280px;font-family:'Fraunces',serif;font-style:italic;font-size:18px}
+  .tile-empty:hover{border-color:var(--orange);color:var(--orange);border-style:solid}
+
+  .tile-vibe-bar{position:absolute;top:0;left:0;right:0;height:6px;border-radius:10px 10px 0 0;background:var(--teal)}
+
+  .tile-head{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;background:var(--cream);border:1px solid var(--line)}
+  .avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+  .tile-name{font-family:'Fraunces',serif;font-size:22px;font-weight:500;line-height:1.1;letter-spacing:-0.01em}
+  .tile-bio{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
+
+  .tile-section{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+  .tile-label{font-family:'Space Grotesk';font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:4px}
+  .tile-text{font-size:14px;line-height:1.4}
+  .tile-goal{color:var(--ink)}
+  .tile-fact{font-family:'Fraunces',serif;font-style:italic;color:var(--ink)}
+
+  .tile-meta{margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+
+  /* ==== MODAL ==== */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(26,26,26,0.55);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:100;overflow-y:auto}
+  .modal-backdrop.open{display:flex}
+  .modal{background:var(--cream);border-radius:14px;max-width:560px;width:100%;padding:32px;position:relative;border:1px solid var(--line-strong)}
+  .modal h2{font-family:'Fraunces',serif;font-size:32px;font-weight:400;letter-spacing:-0.01em;margin-bottom:6px}
+  .modal h2 em{color:var(--orange);font-style:italic}
+  .modal .modal-dek{font-family:'Fraunces',serif;font-style:italic;color:var(--muted);margin-bottom:22px}
+  .modal .close{position:absolute;top:16px;right:16px;background:transparent;border:0;font-size:26px;cursor:pointer;color:var(--muted);line-height:1;width:32px;height:32px;border-radius:50%}
+  .modal .close:hover{background:var(--line);color:var(--ink)}
+
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:'Space Grotesk';font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:6px;font-weight:500}
+  .field input,.field textarea,.field select{width:100%;font-family:'Space Grotesk';font-size:15px;padding:11px 14px;border:1.5px solid var(--line-strong);border-radius:8px;background:var(--paper);color:var(--ink);transition:border-color 0.15s}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--orange)}
+  .field textarea{resize:vertical;min-height:72px;font-family:'Fraunces',serif;font-size:16px}
+  .field .hint{font-size:12px;color:var(--muted);margin-top:4px}
+
+  .emoji-picker{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .emoji-btn{font-size:22px;padding:6px 10px;border:1.5px solid var(--line);background:var(--paper);border-radius:8px;cursor:pointer;transition:all 0.1s}
+  .emoji-btn:hover{border-color:var(--ink);transform:scale(1.08)}
+  .emoji-btn.selected{border-color:var(--orange);background:#fff5ee}
+
+  .color-picker{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+  .color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all 0.1s}
+  .color-swatch:hover{transform:scale(1.1)}
+  .color-swatch.selected{border-color:var(--ink);transform:scale(1.1)}
+
+  .photo-row{display:flex;gap:12px;align-items:center;margin-top:4px}
+  .photo-preview{width:64px;height:64px;border-radius:50%;background:var(--cream);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;flex-shrink:0}
+  .photo-preview img{width:100%;height:100%;object-fit:cover}
+  .file-btn{font-family:'Space Grotesk';font-size:12px;padding:8px 14px;border:1.5px solid var(--line-strong);background:var(--paper);border-radius:8px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+  .file-btn:hover{border-color:var(--ink);color:var(--ink)}
+  #photoFile{display:none}
+
+  .submit-row{display:flex;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+  .submit-row .btn{flex:1;padding:13px}
+
+  /* ==== EMPTY STATE ==== */
+  .empty-state{max-width:1200px;margin:60px auto;text-align:center;padding:60px 20px}
+  .empty-state h3{font-family:'Fraunces',serif;font-size:28px;font-weight:400;margin-bottom:10px}
+  .empty-state p{color:var(--muted);margin-bottom:20px}
+
+  /* ==== TOAST ==== */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:200}
+  .toast.show{opacity:1}
+
+  @media (max-width:520px){
+    body{padding:20px 14px 60px}
+    .masthead h1{font-size:48px}
+    .wall{grid-template-columns:1fr;gap:12px}
+    .modal{padding:24px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span>EQC Institute of Technology</span>
+    <span id="liveDate">—</span>
+    <span>Intake 26B</span>
+  </div>
+  <h1>The <em>Yearbook</em> Wall</h1>
+  <p class="dek">Twenty-six slots. Twenty-six stories. Claim a tile, fill it in, and let's meet each other properly.</p>
+</header>
+
+<div class="toolbar">
+  <div class="count"><strong id="filledCount">0</strong> of <span id="totalCount">0</span> tiles claimed</div>
+  <div class="actions">
+    <button class="btn primary" id="claimBtn">+ Claim a tile</button>
+    <button class="btn ghost" id="exportBtn">Export wall</button>
+  </div>
+</div>
+
+<div class="wall" id="wall"></div>
+
+<div class="empty-state" id="emptyState" style="display:none">
+  <h3>The wall is waiting.</h3>
+  <p>Tap "Claim a tile" to add yourself.</p>
+</div>
+
+<!-- ==== MODAL ==== -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <button class="close" id="closeModal" aria-label="Close">×</button>
+    <h2 id="modalTitle">Add <em>you</em> to the wall</h2>
+    <p class="modal-dek" id="modalDek">A few quick fields. No pressure.</p>
+
+    <div class="field">
+      <label>Name</label>
+      <input type="text" id="f_name" placeholder="What you want to be called" maxlength="40">
+    </div>
+
+    <div class="field">
+      <label>One-line bio</label>
+      <input type="text" id="f_bio" placeholder="Who you are in 6 words" maxlength="80">
+    </div>
+
+    <div class="field">
+      <label>Photo or emoji avatar</label>
+      <div class="photo-row">
+        <div class="photo-preview" id="avatarPreview">👋</div>
+        <button class="file-btn" id="uploadBtn">Upload photo</button>
+        <input type="file" id="photoFile" accept="image/*">
+      </div>
+      <div class="emoji-picker" id="emojiPicker">
+        <button class="emoji-btn" data-emoji="👋">👋</button>
+        <button class="emoji-btn" data-emoji="😎">😎</button>
+        <button class="emoji-btn" data-emoji="🧠">🧠</button>
+        <button class="emoji-btn" data-emoji="🎨">🎨</button>
+        <button class="emoji-btn" data-emoji="🚀">🚀</button>
+        <button class="emoji-btn" data-emoji="🎧">🎧</button>
+        <button class="emoji-btn" data-emoji="☕">☕</button>
+        <button class="emoji-btn" data-emoji="🎮">🎮</button>
+        <button class="emoji-btn" data-emoji="🔥">🔥</button>
+        <button class="emoji-btn" data-emoji="🌊">🌊</button>
+        <button class="emoji-btn" data-emoji="⚡">⚡</button>
+        <button class="emoji-btn" data-emoji="🌱">🌱</button>
+        <button class="emoji-btn" data-emoji="🦈">🦈</button>
+        <button class="emoji-btn" data-emoji="👻">👻</button>
+        <button class="emoji-btn" data-emoji="🍕">🍕</button>
+        <button class="emoji-btn" data-emoji="🪴">🪴</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Your vibe colour</label>
+      <div class="color-picker" id="colorPicker">
+        <div class="color-swatch" style="background:#F26522" data-color="#F26522"></div>
+        <div class="color-swatch" style="background:#00A0A0" data-color="#00A0A0"></div>
+        <div class="color-swatch" style="background:#E63946" data-color="#E63946"></div>
+        <div class="color-swatch" style="background:#F4A261" data-color="#F4A261"></div>
+        <div class="color-swatch" style="background:#2A9D8F" data-color="#2A9D8F"></div>
+        <div class="color-swatch" style="background:#264653" data-color="#264653"></div>
+        <div class="color-swatch" style="background:#8338EC" data-color="#8338EC"></div>
+        <div class="color-swatch" style="background:#3A86FF" data-color="#3A86FF"></div>
+        <div class="color-swatch" style="background:#FB5607" data-color="#FB5607"></div>
+        <div class="color-swatch" style="background:#FFBE0B" data-color="#FFBE0B"></div>
+        <div class="color-swatch" style="background:#06A77D" data-color="#06A77D"></div>
+        <div class="color-swatch" style="background:#1a1a1a" data-color="#1a1a1a"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Learning goal for this course</label>
+      <textarea id="f_goal" placeholder="What do you want to walk out of here knowing how to do?" maxlength="160"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Fun fact about you</label>
+      <textarea id="f_fact" placeholder="Something we'd never guess" maxlength="160"></textarea>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn ghost" id="cancelBtn">Cancel</button>
+      <button class="btn primary" id="saveBtn">Save my tile</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ==== CONFIG ====
+  const TOTAL_TILES = 26; // 26B = up to 26 students, adjust if your cohort is different
+  const STORAGE_KEY = 'yearbook:26b:tiles';
+
+  // ==== STATE ====
+  let tiles = []; // array of tile objects, or null for empty
+  let editingIndex = null; // which tile is being edited
+  let draft = { photo: null, emoji: '👋', color: '#F26522' };
+
+  // ==== DATE ====
+  document.getElementById('liveDate').textContent = new Date().toLocaleDateString('en-AU', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  });
+
+  // ==== STORAGE (with fallback) ====
+  async function loadTiles(){
+    // Try window.storage (Claude artifacts shared storage)
+    if (window.storage && window.storage.get){
+      try {
+        const result = await window.storage.get(STORAGE_KEY, true); // shared=true
+        if (result && result.value) return JSON.parse(result.value);
+      } catch(e){ /* key doesn't exist yet, fall through */ }
+      return new Array(TOTAL_TILES).fill(null);
+    }
+    // Fallback: regular localStorage (useful for local testing/hosting)
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch(e){}
+    return new Array(TOTAL_TILES).fill(null);
+  }
+
+  async function saveTiles(){
+    if (window.storage && window.storage.set){
+      try {
+        await window.storage.set(STORAGE_KEY, JSON.stringify(tiles), true); // shared=true
+        return true;
+      } catch(e){ console.error('shared storage failed', e); }
+    }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tiles)); return true; }
+    catch(e){ console.error('localStorage failed', e); return false; }
+  }
+
+  // ==== RENDER ====
+  function render(){
+    const wall = document.getElementById('wall');
+    wall.innerHTML = '';
+    let filled = 0;
+
+    tiles.forEach((tile, i) => {
+      const el = document.createElement('div');
+      if (!tile){
+        el.className = 'tile tile-empty';
+        el.innerHTML = `<span>+ slot ${i+1}<br><small style="font-size:13px;font-style:normal;">(claim this tile)</small></span>`;
+        el.onclick = () => openModal(i);
+      } else {
+        filled++;
+        el.className = 'tile';
+        el.style.borderTopColor = tile.color;
+        const avatarHTML = tile.photo
+          ? `<div class="avatar"><img src="${tile.photo}" alt=""></div>`
+          : `<div class="avatar" style="background:${lighten(tile.color)}">${escapeHTML(tile.emoji || '👋')}</div>`;
+        el.innerHTML = `
+          <div class="tile-vibe-bar" style="background:${tile.color}"></div>
+          <div class="tile-head">
+            ${avatarHTML}
+            <div>
+              <div class="tile-name">${escapeHTML(tile.name)}</div>
+              <div class="tile-bio">${escapeHTML(tile.bio)}</div>
+            </div>
+          </div>
+          <div class="tile-section">
+            <div class="tile-label">Learning goal</div>
+            <div class="tile-text tile-goal">${escapeHTML(tile.goal)}</div>
+          </div>
+          <div class="tile-section">
+            <div class="tile-label">Fun fact</div>
+            <div class="tile-text tile-fact">"${escapeHTML(tile.fact)}"</div>
+          </div>
+          <div class="tile-meta">
+            <span>Tile ${String(i+1).padStart(2,'0')}</span>
+            <span>Edit ↗</span>
+          </div>
+        `;
+        el.onclick = () => openModal(i);
+      }
+      wall.appendChild(el);
+    });
+
+    document.getElementById('filledCount').textContent = filled;
+    document.getElementById('totalCount').textContent = TOTAL_TILES;
+  }
+
+  function escapeHTML(s){
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function lighten(hex){
+    // make a pale background from the vibe color
+    const n = parseInt(hex.slice(1),16);
+    const r = (n>>16)&255, g = (n>>8)&255, b = n&255;
+    return `rgba(${r},${g},${b},0.15)`;
+  }
+
+  // ==== MODAL ====
+  function openModal(i){
+    editingIndex = i;
+    const existing = tiles[i];
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDek = document.getElementById('modalDek');
+    if (existing){
+      modalTitle.innerHTML = `Edit <em>your</em> tile`;
+      modalDek.textContent = 'Tweak anything. Your classmates will see the update live.';
+      draft = { photo: existing.photo || null, emoji: existing.emoji || '👋', color: existing.color || '#F26522' };
+      document.getElementById('f_name').value = existing.name || '';
+      document.getElementById('f_bio').value = existing.bio || '';
+      document.getElementById('f_goal').value = existing.goal || '';
+      document.getElementById('f_fact').value = existing.fact || '';
+    } else {
+      modalTitle.innerHTML = `Add <em>you</em> to the wall`;
+      modalDek.textContent = 'A few quick fields. No pressure.';
+      draft = { photo: null, emoji: '👋', color: '#F26522' };
+      document.getElementById('f_name').value = '';
+      document.getElementById('f_bio').value = '';
+      document.getElementById('f_goal').value = '';
+      document.getElementById('f_fact').value = '';
+    }
+    syncDraftUI();
+    document.getElementById('modal').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modal').classList.remove('open');
+    editingIndex = null;
+  }
+  document.getElementById('closeModal').onclick = closeModal;
+  document.getElementById('cancelBtn').onclick = closeModal;
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') closeModal();
+  });
+
+  function syncDraftUI(){
+    const preview = document.getElementById('avatarPreview');
+    if (draft.photo){
+      preview.innerHTML = `<img src="${draft.photo}" alt="">`;
+    } else {
+      preview.style.background = lighten(draft.color);
+      preview.textContent = draft.emoji;
+    }
+    document.querySelectorAll('.emoji-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.emoji === draft.emoji && !draft.photo);
+    });
+    document.querySelectorAll('.color-swatch').forEach(b => {
+      b.classList.toggle('selected', b.dataset.color === draft.color);
+    });
+  }
+
+  document.querySelectorAll('.emoji-btn').forEach(b => {
+    b.onclick = () => { draft.emoji = b.dataset.emoji; draft.photo = null; syncDraftUI(); };
+  });
+  document.querySelectorAll('.color-swatch').forEach(b => {
+    b.onclick = () => { draft.color = b.dataset.color; syncDraftUI(); };
+  });
+
+  document.getElementById('uploadBtn').onclick = () => document.getElementById('photoFile').click();
+  document.getElementById('photoFile').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    // resize to keep storage light
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const size = 200;
+        canvas.width = size; canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        // square crop
+        const s = Math.min(img.width, img.height);
+        const sx = (img.width - s) / 2, sy = (img.height - s) / 2;
+        ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
+        draft.photo = canvas.toDataURL('image/jpeg', 0.75);
+        syncDraftUI();
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // ==== SAVE ====
+  document.getElementById('saveBtn').onclick = async () => {
+    const name = document.getElementById('f_name').value.trim();
+    const bio = document.getElementById('f_bio').value.trim();
+    const goal = document.getElementById('f_goal').value.trim();
+    const fact = document.getElementById('f_fact').value.trim();
+    if (!name){ showToast('Add your name first'); return; }
+    if (!bio){ showToast('Add a one-line bio'); return; }
+    if (!goal){ showToast('Add a learning goal'); return; }
+    if (!fact){ showToast('Add a fun fact'); return; }
+    tiles[editingIndex] = {
+      name, bio, goal, fact,
+      photo: draft.photo,
+      emoji: draft.emoji,
+      color: draft.color,
+      updatedAt: new Date().toISOString()
+    };
+    await saveTiles();
+    render();
+    closeModal();
+    showToast(tiles[editingIndex].name ? 'Tile saved ✓' : 'Welcome to 26B ✓');
+  };
+
+  // ==== CLAIM BUTTON ====
+  document.getElementById('claimBtn').onclick = () => {
+    const firstEmpty = tiles.findIndex(t => !t);
+    if (firstEmpty === -1){ showToast('All tiles claimed!'); return; }
+    openModal(firstEmpty);
+  };
+
+  // ==== EXPORT ====
+  document.getElementById('exportBtn').onclick = () => {
+    const data = JSON.stringify(tiles, null, 2);
+    const blob = new Blob([data], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `26b-yearbook-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Wall exported ↓');
+  };
+
+  // ==== TOAST ====
+  let toastTimer;
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ==== LIVE REFRESH ====
+  // Poll for updates every 4s so students see each other's tiles appear
+  async function refresh(){
+    const fresh = await loadTiles();
+    // only re-render if something actually changed
+    if (JSON.stringify(fresh) !== JSON.stringify(tiles)){
+      // don't clobber if the modal is open and user is editing
+      if (!document.getElementById('modal').classList.contains('open')){
+        tiles = fresh;
+        render();
+      }
+    }
+  }
+
+  // ==== BOOT ====
+  (async () => {
+    tiles = await loadTiles();
+    // Ensure right length
+    while (tiles.length < TOTAL_TILES) tiles.push(null);
+    render();
+    setInterval(refresh, 4000);
+  })();
+</script>
+</body>
+</html>

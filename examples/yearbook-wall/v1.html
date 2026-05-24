@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26B · The Yearbook Wall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Fraunces:ital,wght@0,400;0,500;0,700;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Major+Mono+Display&family=Syne:wght@400;700;800&family=DM+Serif+Display&family=Inter:wght@400;500;700&family=Rubik+Mono+One&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f0a;
+    --bg-raised:#121712;
+    --green:#00ff88;
+    --green-dim:#00cc6a;
+    --green-glow:rgba(0,255,136,0.25);
+    --green-faint:rgba(0,255,136,0.08);
+    --line:#1f2a1f;
+    --line-bright:#2a3a2a;
+    --text:#e8f5e8;
+    --text-dim:#8a9a8a;
+    --danger:#ff4477;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+  body{padding:32px 24px 80px;line-height:1.5}
+
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse at top,var(--green-faint) 0%,transparent 70%),
+      repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,0.012) 2px,rgba(0,255,136,0.012) 4px);
+  }
+
+  .shell{max-width:1600px;margin:0 auto;position:relative;z-index:1}
+
+  header{margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:24px}
+  .top-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-family:'JetBrains Mono';font-size:11px;color:var(--text-dim);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px}
+  .brand{color:var(--green);display:flex;align-items:center;gap:8px}
+  .brand .dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green);animation:pulse 1.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(54px,9vw,96px);line-height:0.95;letter-spacing:-0.02em}
+  h1 em{font-style:italic;color:var(--green);text-shadow:0 0 40px var(--green-glow)}
+  .dek{font-family:'Fraunces',serif;font-style:italic;font-size:20px;color:var(--text-dim);max-width:720px;margin-top:10px}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:28px;font-family:'JetBrains Mono'}
+  .stats{display:flex;gap:20px;align-items:center;font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase}
+  .stats strong{color:var(--green);font-weight:500;font-size:14px}
+  .stats .sep{color:var(--line-bright)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{
+    font-family:'JetBrains Mono';font-size:11px;padding:10px 16px;border:1px solid var(--line-bright);
+    background:transparent;color:var(--text);border-radius:6px;cursor:pointer;font-weight:500;
+    text-transform:uppercase;letter-spacing:0.14em;transition:all 0.2s;
+  }
+  .btn:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 16px var(--green-faint)}
+  .btn.primary{background:var(--green);border-color:var(--green);color:#000;font-weight:700}
+  .btn.primary:hover{background:transparent;color:var(--green)}
+
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+
+  .tile{
+    position:relative;border:2px solid;border-radius:14px;padding:24px;min-height:240px;
+    display:flex;flex-direction:column;cursor:pointer;overflow:hidden;
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease;
+    animation:tileIn 0.6s cubic-bezier(0.4,0,0.2,1) backwards;
+  }
+  @keyframes tileIn{
+    from{opacity:0;transform:translateY(20px) scale(0.96)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+  .tile:hover{transform:translateY(-4px);box-shadow:0 20px 40px -10px rgba(0,0,0,0.5)}
+
+  .tile-head{display:flex;gap:14px;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid rgba(0,0,0,0.12)}
+  .tile-avatar{
+    width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;flex-shrink:0;
+    border:2px solid rgba(255,255,255,0.3);
+  }
+  .tile-avatar img{width:100%;height:100%;object-fit:cover}
+  .tile-name{font-size:24px;font-weight:500;line-height:1.05;letter-spacing:-0.01em;word-break:break-word}
+
+  .tile-facts{display:flex;flex-direction:column;gap:8px;flex:1}
+  .fact{
+    padding:12px 14px;border-radius:10px;background:rgba(0,0,0,0.18);font-size:14px;line-height:1.45;
+    position:relative;transition:all 0.3s ease;
+  }
+
+  .tile.revealed .fact[data-truth="true"]{
+    background:rgba(0,0,0,0.28);
+    box-shadow:inset 3px 0 0 rgba(0,255,136,0.9);
+  }
+  .tile.revealed .fact[data-truth="false"]{
+    background:rgba(255,68,119,0.25);
+    box-shadow:inset 3px 0 0 var(--danger);
+    animation:shake 0.5s ease;
+  }
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-3px)}
+    75%{transform:translateX(3px)}
+  }
+  .fact-label{
+    position:absolute;top:8px;right:10px;font-family:'JetBrains Mono';font-size:9px;
+    padding:2px 8px;border-radius:4px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;
+    opacity:0;transition:opacity 0.4s ease 0.2s;
+  }
+  .tile.revealed .fact-label{opacity:1}
+  .fact[data-truth="true"] .fact-label{background:rgba(0,255,136,0.9);color:#000}
+  .fact[data-truth="false"] .fact-label{background:var(--danger);color:#fff}
+
+  .tile-hint{
+    font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    margin-top:12px;padding-top:12px;border-top:1.5px solid rgba(0,0,0,0.12);
+    display:flex;justify-content:space-between;opacity:0.6;
+  }
+  .tile.revealed .tile-hint{opacity:1}
+
+  .empty-state{
+    grid-column:1/-1;text-align:center;padding:80px 20px;
+    border:2px dashed var(--line-bright);border-radius:14px;color:var(--text-dim);
+  }
+  .empty-state h3{font-family:'Fraunces',serif;font-size:28px;font-weight:400;color:var(--text);margin-bottom:10px}
+  .empty-state p{font-family:'JetBrains Mono';font-size:13px;letter-spacing:0.05em}
+  .empty-state code{background:var(--bg-raised);padding:2px 8px;border-radius:4px;color:var(--green);font-size:12px}
+
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
+    display:none;align-items:flex-start;justify-content:center;padding:60px 20px;z-index:100;overflow-y:auto;
+  }
+  .modal-bg.open{display:flex;animation:fadeIn 0.2s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--bg-raised);border:1px solid var(--line-bright);border-radius:14px;
+    max-width:720px;width:100%;padding:32px;animation:slideUp 0.3s ease;
+  }
+  @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal h2{font-family:'Fraunces',serif;font-size:32px;font-weight:400;margin-bottom:6px}
+  .modal h2 em{color:var(--green);font-style:italic}
+  .modal p.hint{color:var(--text-dim);margin-bottom:20px;font-size:14px}
+  .modal textarea{
+    width:100%;min-height:260px;font-family:'JetBrains Mono';font-size:13px;line-height:1.6;
+    padding:16px;background:#000;border:1px solid var(--line-bright);border-radius:8px;
+    color:#c8d8c8;resize:vertical;
+  }
+  .modal textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px var(--green-faint)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green);color:#000;padding:14px 28px;border-radius:999px;font-size:13px;
+    font-family:'JetBrains Mono';font-weight:700;text-transform:uppercase;letter-spacing:0.14em;
+    opacity:0;pointer-events:none;transition:all 0.3s;z-index:200;box-shadow:0 0 30px var(--green-glow);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.error{background:var(--danger);color:#fff}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<header>
+  <div class="top-row">
+    <span class="brand"><span class="dot"></span>EQC · 26B</span>
+    <span id="liveDate">—</span>
+    <span>THE YEARBOOK WALL</span>
+  </div>
+  <h1>The <em>Yearbook</em> Wall.</h1>
+  <p class="dek">Everyone's got three facts. Two are true. One is a lie. Click a tile to reveal — but only after we've guessed.</p>
+</header>
+
+<div class="toolbar">
+  <div class="stats">
+    <span><strong id="tileCount">0</strong> tiles on the wall</span>
+    <span class="sep">·</span>
+    <span><strong id="revealedCount">0</strong> revealed</span>
+  </div>
+  <div class="actions">
+    <button class="btn" id="hideAllBtn">Hide all</button>
+    <button class="btn" id="clearBtn">Clear wall</button>
+    <button class="btn primary" id="addBtn">+ Paste tile code</button>
+  </div>
+</div>
+
+<div class="wall" id="wall">
+  <div class="empty-state" id="emptyState">
+    <h3>The wall is waiting.</h3>
+    <p>Click <code>+ Paste tile code</code> and drop in a student's HTML block.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>Paste <em>tile</em> code</h2>
+    <p class="hint">Drop the HTML block a student sent you. If they sent more than one, paste them all — each tile goes on separately.</p>
+    <textarea id="pasteArea" placeholder="<!-- 26B tile: ... -->
+<div class='tile' data-name='...' ...>
+  ...
+</div>"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="cancelBtn">Cancel</button>
+      <button class="btn primary" id="addTileBtn">Add to wall</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'yearbook26b:tiles';
+  const $ = id => document.getElementById(id);
+
+  let tiles = [];
+
+  $('liveDate').textContent = new Date().toLocaleDateString('en-AU', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  }).toUpperCase();
+
+  function load(){
+    try { tiles = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e){ tiles = []; }
+  }
+  function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tiles));
+  }
+
+  function parsePaste(raw){
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = raw.trim();
+    const parsed = [];
+    wrapper.querySelectorAll('.tile').forEach(el => {
+      const name = el.getAttribute('data-name') || 'Unknown';
+      const slug = el.getAttribute('data-slug') || name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+      const photo = el.getAttribute('data-photo') || null;
+      const bg = el.getAttribute('data-bg') || '#00ff88';
+      const fontTitle = el.getAttribute('data-font-title') || 'Fraunces';
+      const fontBody = el.getAttribute('data-font-body') || 'Space Grotesk';
+      const headerColor = el.getAttribute('data-header-color') || '#000';
+      const bodyColor = el.getAttribute('data-body-color') || '#1a1a1a';
+      const facts = [];
+      el.querySelectorAll('.fact').forEach(f => {
+        const truth = f.getAttribute('data-truth');
+        facts.push({
+          text: f.textContent.trim(),
+          isTruth: truth === 'true' ? true : truth === 'false' ? false : null,
+        });
+      });
+      parsed.push({
+        id: slug + '-' + Date.now() + Math.random().toString(36).slice(2,6),
+        name, slug, photo, bg, fontTitle, fontBody, headerColor, bodyColor, facts,
+        revealed: false,
+        addedAt: new Date().toISOString(),
+      });
+    });
+    return parsed;
+  }
+
+  function render(){
+    const wall = $('wall');
+    const empty = $('emptyState');
+    $('tileCount').textContent = tiles.length;
+    $('revealedCount').textContent = tiles.filter(t => t.revealed).length;
+
+    if (tiles.length === 0){
+      empty.style.display = 'block';
+      wall.querySelectorAll('.tile').forEach(n => n.remove());
+      return;
+    }
+    empty.style.display = 'none';
+    wall.querySelectorAll('.tile').forEach(n => n.remove());
+
+    tiles.forEach((t, idx) => {
+      const el = document.createElement('div');
+      el.className = 'tile' + (t.revealed ? ' revealed' : '');
+      el.style.background = t.bg;
+      el.style.borderColor = t.bg;
+      el.style.color = t.bodyColor;
+      el.style.animationDelay = (idx * 0.05) + 's';
+
+      const avatarHTML = t.photo
+        ? `<div class="tile-avatar"><img src="${t.photo}" alt=""></div>`
+        : `<div class="tile-avatar">👋</div>`;
+
+      const factsHTML = t.facts.map((f) => {
+        const truth = f.isTruth === true ? 'true' : f.isTruth === false ? 'false' : 'unset';
+        const label = f.isTruth === true ? 'TRUTH' : 'LIE';
+        const safeText = escapeHTML(f.text);
+        return `<div class="fact" data-truth="${truth}" style="font-family:'${t.fontBody}',sans-serif">
+          ${safeText}
+          <span class="fact-label">${label}</span>
+        </div>`;
+      }).join('');
+
+      el.innerHTML = `
+        <div class="tile-head">
+          ${avatarHTML}
+          <h3 class="tile-name" style="font-family:'${t.fontTitle}',serif;color:${t.headerColor}">${escapeHTML(t.name)}</h3>
+        </div>
+        <div class="tile-facts">${factsHTML}</div>
+        <div class="tile-hint" style="color:${t.bodyColor}">
+          <span>#${String(idx+1).padStart(2,'0')}</span>
+          <span>${t.revealed ? 'Revealed' : 'Tap to reveal'}</span>
+        </div>
+      `;
+
+      el.addEventListener('click', () => {
+        t.revealed = !t.revealed;
+        save();
+        render();
+      });
+
+      el.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (confirm(`Remove ${t.name}'s tile?`)){
+          tiles = tiles.filter(x => x.id !== t.id);
+          save();
+          render();
+          showToast(`Removed ${t.name}`);
+        }
+      });
+
+      wall.appendChild(el);
+    });
+  }
+
+  function escapeHTML(s){
+    return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  $('addBtn').addEventListener('click', () => {
+    $('modalBg').classList.add('open');
+    $('pasteArea').value = '';
+    setTimeout(() => $('pasteArea').focus(), 100);
+  });
+  $('cancelBtn').addEventListener('click', () => $('modalBg').classList.remove('open'));
+  $('modalBg').addEventListener('click', e => { if (e.target.id === 'modalBg') $('modalBg').classList.remove('open'); });
+
+  $('addTileBtn').addEventListener('click', () => {
+    const raw = $('pasteArea').value.trim();
+    if (!raw){ showToast('Paste some code first', true); return; }
+    const parsed = parsePaste(raw);
+    if (parsed.length === 0){
+      showToast('No valid tiles found — check the code', true);
+      return;
+    }
+    tiles.push(...parsed);
+    save();
+    render();
+    $('modalBg').classList.remove('open');
+    showToast(`Added ${parsed.length} tile${parsed.length > 1 ? 's' : ''}`);
+  });
+
+  $('pasteArea').addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){
+      e.preventDefault();
+      $('addTileBtn').click();
+    }
+  });
+
+  $('hideAllBtn').addEventListener('click', () => {
+    tiles.forEach(t => t.revealed = false);
+    save();
+    render();
+    showToast('All tiles hidden');
+  });
+  $('clearBtn').addEventListener('click', () => {
+    if (tiles.length === 0) return;
+    if (confirm(`Clear all ${tiles.length} tiles? This cannot be undone.`)){
+      tiles = [];
+      save();
+      render();
+      showToast('Wall cleared');
+    }
+  });
+
+  let toastTm;
+  function showToast(msg, isError){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.toggle('error', !!isError);
+    t.classList.add('show');
+    clearTimeout(toastTm);
+    toastTm = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){
+      $('modalBg').classList.remove('open');
+    }
+  });
+
+  load();
+  render();
+})();
+</script>
+</body>
+</html>

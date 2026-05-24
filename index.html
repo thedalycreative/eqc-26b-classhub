@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26b Class Hub · EQC Front End Web Dev</title>
+<meta name="description" content="Equinim College Intake 26B class hub — Front-end web dev course (12 weeks, 24 classes). Lessons, downloads, resources, code examples and templates for students.">
+<meta name="author" content="Tim Daly · The Daly Creative">
+<meta name="theme-color" content="#5865f2">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<meta property="og:title" content="26B Class Hub · EQC Front End Web Dev">
+<meta property="og:description" content="12-week front-end web dev course hub for Intake 26B. Lessons, downloads, resources, examples.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.svg">
+<meta property="og:locale" content="en_AU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="26B Class Hub · EQC Front End Web Dev">
+<meta name="twitter:description" content="12-week front-end web dev course hub for Intake 26B.">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+/* ============================================================
+   DISCORD COLOR PALETTE
+   ============================================================ */
+:root {
+  --dc-bg:        #1e1f22;
+  --dc-bg2:       #2b2d31;
+  --dc-bg3:       #313338;
+  --dc-bg4:       #383a40;
+  --dc-border:    #3f4147;
+  --dc-blurple:   #5865f2;
+  --dc-green:     #57f287;
+  --dc-yellow:    #fee75c;
+  --dc-red:       #ed4245;
+  --dc-fuchsia:   #eb459e;
+  --dc-white:     #f2f3f5;
+  --dc-light:     #b5bac1;
+  --dc-muted:     #80848e;
+  --dc-dark-text: #1e1f22;
+  --dc-blurple-dark: #4752c4;
+  --dc-green-dark: #248045;
+  --dc-current:   #f0b232;
+  --radius:       8px;
+  --radius-lg:    12px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--dc-bg);
+  color: var(--dc-light);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a { color: var(--dc-blurple); text-decoration: none; }
+a:hover { color: #7983f5; text-decoration: underline; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  background: var(--dc-bg2);
+  border-bottom: 1px solid var(--dc-border);
+  padding: 28px 24px 20px;
+  text-align: center;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 48px;
+  margin-bottom: 4px;
+}
+
+.header h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--dc-white);
+  letter-spacing: -0.02em;
+}
+
+.header h1 span { color: var(--dc-blurple); }
+
+.header .subtitle {
+  font-size: 16px;
+  color: var(--dc-muted);
+  margin-top: 4px;
+}
+
+.header .intake-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--dc-bg3);
+  border: 1px solid var(--dc-border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--dc-light);
+}
+
+.header .intake-info .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--dc-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-section {
+  background: var(--dc-bg2);
+  border-bottom: 1px solid var(--dc-border);
+  padding: 16px 24px;
+}
+
+.progress-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--dc-muted);
+  margin-bottom: 8px;
+}
+
+.progress-label strong { color: var(--dc-white); }
+
+.progress-bar-bg {
+  height: 8px;
+  background: var(--dc-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--dc-blurple), var(--dc-green));
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* ============================================================
+   CONTACT BAR
+   ============================================================ */
+.contact-bar {
+  background: var(--dc-bg3);
+  border-bottom: 1px solid var(--dc-border);
+  padding: 12px 24px;
+}
+
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dc-light);
+  background: var(--dc-bg2);
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--dc-border);
+}
+
+.contact-item i { font-size: 14px; }
+.contact-item.trainer i { color: var(--dc-blurple); }
+.contact-item.school i { color: var(--dc-green); }
+.contact-item.services i { color: var(--dc-fuchsia); }
+
+.contact-item a { color: var(--dc-light); }
+.contact-item a:hover { color: var(--dc-white); text-decoration: none; }
+
+/* ============================================================
+   BADGE LEGEND
+   ============================================================ */
+.legend {
+  max-width: 1200px;
+  margin: 20px auto 0;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--dc-muted);
+}
+
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+}
+
+.legend-dot.file { background: var(--dc-blurple); }
+.legend-dot.link { background: var(--dc-green); }
+.legend-dot.code { background: var(--dc-yellow); }
+.legend-dot.hub { background: var(--dc-fuchsia); }
+
+/* ============================================================
+   WEEKS GRID
+   ============================================================ */
+.weeks {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 24px;
+  display: grid;
+  gap: 20px;
+}
+
+/* ============================================================
+   WEEK CARD
+   ============================================================ */
+.week-card {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.week-card:hover { border-color: var(--dc-muted); }
+
+.week-card.current {
+  border-color: var(--dc-current);
+  box-shadow: 0 0 20px rgba(240, 178, 50, 0.12);
+}
+
+.week-card.completed { opacity: 0.85; }
+.week-card.completed:hover { opacity: 1; }
+.week-card.upcoming { opacity: 0.6; }
+.week-card.upcoming:hover { opacity: 0.8; }
+
+.week-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--dc-bg3);
+  border-bottom: 1px solid var(--dc-border);
+}
+
+.week-header:hover { background: var(--dc-bg4); }
+
+.week-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.week-num {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--dc-blurple);
+  background: rgba(88, 101, 242, 0.15);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.week-card.current .week-num {
+  color: var(--dc-current);
+  background: rgba(240, 178, 50, 0.15);
+}
+
+.week-dates {
+  font-size: 14px;
+  color: var(--dc-white);
+  font-weight: 600;
+}
+
+.week-dates .date-range {
+  color: var(--dc-muted);
+  font-weight: 400;
+  margin-left: 8px;
+  font-size: 13px;
+}
+
+.week-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.status-pill.done {
+  background: rgba(87, 242, 135, 0.15);
+  color: var(--dc-green);
+}
+
+.status-pill.now {
+  background: rgba(240, 178, 50, 0.2);
+  color: var(--dc-current);
+  animation: pulse 2s infinite;
+}
+
+.status-pill.soon {
+  background: rgba(128, 132, 142, 0.15);
+  color: var(--dc-muted);
+}
+
+.week-toggle {
+  color: var(--dc-muted);
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.week-card.open .week-toggle { transform: rotate(180deg); }
+
+.week-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.week-card.open .week-body { max-height: 2000px; }
+
+.week-content {
+  padding: 16px 20px;
+  display: grid;
+  gap: 12px;
+}
+
+/* Thursday note */
+.thu-note {
+  font-size: 12px;
+  color: var(--dc-muted);
+  text-align: center;
+  padding: 8px;
+  background: var(--dc-bg);
+  border-radius: var(--radius);
+  border: 1px dashed var(--dc-border);
+}
+
+.thu-note i { margin-right: 4px; }
+
+/* Holiday note */
+.holiday-note {
+  font-size: 13px;
+  color: var(--dc-yellow);
+  text-align: center;
+  padding: 8px 12px;
+  background: rgba(254, 231, 92, 0.08);
+  border-radius: var(--radius);
+  border: 1px solid rgba(254, 231, 92, 0.2);
+}
+
+/* MC Module indicator */
+.mc-modules {
+  padding: 10px 16px;
+  background: rgba(235, 69, 158, 0.06);
+  border: 1px solid rgba(235, 69, 158, 0.15);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--dc-light);
+}
+
+.mc-modules strong {
+  color: var(--dc-fuchsia);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.mc-modules ul {
+  list-style: none;
+  margin-top: 4px;
+}
+
+.mc-modules li::before {
+  content: '>';
+  color: var(--dc-fuchsia);
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   CLASS TILE
+   ============================================================ */
+.class-tile {
+  background: var(--dc-bg);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+
+.class-tile:hover { border-color: var(--dc-muted); }
+
+.class-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.class-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dc-blurple);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.class-day {
+  font-size: 12px;
+  color: var(--dc-muted);
+  white-space: nowrap;
+}
+
+.class-topic {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dc-white);
+  line-height: 1.3;
+}
+
+.class-desc {
+  font-size: 13px;
+  color: var(--dc-muted);
+}
+
+/* Subject tags */
+.subject-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.subject-tag.s1 {
+  background: rgba(235, 69, 158, 0.15);
+  color: var(--dc-fuchsia);
+}
+
+.subject-tag.s2 {
+  background: rgba(87, 242, 135, 0.15);
+  color: var(--dc-green);
+}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: default;
+  transition: transform 0.15s;
+}
+
+.badge:hover { transform: translateY(-1px); }
+
+.badge i { font-size: 12px; }
+
+.badge.file {
+  background: rgba(88, 101, 242, 0.2);
+  color: #8b9bf7;
+  border: 1px solid rgba(88, 101, 242, 0.3);
+}
+
+.badge.link {
+  background: rgba(87, 242, 135, 0.12);
+  color: #57f287;
+  border: 1px solid rgba(87, 242, 135, 0.25);
+}
+
+.badge a { color: inherit; text-decoration: none; }
+.badge a:hover { text-decoration: underline; }
+
+.badge.code {
+  background: rgba(254, 231, 92, 0.15);
+  color: #fee75c;
+  border: 1px solid rgba(254, 231, 92, 0.3);
+}
+
+.badge.hub {
+  background: rgba(235, 69, 158, 0.15);
+  color: #eb459e;
+  border: 1px solid rgba(235, 69, 158, 0.25);
+}
+
+/* ============================================================
+   RESOURCES SECTION
+   ============================================================ */
+.resources-section {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.resources-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dc-white);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resources-section h2 i { color: var(--dc-blurple); }
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.resource-card {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.resource-card:hover {
+  border-color: var(--dc-blurple);
+  transform: translateY(-2px);
+}
+
+.resource-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dc-white);
+  margin-bottom: 4px;
+}
+
+.resource-card p {
+  font-size: 12px;
+  color: var(--dc-muted);
+  margin-bottom: 8px;
+}
+
+.resource-card a {
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============================================================
+   CHEAT SHEETS
+   ============================================================ */
+.cheat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.cheat-card {
+  background: var(--dc-bg);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--dc-light);
+}
+
+.cheat-card i {
+  font-size: 20px;
+  color: var(--dc-blurple);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  color: var(--dc-muted);
+  font-size: 12px;
+  border-top: 1px solid var(--dc-border);
+  margin-top: 40px;
+}
+
+.footer .heart { color: var(--dc-red); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width: 768px) {
+  .week-content {
+    grid-template-columns: 1fr 1fr;
+  }
+  .thu-note, .mc-modules, .holiday-note {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 22px; }
+  .contact-inner { flex-direction: column; align-items: center; }
+  .week-header { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .week-status { align-self: flex-start; }
+  .legend { flex-direction: column; align-items: center; }
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+.week-card {
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.week-card:nth-child(1)  { animation-delay: 0.05s; }
+.week-card:nth-child(2)  { animation-delay: 0.1s; }
+.week-card:nth-child(3)  { animation-delay: 0.15s; }
+.week-card:nth-child(4)  { animation-delay: 0.2s; }
+.week-card:nth-child(5)  { animation-delay: 0.25s; }
+.week-card:nth-child(6)  { animation-delay: 0.3s; }
+.week-card:nth-child(7)  { animation-delay: 0.35s; }
+.week-card:nth-child(8)  { animation-delay: 0.4s; }
+.week-card:nth-child(9)  { animation-delay: 0.45s; }
+.week-card:nth-child(10) { animation-delay: 0.5s; }
+.week-card:nth-child(11) { animation-delay: 0.55s; }
+.week-card:nth-child(12) { animation-delay: 0.6s; }
+
+/* ============================================================
+   TOP NAV (added in v2 — shared brand bar across pages)
+   ============================================================ */
+.topnav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(43, 45, 49, 0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--dc-border);
+}
+.topnav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.topnav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.topnav-brand:hover { text-decoration: none; }
+.topnav-brand img { height: 40px; width: auto; }
+.topnav-links { display: flex; align-items: center; gap: 4px; }
+.topnav-link {
+  color: var(--dc-light); font-size: 14px; font-weight: 500;
+  padding: 8px 14px; border-radius: var(--radius);
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 0.15s;
+}
+.topnav-link:hover { background: var(--dc-bg3); color: var(--dc-white); text-decoration: none; }
+.topnav-link.active { background: rgba(88, 101, 242, 0.15); color: var(--dc-white); }
+.topnav-link i { font-size: 16px; }
+@media (max-width: 720px) {
+  .topnav-link { padding: 8px 10px; font-size: 13px; }
+  .topnav-link span { display: none; }
+  .topnav-link i { font-size: 18px; }
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP NAV
+     ============================================================ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="topnav-brand">
+      <img src="assets/logo.svg" alt="26B Class Hub" width="220" height="56">
+      <span class="sr-only">26B Class Hub Home</span>
+    </a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link active"><i class="bi bi-house-door-fill"></i><span>Hub</span></a>
+      <a href="lessons/" class="topnav-link"><i class="bi bi-journal-text"></i><span>Lessons</span></a>
+      <a href="resources.html" class="topnav-link"><i class="bi bi-bookmark-star"></i><span>Resources</span></a>
+      <a href="downloads.html" class="topnav-link"><i class="bi bi-download"></i><span>Downloads</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">🚀</div>
+    <h1>26b <span>Class Hub</span></h1>
+    <p class="subtitle">Front End Web Development &middot; Subjects 1 &amp; 2 &middot; Equinim College</p>
+    <div class="intake-info">
+      <span class="dot"></span>
+      Intake 26b &middot; Started 23 March 2026 &middot; 12 Weeks
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PROGRESS BAR
+     ============================================================ -->
+<section class="progress-section">
+  <div class="progress-inner">
+    <div class="progress-label">
+      <span>Course Progress</span>
+      <strong id="progressText">Week 9 of 12</strong>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width: 75%"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT BAR
+     ============================================================ -->
+<section class="contact-bar">
+  <div class="contact-inner">
+    <span class="contact-item trainer">
+      <i class="bi bi-person-fill"></i>
+      Tim Daly
+    </span>
+    <span class="contact-item trainer">
+      <i class="bi bi-telephone-fill"></i>
+      <a href="tel:0414265050">0414 265 050</a>
+    </span>
+    <span class="contact-item trainer">
+      <i class="bi bi-envelope-fill"></i>
+      <a href="mailto:thetimdaly@gmail.com">thetimdaly@gmail.com</a>
+    </span>
+    <span class="contact-item school">
+      <i class="bi bi-mortarboard-fill"></i>
+      <a href="mailto:tim@equinimcollege.com">tim@equinimcollege.com</a>
+    </span>
+    <span class="contact-item services">
+      <i class="bi bi-people-fill"></i>
+      Student Services: <a href="mailto:team@equinimcollege.com">team@equinimcollege.com</a>
+    </span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BADGE LEGEND
+     ============================================================ -->
+<div class="legend">
+  <span class="legend-item"><span class="legend-dot file"></span> Lesson File</span>
+  <span class="legend-item"><span class="legend-dot link"></span> Online Resource</span>
+  <span class="legend-item"><span class="legend-dot code"></span> Code / ZIP</span>
+  <span class="legend-item"><span class="legend-dot hub"></span> HUB Module</span>
+</div>
+
+<!-- ============================================================
+     WEEKS
+     ============================================================ -->
+<main class="weeks" id="weeks">
+
+<!-- ===================== WEEK 1 ===================== -->
+<div class="week-card completed" data-week="1">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 1</span>
+      <span class="week-dates">Introduction &amp; HTML <span class="date-range">23 - 26 Mar</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 1</span>
+          <span class="class-day">Mon 23 Mar</span>
+        </div>
+        <div class="class-topic">Introduction <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Welcome to the course! Setup VS Code, intro to how the web works.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Welcome 26b.pdf</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://code.visualstudio.com" target="_blank">VS Code</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com" target="_blank">W3Schools</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 2</span>
+          <span class="class-day">Wed 25 Mar</span>
+        </div>
+        <div class="class-topic">Basic HTML <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">HTML tags, structure, headings, paragraphs, images, links.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 2 Lesson Doc</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Tag Reference Sheet.pdf</span>
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> FrontEndClass2</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML" target="_blank">MDN HTML</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 26 Mar &mdash; Practical catch-up &amp; MC modules
+      </div>
+
+      <div class="mc-modules">
+        <strong><i class="bi bi-collection"></i> HUB Modules This Week</strong>
+        <ul>
+          <li>MC S02 Module 1 &ndash; Build Dynamic Websites</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 2 ===================== -->
+<div class="week-card completed" data-week="2">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 2</span>
+      <span class="week-dates">CSS Basics <span class="date-range">30 Mar - 2 Apr</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 3</span>
+          <span class="class-day">Mon 30 Mar</span>
+        </div>
+        <div class="class-topic">Basic CSS (Inline) <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Inline styles, colours, fonts, the box model basics.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 3 Lesson Doc</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Class 3 Reference Sheet</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Color Model.pdf</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Hex Color Model.pdf</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Accessible Design.pdf</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://coolors.co" target="_blank">Coolors.co</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 4</span>
+          <span class="class-day">Wed 1 Apr</span>
+        </div>
+        <div class="class-topic">External Stylesheets &amp; Classes <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Linking CSS files, class selectors, IDs, specificity basics.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 4 Lesson Doc</span>
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> FrontEndClass4</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/css/css_selectors.asp" target="_blank">CSS Selectors</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://fonts.google.com" target="_blank">Google Fonts</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 2 Apr &mdash; Practical catch-up &amp; MC modules
+      </div>
+
+      <div class="mc-modules">
+        <strong><i class="bi bi-collection"></i> HUB Modules This Week</strong>
+        <ul>
+          <li>MC S02 Module 2 &ndash; Develop Complex Page Layouts</li>
+          <li>MC S02 Module 3 &ndash; Develop Complex Cascading Style Sheets</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EASTER BREAK ===================== -->
+<div class="week-card" style="opacity: 0.5; border-color: var(--dc-yellow); background: rgba(254,231,92,0.03);">
+  <div class="week-header" style="cursor: default; background: rgba(254,231,92,0.06);">
+    <div class="week-title">
+      <span class="week-num" style="color: var(--dc-yellow); background: rgba(254,231,92,0.15);">Break</span>
+      <span class="week-dates">Easter Break <span class="date-range">6 - 10 Apr</span></span>
+    </div>
+    <div class="week-status">
+      <span style="font-size: 24px;">🐣</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 3 ===================== -->
+<div class="week-card completed" data-week="3">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 3</span>
+      <span class="week-dates">Concepts &amp; CSS Continued <span class="date-range">13 - 16 Apr</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 5</span>
+          <span class="class-day">Mon 13 Apr</span>
+        </div>
+        <div class="class-topic">Originate &amp; Develop Concepts <span class="subject-tag s1">S1</span></div>
+        <div class="class-desc">Understanding client briefs, target audience, design concepts.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> 26b-OriginateDevelop.html</span>
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 1</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 6</span>
+          <span class="class-day">Wed 15 Apr</span>
+        </div>
+        <div class="class-topic">CSS &ndash; Tables &amp; Icons <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">HTML tables, icon fonts, Font Awesome, symbol libraries.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-ppt"></i> <a href="downloads/code/icons-and-symbols.pptx" target="_blank">Icons &amp; Symbols.pptx</a></span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> <a href="downloads/pdfs/icon-audit-worksheet.pdf" target="_blank">Icon Audit Worksheet.pdf</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://fontawesome.com" target="_blank">Font Awesome</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/html_tables.asp" target="_blank">W3Schools Tables</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/icons/" target="_blank">W3Schools Icons</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 16 Apr &mdash; Practical catch-up &amp; MC modules
+      </div>
+
+      <div class="mc-modules">
+        <strong><i class="bi bi-collection"></i> HUB Modules This Week</strong>
+        <ul>
+          <li>MC S01 Module 1 &ndash; Originate &amp; Develop Concepts</li>
+          <li>MC S01 Module 2 &ndash; Manage Client Problems</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 4 ===================== -->
+<div class="week-card completed" data-week="4">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 4</span>
+      <span class="week-dates">CSS Advanced <span class="date-range">20 - 23 Apr</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 7</span>
+          <span class="class-day">Mon 20 Apr</span>
+        </div>
+        <div class="class-topic">Embedding Videos &amp; Maps <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">CSS tables continued, embedding YouTube, Google Maps, iframes.</div>
+        <div class="badges">
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/html_iframe.asp" target="_blank">W3Schools iframes</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/html_youtube.asp" target="_blank">Embed YouTube</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/graphics/google_maps_intro.asp" target="_blank">Google Maps</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 8</span>
+          <span class="class-day">Wed 22 Apr</span>
+        </div>
+        <div class="class-topic">Flexbox &amp; Grid <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">CSS layout with Flexbox and Grid. The two layout systems that run the modern web.</div>
+        <div class="badges">
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">Flexbox Guide</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">Grid Guide</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://flexboxfroggy.com" target="_blank">Flexbox Froggy</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://cssgridgarden.com" target="_blank">Grid Garden</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 23 Apr &mdash; Practical catch-up
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 5 ===================== -->
+<div class="week-card completed" data-week="5">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 5</span>
+      <span class="week-dates">Bootstrap Begins <span class="date-range">27 - 30 Apr</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 9</span>
+          <span class="class-day">Mon 27 Apr</span>
+        </div>
+        <div class="class-topic">Match ICT Needs &amp; Intro Bootstrap <span class="subject-tag s1">S1</span><span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">First half: Match ICT needs assessment. Second half: what is Bootstrap and why use it.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Intro to Bootstrap.docx</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Bootstrap Breakpoints.pdf</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/" target="_blank">Bootstrap 5 Docs</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/bootstrap5/" target="_blank">W3Schools Bootstrap</a></span>
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 Bootstrap</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 10</span>
+          <span class="class-day">Wed 29 Apr</span>
+        </div>
+        <div class="class-topic">Bootstrap Demo <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Live demo: building a page with Bootstrap components, grid, navbar.</div>
+        <div class="badges">
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> 26b-Topic5-Bootstrap.zip</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/components/" target="_blank">Components</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">Examples</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 30 Apr &mdash; Practical catch-up &amp; Bootstrap practice
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 6 ===================== -->
+<div class="week-card completed" data-week="6">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 6</span>
+      <span class="week-dates">Skywings Build <span class="date-range">4 - 7 May</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 11</span>
+          <span class="class-day">Mon 4 May</span>
+        </div>
+        <div class="class-topic">Begin Skywings Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Start the first Bootstrap website build using the Skywings starter kit.</div>
+        <div class="badges">
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Skywings.zip (starter)</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Skywings Home Content.pdf</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Skywings About Content.pdf</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/" target="_blank">Bootstrap Docs</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 12</span>
+          <span class="class-day">Wed 6 May</span>
+        </div>
+        <div class="class-topic">Skywings Build (continued) <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Continue building the Skywings website. Navbar, hero, cards, footer.</div>
+        <div class="badges">
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/components/navbar/" target="_blank">Navbar</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/components/card/" target="_blank">Cards</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 7 May &mdash; Continue build
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 7 ===================== -->
+<div class="week-card completed" data-week="7">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 7</span>
+      <span class="week-dates">Complete Skywings &amp; Client Skills <span class="date-range">11 - 14 May</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 13</span>
+          <span class="class-day">Mon 11 May</span>
+        </div>
+        <div class="class-topic">Skywings Build &amp; Complete <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Finish and polish the Skywings Bootstrap website.</div>
+        <div class="badges">
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Cloneskywings.zip</span>
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Crestia.zip</span>
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> Lesson Plan 13 May.html</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 14</span>
+          <span class="class-day">Wed 13 May</span>
+        </div>
+        <div class="class-topic">Manage Client Problems <span class="subject-tag s1">S1</span></div>
+        <div class="class-desc">Dealing with scope creep, client feedback, communication strategies.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> Manage Client Problems.html</span>
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 2</span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 14 May &mdash; Practical catch-up
+      </div>
+
+      <div class="mc-modules">
+        <strong><i class="bi bi-collection"></i> HUB Modules This Week</strong>
+        <ul>
+          <li>MC S01 Module 3 &ndash; Lead &amp; Facilitate a Team</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 8 ===================== -->
+<div class="week-card completed" data-week="8">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 8</span>
+      <span class="week-dates">Your Website Begins <span class="date-range">18 - 21 May</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill done"><i class="bi bi-check-circle-fill"></i> Done</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 15</span>
+          <span class="class-day">Mon 18 May</span>
+        </div>
+        <div class="class-topic">Build Your Own Website &ndash; Step 1 &amp; 2 <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Pick your site concept, plan your pages, organise your project folder.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/how-to-organise.html" target="_blank">how-to-organise.html</a></span>
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/why-tidy-folders.html" target="_blank">why-tidy-folders.html</a></span>
+          <span class="badge code"><i class="bi bi-file-earmark-pdf"></i> <a href="downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" target="_blank">Terminal Commands Cheat Sheet</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://excalidraw.com" target="_blank">Excalidraw</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.figma.com" target="_blank">Figma</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 16</span>
+          <span class="class-day">Wed 20 May</span>
+        </div>
+        <div class="class-topic">Wireframes &amp; AI Tools <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Wireframing, prototyping, AI platforms overview (Claude, Gemini), prompt craft.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/2026-05-20-class.html" target="_blank">Wireframes &amp; AI Slides</a></span>
+          <span class="badge file"><i class="bi bi-file-earmark-image"></i> <a href="downloads/images/gsd-wireframe.png" target="_blank">gsd-wireframe.png</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://excalidraw.com" target="_blank">Excalidraw</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.figma.com" target="_blank">Figma</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://penpot.app" target="_blank">Penpot</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://claude.ai" target="_blank">Claude AI</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://gemini.google.com" target="_blank">Gemini</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://monkeytype.com" target="_blank">Monkeytype</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 21 May &mdash; Continue planning &amp; wireframing
+      </div>
+
+      <div class="mc-modules">
+        <strong><i class="bi bi-collection"></i> HUB Modules This Week</strong>
+        <ul>
+          <li>MC S01 Module 4 &ndash; Match ICT Needs w/ Strategic Direction</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 9 ===================== -->
+<div class="week-card current open" data-week="9">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 9</span>
+      <span class="week-dates">Prototype &amp; Build <span class="date-range">25 - 28 May</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill now"><i class="bi bi-arrow-right-circle-fill"></i> Now</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 17</span>
+          <span class="class-day">Mon 25 May</span>
+        </div>
+        <div class="class-topic">Prototype &amp; Begin Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Turn your wireframe into a working prototype. Start coding your site.</div>
+        <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-25-lesson-plan.html" target="_blank">Lesson Plan Deck</a></span>
+          <span class="badge file"><i class="bi bi-file-earmark-text"></i> <a href="lessons/2026-05-25-lesson-plan.md" target="_blank">Teacher Notes</a></span>
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 1</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="resources.html#games" target="_blank">Practice Games</a></span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 18</span>
+          <span class="class-day">Wed 27 May</span>
+        </div>
+        <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Continue building your original website.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 2</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="resources.html#templates" target="_blank">Templates</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 28 May &mdash; Build time
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 10 ===================== -->
+<div class="week-card upcoming" data-week="10">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 10</span>
+      <span class="week-dates">Build Website <span class="date-range">1 - 4 Jun</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill soon">Upcoming</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="holiday-note">
+        <i class="bi bi-flag"></i> Monday 1 Jun is WA Day (public holiday) &mdash; no class
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 19</span>
+          <span class="class-day">Wed 3 Jun</span>
+        </div>
+        <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Continue building. Focus on responsive design and layout.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 3</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 20</span>
+          <span class="class-day">Thu 4 Jun</span>
+        </div>
+        <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Continue building. Polish and refine.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 3 cont.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 11 ===================== -->
+<div class="week-card upcoming" data-week="11">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 11</span>
+      <span class="week-dates">Build &amp; Review <span class="date-range">8 - 11 Jun</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill soon">Upcoming</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 21</span>
+          <span class="class-day">Mon 8 Jun</span>
+        </div>
+        <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Final build sessions. Make sure all pages are working.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 4 (Submit)</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 22</span>
+          <span class="class-day">Wed 10 Jun</span>
+        </div>
+        <div class="class-topic">Review &amp; Test <span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Step 5: Review and test your website. Cross-browser, responsive, accessibility checks.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 5</span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://validator.w3.org" target="_blank">W3C Validator</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://wave.webaim.org" target="_blank">WAVE Accessibility</a></span>
+        </div>
+      </div>
+
+      <div class="thu-note">
+        <i class="bi bi-calendar3"></i>
+        Thursday 11 Jun &mdash; Final testing &amp; polish
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WEEK 12 ===================== -->
+<div class="week-card upcoming" data-week="12">
+  <div class="week-header" onclick="toggleWeek(this)">
+    <div class="week-title">
+      <span class="week-num">Week 12</span>
+      <span class="week-dates">Teamwork &amp; Submission <span class="date-range">15 - 18 Jun</span></span>
+    </div>
+    <div class="week-status">
+      <span class="status-pill soon">Final Week</span>
+      <i class="bi bi-chevron-down week-toggle"></i>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="week-content">
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 23</span>
+          <span class="class-day">Mon 15 Jun</span>
+        </div>
+        <div class="class-topic">Lead &amp; Facilitate a Team <span class="subject-tag s1">S1</span></div>
+        <div class="class-desc">Team leadership, collaboration, giving and receiving feedback.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 3</span>
+        </div>
+      </div>
+
+      <div class="class-tile">
+        <div class="class-top">
+          <span class="class-num">Class 24</span>
+          <span class="class-day">Wed 17 Jun</span>
+        </div>
+        <div class="class-topic">Submission &amp; Feedback <span class="subject-tag s1">S1</span><span class="subject-tag s2">S2</span></div>
+        <div class="class-desc">Submit your final website. Peer review and trainer feedback session.</div>
+        <div class="badges">
+          <span class="badge hub"><i class="bi bi-collection"></i> Final Submission</span>
+        </div>
+      </div>
+
+      <div class="thu-note" style="border-color: var(--dc-green); color: var(--dc-green); background: rgba(87,242,135,0.06);">
+        <i class="bi bi-trophy-fill"></i>
+        Thursday 18 Jun &mdash; Subjects 1 &amp; 2 Complete! 🎉
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ============================================================
+     GENERAL RESOURCES
+     ============================================================ -->
+<section class="resources-section">
+  <h2><i class="bi bi-bookmarks-fill"></i> Handy Resources</h2>
+  <div class="resource-grid">
+
+    <div class="resource-card">
+      <h3><i class="bi bi-code-slash"></i> W3Schools</h3>
+      <p>Beginner-friendly tutorials for HTML, CSS, Bootstrap, and more. Your go-to reference.</p>
+      <a href="https://www.w3schools.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> w3schools.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-book"></i> MDN Web Docs</h3>
+      <p>The definitive reference for web tech. More detailed than W3Schools, great when you need the full picture.</p>
+      <a href="https://developer.mozilla.org" target="_blank"><i class="bi bi-box-arrow-up-right"></i> developer.mozilla.org</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-braces"></i> VS Code</h3>
+      <p>The code editor we use in class. Free, fast, and full of helpful extensions.</p>
+      <a href="https://code.visualstudio.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> code.visualstudio.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-bootstrap"></i> Bootstrap 5</h3>
+      <p>The CSS framework we use for responsive websites. Grid, components, utilities.</p>
+      <a href="https://getbootstrap.com/docs/5.3/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> getbootstrap.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-palette"></i> Coolors</h3>
+      <p>Generate colour palettes in seconds. Great for picking your site's colour scheme.</p>
+      <a href="https://coolors.co" target="_blank"><i class="bi bi-box-arrow-up-right"></i> coolors.co</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-fonts"></i> Google Fonts</h3>
+      <p>Free web fonts. Pick a font pair, copy the link tag, done.</p>
+      <a href="https://fonts.google.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> fonts.google.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-star-fill"></i> Font Awesome</h3>
+      <p>Icon library. Thousands of free icons you can use in any website.</p>
+      <a href="https://fontawesome.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> fontawesome.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-keyboard"></i> Monkeytype</h3>
+      <p>Typing speed test. Track your WPM and accuracy over time.</p>
+      <a href="https://monkeytype.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> monkeytype.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-pencil-square"></i> Excalidraw</h3>
+      <p>Quick wireframes in the browser. Hand-drawn style, easy to share.</p>
+      <a href="https://excalidraw.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> excalidraw.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-vector-pen"></i> Figma</h3>
+      <p>Industry-standard design tool. Free tier covers everything you need.</p>
+      <a href="https://www.figma.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> figma.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-images"></i> Unsplash</h3>
+      <p>Free high-quality stock photos. No attribution required.</p>
+      <a href="https://unsplash.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> unsplash.com</a>
+    </div>
+
+    <div class="resource-card">
+      <h3><i class="bi bi-images"></i> Pexels</h3>
+      <p>Another great source of free stock photos and videos.</p>
+      <a href="https://www.pexels.com" target="_blank"><i class="bi bi-box-arrow-up-right"></i> pexels.com</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CHEAT SHEETS
+     ============================================================ -->
+<section class="resources-section">
+  <h2><i class="bi bi-file-earmark-text-fill"></i> Cheat Sheets</h2>
+  <div class="cheat-grid">
+    <div class="cheat-card">
+      <i class="bi bi-terminal"></i>
+      <span>Terminal Commands Cheat Sheet.pdf</span>
+    </div>
+    <div class="cheat-card">
+      <i class="bi bi-filetype-html"></i>
+      <span>HTML Tag Reference Sheet.pdf</span>
+    </div>
+    <div class="cheat-card">
+      <i class="bi bi-filetype-css"></i>
+      <span>CSS Class 3 Reference Sheet.pdf</span>
+    </div>
+    <div class="cheat-card">
+      <i class="bi bi-bootstrap"></i>
+      <span>Bootstrap Breakpoints.pdf</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <p>26b Class Hub &middot; Equinim College &middot; Front End Web Development 2026</p>
+  <p style="margin-top: 4px;">Built with <span class="heart">&hearts;</span> by Tim Daly</p>
+  <p style="margin-top: 8px; font-size: 11px; color: var(--dc-muted);">
+    <span class="subject-tag s1" style="vertical-align: baseline;">S1</span> = Subject 1 (Professional Skills)
+    &nbsp;&middot;&nbsp;
+    <span class="subject-tag s2" style="vertical-align: baseline;">S2</span> = Subject 2 (Technical Build)
+  </p>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+function toggleWeek(header) {
+  const card = header.closest('.week-card');
+  card.classList.toggle('open');
+}
+
+// Auto-open current week and scroll to it on load
+document.addEventListener('DOMContentLoaded', () => {
+  const currentCard = document.querySelector('.week-card.current');
+  if (currentCard) {
+    currentCard.classList.add('open');
+    setTimeout(() => {
+      currentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 600);
+  }
+});
+</script>
+
+</body>
+</html>

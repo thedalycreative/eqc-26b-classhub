@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Set Up Your Equinim Folders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#f3e9d8;
+    --sand-deep:#ecdcc2;
+    --ink:#2a211b;
+    --ink-soft:#5c4f44;
+    --sun:#e8633a;
+    --sun-deep:#c9461f;
+    --sky:#3a7d8c;
+    --sky-deep:#2c6271;
+    --cream:#fbf6ec;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Newsreader",Georgia,serif;
+    background:var(--sand);
+    color:var(--ink);
+    line-height:1.55;
+    font-size:20px;
+    overflow-x:hidden;
+  }
+  .display{font-family:"Bricolage Grotesque",sans-serif;line-height:1.0;letter-spacing:-0.02em}
+
+  /* ---------- TOP LINK ---------- */
+  .topbar{position:relative;z-index:5;padding:18px 24px}
+  .back{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sun-deep);text-decoration:none;
+  }
+  .back:hover{color:var(--ink)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:62vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:30px 24px 70px;overflow:hidden;
+    background:linear-gradient(180deg,#f6d9a8 0%, #f0bd8a 42%, var(--sand) 100%);
+    margin-top:-58px;
+  }
+  .sun{
+    position:absolute;top:8%;width:min(280px,55vw);height:min(280px,55vw);border-radius:50%;
+    background:radial-gradient(circle at 50% 45%, #ffd27a 0%, #ff9d4d 55%, var(--sun) 100%);
+    box-shadow:0 0 80px 26px rgba(255,170,90,.5);
+    animation:rise 1.3s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise{from{transform:translateY(60px) scale(.85);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+  .hero-inner{position:relative;z-index:2;max-width:840px}
+  .kicker{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-transform:uppercase;
+    letter-spacing:.32em;font-size:14px;color:var(--sun-deep);margin-bottom:20px;animation:fade .8s .15s both;
+  }
+  h1.display{font-weight:800;font-size:clamp(40px,8vw,86px);color:var(--ink);margin-bottom:20px;animation:fade .9s .3s both}
+  h1 .swap{color:var(--sun-deep)}
+  .lede{font-size:clamp(19px,2.3vw,25px);color:var(--ink-soft);max-width:600px;margin:0 auto;animation:fade .9s .5s both}
+  @keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:70px 24px}
+  .wrap{max-width:760px;margin:0 auto}
+  .big{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(30px,5vw,50px);line-height:1.05;letter-spacing:-.02em;margin-bottom:24px}
+  .big .hi{color:var(--sun-deep)}
+  p.body{font-size:clamp(19px,2.2vw,23px);color:var(--ink-soft);margin-bottom:20px}
+  p.body b{color:var(--ink)}
+
+  /* ---------- THE TREE ---------- */
+  .treewrap{background:var(--cream);border:2px solid var(--sand-deep);border-radius:22px;padding:30px 26px;margin-top:10px;box-shadow:0 18px 40px -24px rgba(42,33,27,.4)}
+  .tree{font-family:"Bricolage Grotesque",sans-serif}
+  .node{display:flex;align-items:baseline;gap:10px;padding:7px 0}
+  .node .ico{flex:none;font-size:18px}
+  .node .nm{font-weight:700;font-size:18px;color:var(--ink)}
+  .node .hint{font-family:"Newsreader",serif;font-style:italic;font-weight:400;font-size:15px;color:var(--ink-soft)}
+  .root > .node .nm{font-size:21px}
+  .lvl1{padding-left:14px;margin-left:8px;border-left:2px dashed var(--sand-deep)}
+  .lvl2{padding-left:14px;margin-left:8px;border-left:2px dashed #d9c3a3}
+  .group-web{background:rgba(232,99,58,.07);border-radius:14px;padding:6px 10px;margin:6px 0}
+  .group-cyber{background:rgba(58,125,140,.09);border-radius:14px;padding:6px 10px;margin:6px 0}
+  .group-web > .node .nm{color:var(--sun-deep)}
+  .group-cyber > .node .nm{color:var(--sky-deep)}
+
+  /* repeat pattern callout */
+  .pattern{display:flex;gap:14px;align-items:flex-start;background:var(--ink);color:var(--cream);border-radius:18px;padding:24px 24px;margin-top:30px}
+  .pattern .e{font-size:30px;flex:none}
+  .pattern .t{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:19px;margin-bottom:6px;color:#fff}
+  .pattern .d{font-size:17px;color:#d9ccbd}
+
+  /* what goes where */
+  .ww .item{display:flex;gap:16px;padding:18px 0;border-top:2px solid var(--sand-deep);align-items:flex-start}
+  .ww .item:last-child{border-bottom:2px solid var(--sand-deep)}
+  .ww .fld{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:18px;flex:none;width:170px;color:var(--ink)}
+  .ww .exp{font-size:18px;color:var(--ink-soft)}
+  @media(max-width:620px){.ww .item{flex-direction:column;gap:4px}.ww .fld{width:auto}}
+
+  /* naming */
+  .name{background:var(--sky);color:#eafdff}
+  .name .big{color:#fff}
+  .name p.body{color:#d6f1f5}
+  .name p.body b{color:#fff}
+  .names{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  .nbox{border-radius:16px;padding:22px 20px;font-family:"Bricolage Grotesque",sans-serif}
+  .nbox h3{font-size:14px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;font-weight:700}
+  .nbox p{font-size:16px;line-height:1.7;font-weight:400}
+  .bad{background:rgba(0,0,0,.18)}.bad h3{color:#ffd2c4}.bad p{color:#ffe2d8}
+  .good{background:#fff;color:var(--ink)}.good h3{color:var(--sky-deep)}
+  @media(max-width:620px){.names{grid-template-columns:1fr}}
+
+  /* closer */
+  .closer{text-align:center;background:linear-gradient(180deg,var(--sand),#f6d9a8)}
+  .closer .sign{font-family:"Newsreader",serif;font-style:italic;font-size:20px;color:var(--ink-soft);margin-top:26px}
+  .note{font-size:15px;color:var(--ink-soft);margin-top:34px;font-style:italic}
+</style>
+</head>
+<body>
+
+  <div class="topbar"><a class="back" href="why-tidy-folders.html">← Why bother?</a></div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="sun"></div>
+    <div class="hero-inner">
+      <div class="kicker">The How · For Dwain &amp; Ayu</div>
+      <h1 class="display">Build it once.<br><span class="swap">Use it forever.</span></h1>
+      <p class="lede">One simple shelf for everything you study — Web Dev and Cyber — set up so you always know exactly where things go.</p>
+    </div>
+  </header>
+
+  <!-- THE BIG IDEA -->
+  <section>
+    <div class="wrap">
+      <h2 class="big">The trick: <span class="hi">give every subject the same folders.</span></h2>
+      <p class="body">You're studying two things — <b>back end web dev</b> and <b>cyber security</b>. So we split your shelf in two.</p>
+      <p class="body">Then we give <b>each subject the exact same set of folders.</b> Same names, same order. That way you never have to stop and think "hmm, where does this go?" — your brain already knows.</p>
+    </div>
+  </section>
+
+  <!-- THE TREE -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <h2 class="big">Your folder shelf 👇</h2>
+      <p class="body">Make these on your Desktop. That's the whole thing.</p>
+
+      <div class="treewrap">
+        <div class="tree">
+          <div class="root">
+            <div class="node"><span class="ico">📁</span><span class="nm">Equinim Study</span></div>
+            <div class="lvl1">
+
+              <div class="node"><span class="ico">📄</span><span class="nm">00 — Start Here</span><span class="hint">a note to your future self</span></div>
+              <div class="node"><span class="ico">📁</span><span class="nm">01 — Course Info</span><span class="hint">timetable, logins, dates</span></div>
+
+              <div class="group-web">
+                <div class="node"><span class="ico">📁</span><span class="nm">02 — Web Dev</span></div>
+                <div class="lvl2">
+                  <div class="node"><span class="ico">📝</span><span class="nm">Notes</span></div>
+                  <div class="node"><span class="ico">💻</span><span class="nm">Code &amp; Practice</span></div>
+                  <div class="node"><span class="ico">📋</span><span class="nm">Assessments</span></div>
+                  <div class="node"><span class="ico">⚡</span><span class="nm">Cheat Sheets</span></div>
+                </div>
+              </div>
+
+              <div class="group-cyber">
+                <div class="node"><span class="ico">📁</span><span class="nm">03 — Cyber Security</span></div>
+                <div class="lvl2">
+                  <div class="node"><span class="ico">📝</span><span class="nm">Notes</span></div>
+                  <div class="node"><span class="ico">🧪</span><span class="nm">Labs &amp; Practice</span></div>
+                  <div class="node"><span class="ico">📋</span><span class="nm">Assessments</span></div>
+                  <div class="node"><span class="ico">⚡</span><span class="nm">Cheat Sheets</span></div>
+                </div>
+              </div>
+
+              <div class="node"><span class="ico">📁</span><span class="nm">04 — Submitted</span><span class="hint">a copy of anything handed in</span></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <span class="e">🧠</span>
+        <div>
+          <div class="t">See the repeat?</div>
+          <div class="d">Both subjects have <b style="color:#fff">Notes · Practice · Assessments · Cheat Sheets</b>. Learn the pattern once and it works for any subject you ever study.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT GOES WHERE -->
+  <section>
+    <div class="wrap">
+      <h2 class="big">What goes <span class="hi">where</span></h2>
+      <div class="ww">
+        <div class="item"><div class="fld">Start Here</div><div class="exp">A simple note reminding you how the folders work. Read it when you forget.</div></div>
+        <div class="item"><div class="fld">Course Info</div><div class="exp">Your timetable, login details, important dates, who to email. The boring-but-vital stuff.</div></div>
+        <div class="item"><div class="fld">Notes</div><div class="exp">Anything you write down or save from a lesson. Name them by week.</div></div>
+        <div class="item"><div class="fld">Code &amp; Practice</div><div class="exp">Web dev: the code you write while practising. One folder per exercise or mini-build.</div></div>
+        <div class="item"><div class="fld">Labs &amp; Practice</div><div class="exp">Cyber: your hands-on labs, walkthroughs, and anything you try out yourself.</div></div>
+        <div class="item"><div class="fld">Assessments</div><div class="exp">Graded work you're building. Keep it here until it's done and handed in.</div></div>
+        <div class="item"><div class="fld">Cheat Sheets</div><div class="exp">Quick references you'll use again and again — commands, snippets, handy links.</div></div>
+        <div class="item"><div class="fld">Submitted</div><div class="exp">Drop a copy of anything you hand in here. Proof you did it, safe forever.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAMING -->
+  <section class="name">
+    <div class="wrap">
+      <h2 class="big">Name things so future-you isn't confused.</h2>
+      <p class="body">A folder is only tidy if you can read the name and know what's inside. Be boringly clear.</p>
+      <div class="names">
+        <div class="nbox bad">
+          <h3>✗ Don't</h3>
+          <p>new folder<br>stuff<br>final<br>final final 2<br>asdf<br>Untitled (3)</p>
+        </div>
+        <div class="nbox good">
+          <h3>✓ Do</h3>
+          <p>Week 03 Notes<br>Login API Practice<br>Assessment 1 Draft<br>Nmap Cheat Sheet<br>Week 05 Lab — Passwords</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer">
+    <div class="wrap">
+      <h2 class="big">That's it. Go build your shelf.</h2>
+      <p class="body">Spend ten minutes making these folders today. Then every file you touch from now on has a home — and you're already working like the business owner you're becoming.</p>
+      <p class="sign">Keep it clean. — Tim</p>
+      <p class="note">Tip: keep this page in the same folder as the "Why bother?" page so the link up top works.</p>
+    </div>
+  </section>
+
+</body>
+</html>

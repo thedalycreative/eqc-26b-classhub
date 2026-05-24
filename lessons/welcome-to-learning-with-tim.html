@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Learning with Tim — EQC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fafaf7;
+    --paper-2:#f2efe6;
+    --card:#ffffff;
+    --ink:#1a1a1a;
+    --ink-soft:#54514b;
+    --orange:#ff8a3d;
+    --orange-deep:#e8701f;
+    --teal:#2f9ea0;
+    --teal-deep:#1f7b7d;
+    --line:#1a1a1a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Space Grotesk',sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 8% 6%, rgba(255,138,61,.10), transparent 34%),
+      radial-gradient(circle at 92% 10%, rgba(47,158,160,.10), transparent 38%),
+      radial-gradient(rgba(26,26,26,.028) 1px, transparent 1px);
+    background-size:auto, auto, 24px 24px;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 26px}
+
+  /* ---------- selection / detail ---------- */
+  ::selection{background:var(--orange);color:#fff}
+
+  /* ---------- HERO ---------- */
+  header{position:relative;padding:64px 0 26px}
+  .topline{
+    display:flex;align-items:center;gap:12px;font-size:12.5px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--teal-deep);
+    animation:fade .7s ease both;
+  }
+  .topline .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(255,138,61,.2)}
+  .topline .rule{flex:0 0 42px;height:2px;background:var(--ink);opacity:.5}
+
+  h1{
+    font-family:'Fraunces',serif;font-weight:900;font-optical-sizing:auto;
+    font-size:clamp(48px,10vw,108px);line-height:.9;letter-spacing:-.025em;
+    margin:20px 0 0;
+  }
+  h1 .line{display:block;opacity:0;animation:rise .8s cubic-bezier(.2,.8,.3,1) forwards}
+  h1 .l2{animation-delay:.08s}
+  h1 .with{font-style:italic;font-weight:400;color:var(--ink-soft)}
+  h1 .tim{
+    position:relative;color:var(--orange);display:inline-block;
+  }
+  h1 .tim::after{
+    content:"";position:absolute;left:0;right:0;bottom:.1em;height:.14em;
+    background:var(--teal);z-index:-1;border-radius:4px;transform:rotate(-1deg);
+  }
+  .lede{
+    font-size:clamp(18px,2.4vw,22px);color:var(--ink-soft);max-width:600px;margin-top:26px;
+    font-weight:400;opacity:0;animation:rise .8s cubic-bezier(.2,.8,.3,1) .22s forwards;
+  }
+  .lede b{color:var(--ink);font-weight:600}
+
+  /* sticker badge */
+  .badge{
+    position:absolute;top:78px;right:0;
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    background:var(--ink);color:var(--paper);
+    font-size:14px;line-height:1.25;text-align:center;
+    padding:18px 16px;border-radius:50%;width:128px;height:128px;
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(8deg);box-shadow:0 10px 30px rgba(0,0,0,.18);
+    animation:pop .7s cubic-bezier(.2,.9,.3,1.5) .5s both;
+  }
+  .badge span{display:block}
+  .badge .big{font-size:21px;font-weight:600;font-style:normal;color:var(--orange)}
+  @media(max-width:680px){.badge{display:none}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:34px 0}
+  .eyebrow{
+    font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--orange-deep);margin-bottom:14px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--orange)}
+  h2{
+    font-family:'Fraunces',serif;font-weight:600;font-size:clamp(28px,4.5vw,40px);
+    line-height:1.06;letter-spacing:-.02em;margin-bottom:16px;
+  }
+  .prose{font-size:17px;color:var(--ink-soft);max-width:640px}
+  .prose p{margin-bottom:15px}
+  .prose b{color:var(--ink);font-weight:600}
+  .prose .hl{background:linear-gradient(transparent 62%, rgba(47,158,160,.28) 62%);padding:0 2px}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- INTRO CARD ---------- */
+  .intro-card{
+    background:var(--ink);color:var(--paper);border-radius:22px;
+    padding:38px 34px;position:relative;overflow:hidden;
+    box-shadow:0 24px 50px -24px rgba(0,0,0,.5);
+  }
+  .intro-card::before{
+    content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle,var(--orange),transparent 70%);opacity:.4;
+  }
+  .intro-card .eyebrow{color:var(--orange)}
+  .intro-card h2{color:var(--paper)}
+  .intro-card .prose{color:#d8d5cd;max-width:none}
+  .intro-card .prose b{color:#fff}
+
+  /* ---------- HOW I RUN THINGS — principle grid ---------- */
+  .principles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  @media(max-width:680px){.principles{grid-template-columns:1fr}}
+  .p-card{
+    background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:22px;
+    box-shadow:5px 5px 0 var(--ink);transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .p-card:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--teal)}
+  .p-num{font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--orange-deep);margin-bottom:6px}
+  .p-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:21px;line-height:1.1;margin-bottom:8px;letter-spacing:-.01em}
+  .p-card p{font-size:14.5px;color:var(--ink-soft)}
+
+  /* ---------- THE DEAL — two columns ---------- */
+  .deal{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  @media(max-width:680px){.deal{grid-template-columns:1fr}}
+  .deal-col{border-radius:18px;padding:26px 24px;border:2px solid var(--ink)}
+  .deal-col.me{background:var(--paper-2)}
+  .deal-col.you{background:#eaf5f5;border-color:var(--teal-deep)}
+  .deal-col h3{
+    font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .deal-col.you h3{color:var(--teal-deep)}
+  .deal-col ul{list-style:none}
+  .deal-col li{position:relative;padding:8px 0 8px 28px;font-size:15px;color:var(--ink-soft);border-top:1px dashed rgba(26,26,26,.18)}
+  .deal-col li:first-of-type{border-top:none}
+  .deal-col li::before{
+    content:"";position:absolute;left:2px;top:15px;width:9px;height:9px;border-radius:2px;
+    background:var(--orange);transform:rotate(45deg);
+  }
+  .deal-col.you li::before{background:var(--teal)}
+  .deal-col li b{color:var(--ink);font-weight:600}
+
+  /* ---------- OFF THE CLOCK ---------- */
+  .offclock{
+    background:var(--card);border:2px solid var(--ink);border-radius:20px;
+    padding:34px 30px;box-shadow:6px 6px 0 var(--orange);position:relative;
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .tag{
+    font-size:13.5px;font-weight:600;background:var(--paper-2);border:1.5px solid var(--ink);
+    border-radius:30px;padding:7px 15px;display:inline-flex;align-items:center;gap:7px;
+  }
+  .tag .e{font-size:15px}
+
+  /* ---------- GUM CALLOUT ---------- */
+  .gum{
+    margin-top:22px;background:linear-gradient(135deg,#eaf5f5,#faf3ec);
+    border:2px dashed var(--teal-deep);border-radius:18px;padding:24px 26px;
+    display:flex;gap:18px;align-items:flex-start;
+  }
+  .gum .icon{font-size:34px;line-height:1;flex-shrink:0;animation:wiggle 3s ease-in-out infinite}
+  .gum h3{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:6px}
+  .gum p{font-size:15px;color:var(--ink-soft)}
+  .gum p b{color:var(--ink)}
+
+  /* ---------- SIGN OFF ---------- */
+  .signoff{text-align:center;padding:56px 0 30px}
+  .signoff .big{
+    font-family:'Fraunces',serif;font-weight:600;font-size:clamp(30px,5vw,46px);
+    letter-spacing:-.02em;line-height:1.08;max-width:620px;margin:0 auto 22px;
+  }
+  .signoff .big em{font-style:italic;color:var(--orange)}
+  .sig{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:34px;color:var(--teal-deep)}
+  .sig-role{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+
+  footer{border-top:2px solid var(--ink);margin-top:30px;padding:24px 0 50px;text-align:center}
+  footer p{font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em}
+  footer b{color:var(--orange-deep)}
+
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes pop{from{opacity:0;transform:scale(.6) rotate(8deg)}to{opacity:1;transform:scale(1) rotate(8deg)}}
+  @keyframes wiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header>
+    <div class="topline"><span class="dot"></span> EQC Institute of Technology <span class="rule"></span> ICT &amp; Web Development</div>
+    <div class="badge"><div><span class="big">Hey 👋</span><span>glad<br>you're<br>here</span></div></div>
+    <h1>
+      <span class="line">Welcome to</span>
+      <span class="line l2"><span class="with">learning with</span> <span class="tim">Tim</span></span>
+    </h1>
+    <p class="lede">No jargon for the sake of it. No death-by-PowerPoint. Just <b>real-world skills</b>, taught by someone who still builds this stuff for a living — and genuinely wants you to get good at it.</p>
+  </header>
+
+  <!-- WHO I AM -->
+  <section class="reveal">
+    <div class="intro-card">
+      <div class="eyebrow">The short version</div>
+      <h2>I'm Tim — your trainer.</h2>
+      <div class="prose">
+        <p>By day I'm in the room with you, teaching ICT and web development. The rest of the time I run a small creative studio building websites, brand work, and automation tools for real clients with real deadlines.</p>
+        <p>That matters for one reason: <b>everything I teach you, I've actually shipped.</b> This isn't theory I read once in a manual — it's the stuff I use on Monday for a paying client and explain to you on Tuesday.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKGROUND -->
+  <section class="reveal">
+    <div class="eyebrow">Where I come from</div>
+    <h2>I came up through deadlines, not just textbooks.</h2>
+    <div class="prose">
+      <p>I run <b>The Daly Creative</b>, a Perth studio doing brand identity, web development, and AI automation. I learned this trade the hands-on way — client feedback, shipped projects, and the occasional 2am <span class="hl">"why won't this deploy"</span> moment.</p>
+      <p>I bring that straight into the classroom. We use the same tools the industry actually uses — modern web frameworks, real version control, proper deployment — taught the way I wish someone had taught me: clearly, practically, and without making you feel small for not knowing yet.</p>
+    </div>
+  </section>
+
+  <!-- HOW I RUN THINGS -->
+  <section class="reveal">
+    <div class="eyebrow">How I run the room</div>
+    <h2>The vibe, in five rules.</h2>
+    <div class="principles">
+      <div class="p-card">
+        <div class="p-num">01</div>
+        <h3>Questions are the point</h3>
+        <p>There's no such thing as a dumb question in here. The one you're too embarrassed to ask is usually the one five other people are also stuck on. Ask it.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-num">02</div>
+        <h3>Mistakes are data</h3>
+        <p>Broken code isn't failure — it's information. Half this job is reading an error message and going "right, okay." We debug, we don't panic.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-num">03</div>
+        <h3>We build real things</h3>
+        <p>You'll leave with actual projects you can show people — not worksheets. If it wouldn't fly in industry, we're not wasting your time on it.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-num">04</div>
+        <h3>Straight talk, always kind</h3>
+        <p>I'll give you honest feedback because sugar-coating helps no one. But it'll always be about the work, never about you — and always with a way forward.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-num">05</div>
+        <h3>Keep it moving</h3>
+        <p>I like a class that has momentum — short bursts, hands on keyboards, real examples. If you're bored, something's gone wrong and I want to know.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-num">06</div>
+        <h3>You're an adult here</h3>
+        <p>I'll treat you like the professional you're training to become. Show up, give it a crack, and I'll back you the whole way.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE DEAL -->
+  <section class="reveal">
+    <div class="eyebrow">The deal</div>
+    <h2>Here's the two-way street.</h2>
+    <div class="deal">
+      <div class="deal-col me">
+        <h3>🤝 What you get from me</h3>
+        <ul>
+          <li><b>Industry-current skills.</b> I teach what's actually being used right now, not what was hot five years ago.</li>
+          <li><b>Real availability.</b> Stuck? Ask. I'd rather you ask early than struggle silently for a week.</li>
+          <li><b>Clear expectations.</b> You'll always know what we're doing, why it matters, and what "good" looks like.</li>
+          <li><b>Respect.</b> For your time, your background, and the fact you're here to level up.</li>
+        </ul>
+      </div>
+      <div class="deal-col you">
+        <h3>✅ What I ask of you</h3>
+        <ul>
+          <li><b>Show up and engage.</b> You don't have to be the smartest in the room — just present and willing.</li>
+          <li><b>Have a crack.</b> Try it before you ask. A wrong attempt teaches you more than a blank screen.</li>
+          <li><b>Be honest when you're lost.</b> "I don't get it" is a complete sentence and a totally valid one.</li>
+          <li><b>Look out for each other.</b> The best classes feel like a team, not twenty solo missions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFF THE CLOCK -->
+  <section class="reveal">
+    <div class="offclock">
+      <div class="eyebrow">Off the clock</div>
+      <h2>The human behind the whiteboard.</h2>
+      <div class="prose">
+        <p>When I'm not teaching or building for clients, I'm usually losing a word game to people I love, walking a very good dog named <b>Duke</b>, or making some oddly specific little tool to solve a problem nobody else has.</p>
+        <p>I like things that are <b>clever, useful, and a little bit fun</b> — and you'll feel that in how I teach. If a lesson can be a game, it probably will be.</p>
+      </div>
+      <div class="tags">
+        <span class="tag"><span class="e">🧩</span> Word-game tragic</span>
+        <span class="tag"><span class="e">🐕</span> Duke's personal assistant</span>
+        <span class="tag"><span class="e">🛠️</span> Builds tools for fun</span>
+        <span class="tag"><span class="e">⚡</span> Allergic to busywork</span>
+        <span class="tag"><span class="e">🎨</span> Designer at heart</span>
+      </div>
+
+      <div class="gum">
+        <div class="icon">🍬</div>
+        <div>
+          <h3>Yes, about the gum on my desk…</h3>
+          <p>It's not a snack stash. Chewing actually bumps up focus and takes the edge off stress — there's real research behind it. <b>Grab a piece when your concentration dips</b> (and bin it after, obviously). Ask me about the science sometime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGN OFF -->
+  <section class="signoff reveal">
+    <p class="big">So that's me. Come curious, leave capable, and <em>let's build something.</em></p>
+    <div class="sig">Tim</div>
+    <div class="sig-role">Trainer · ICT &amp; Web Development · EQC</div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap"><p>Welcome to <b>Learning with Tim</b> · EQC Institute of Technology · Perth, WA</p></div>
+</footer>
+
+<script>
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+</script>
+</body>
+</html>

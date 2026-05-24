@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is a README? — Lesson Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #161b22;
+    --line: #30363d;
+    --ink: #e6edf3;
+    --muted: #8b949e;
+    --accent: #ff8a3d;
+    --teal: #2f9ea0;
+    --green: #3fb950;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 64px 80px;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide-num {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .slide-tag {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 72px;
+    line-height: 1.05;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  h1 .accent { color: var(--accent); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    letter-spacing: -0.015em;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  p, li {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .lead {
+    font-size: 24px;
+    color: var(--muted);
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    flex: 1;
+    align-items: start;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .card .label {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  ul.clean {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.clean li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  ul.clean li:last-child { border-bottom: none; }
+
+  ul.clean li::before {
+    content: '—';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .code-block {
+    background: #0a0d12;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: auto;
+    color: #c9d1d9;
+  }
+
+  .code-block .md-h { color: var(--accent); font-weight: 700; }
+  .code-block .md-bold { color: #ffd066; font-weight: 700; }
+  .code-block .md-italic { color: var(--teal); font-style: italic; }
+  .code-block .md-link { color: var(--green); }
+  .code-block .md-code { color: #ff7b72; background: #161b22; padding: 1px 4px; border-radius: 3px; }
+
+  .nav {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    z-index: 100;
+  }
+
+  .nav button {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: background 0.15s;
+  }
+
+  .nav button:hover { background: var(--line); }
+  .nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .nav .counter {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 0 8px;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .notes-toggle {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    z-index: 100;
+  }
+
+  .notes-toggle:hover { color: var(--ink); }
+
+  .speaker-notes {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 24px;
+    right: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+    z-index: 99;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  .speaker-notes.visible { display: block; }
+
+  .speaker-notes .note-label {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .terminal-prompt::before {
+    content: '$ ';
+    color: var(--green);
+  }
+
+  .big-stat {
+    font-family: 'Fraunces', serif;
+    font-size: 120px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: rgba(255, 138, 61, 0.1);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .file-tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .file-tree .highlight {
+    color: var(--accent);
+    font-weight: 700;
+    background: rgba(255, 138, 61, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 32px;
+  }
+
+  .checklist .item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+  }
+
+  .checklist .check {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .footer-meta {
+    margin-top: auto;
+    padding-top: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .quote-block {
+    border-left: 3px solid var(--accent);
+    padding: 8px 24px;
+    margin: 24px 0;
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .quote-block .source {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-style: normal;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<button class="notes-toggle" onclick="toggleNotes()">[ N ] Speaker Notes</button>
+
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <section class="slide active" data-notes="Welcome students. Today we're tackling something that sounds boring but is actually one of the most important files in any developer's project. Open with the question on the next slide before revealing the answer.">
+    <div class="slide-num">01 / 12</div>
+    <div class="slide-tag">Lesson 01 · Software Development Fundamentals</div>
+    <h1>What is a<br><span class="accent">README</span> file?</h1>
+    <p class="lead">The unsung hero of every good codebase. The first thing developers, employers, and collaborators read — and often the deciding factor in whether they keep reading.</p>
+    <div class="footer-meta">
+      <span>EQC Institute of Technology</span>
+      <span>60 min · Beginner</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: HOOK -->
+  <section class="slide" data-notes="Pose this question to the room. Wait for answers. Common responses: 'check the files', 'look at the code', 'panic'. Guide them toward the README. The answer is hiding in plain sight — most projects literally have a file telling you to read it first.">
+    <div class="slide-num">02 / 12</div>
+    <div class="slide-tag">The Scenario</div>
+    <h2>You just downloaded<br>a project with 200 files.</h2>
+    <p class="lead" style="font-size: 32px; color: var(--ink); margin-top: 16px;">Where do you start?</p>
+    <div style="margin-top: 64px; font-family: 'Fraunces', serif; font-size: 20px; color: var(--muted); font-style: italic;">
+      → Pause. Discuss. Then reveal.
+    </div>
+  </section>
+
+  <!-- SLIDE 3: THE ANSWER -->
+  <section class="slide" data-notes="The README. The name is literally an instruction. It originated in the 1970s with software distributions — developers wanted to make sure users saw the most important info first, so they named the file in a way that screamed 'open me first'. Point out the file in the tree.">
+    <div class="slide-num">03 / 12</div>
+    <div class="slide-tag">The Answer</div>
+    <h2>You start here.</h2>
+    <div class="grid-2" style="margin-top: 16px;">
+      <div>
+        <div class="file-tree">
+          📁 my-project/<br>
+          ├── 📁 src/<br>
+          ├── 📁 public/<br>
+          ├── 📁 node_modules/<br>
+          ├── 📄 package.json<br>
+          ├── 📄 .gitignore<br>
+          └── <span class="highlight">📄 README.md ← start here</span>
+        </div>
+      </div>
+      <div>
+        <h3>Read. Me.</h3>
+        <p style="margin-bottom: 16px;">The name is the instruction. It's been the universal "open this first" file since the 1970s.</p>
+        <p style="color: var(--muted);">Lives in the project's root directory, written in Markdown, and acts as the front door to everything else.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: DEFINITION -->
+  <section class="slide" data-notes="Reinforce the three roles. A README is documentation (for users), a sales pitch (for potential users/employers), and a user manual (for collaborators). It does triple duty. Emphasise that .md means Markdown — we'll cover that syntax shortly.">
+    <div class="slide-num">04 / 12</div>
+    <div class="slide-tag">Definition</div>
+    <h2>So what is it, really?</h2>
+    <p class="lead" style="margin-bottom: 48px;">A plain-text file (usually <code style="background: var(--panel); padding: 4px 8px; border-radius: 4px; color: var(--accent);">README.md</code>) that explains what a project is, how to use it, and why it exists.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon-box">📖</div>
+        <h4>Documentation</h4>
+        <p>Tells developers how the code works and how to run it.</p>
+      </div>
+      <div class="card">
+        <div class="icon-box">✨</div>
+        <h4>Sales Pitch</h4>
+        <p>Convinces visitors the project is worth their time.</p>
+      </div>
+      <div class="card">
+        <div class="icon-box">🧭</div>
+        <h4>User Manual</h4>
+        <p>Guides people through setup, usage, and contribution.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: WHY IT MATTERS -->
+  <section class="slide" data-notes="This is the 'why should I care' moment. Drive home that for portfolio projects, a great README can outweigh a mediocre CV. Recruiters and tech leads scan READMEs before they even clone the repo. A messy README signals messy thinking.">
+    <div class="slide-num">05 / 12</div>
+    <div class="slide-tag">Why It Matters</div>
+    <h2>First impressions are everything.</h2>
+    <div class="quote-block">
+      "A README is the cover letter of your codebase. If it's sloppy, no one reads the rest."
+      <span class="source">— Every senior dev, ever</span>
+    </div>
+    <div class="grid-3" style="margin-top: 32px;">
+      <div class="card">
+        <div class="label">For Recruiters</div>
+        <p style="color: var(--ink); font-size: 16px;">Often scanned <strong style="color: var(--accent);">before</strong> the code itself. A polished README signals professionalism.</p>
+      </div>
+      <div class="card">
+        <div class="label">For Collaborators</div>
+        <p style="color: var(--ink); font-size: 16px;">Decides whether someone contributes — or bounces in 30 seconds.</p>
+      </div>
+      <div class="card">
+        <div class="label">For Future You</div>
+        <p style="color: var(--ink); font-size: 16px;">In 6 months, you'll forget how your own project works. The README is your memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: ANATOMY -->
+  <section class="slide" data-notes="Walk through each section. Not every README needs ALL of these — small projects can skip Contributing or License. But every README should have at minimum: title, description, installation, and usage. The rest scale with project size.">
+    <div class="slide-num">06 / 12</div>
+    <div class="slide-tag">Anatomy</div>
+    <h2>The 10 sections of a great README.</h2>
+    <div class="grid-2" style="margin-top: 16px;">
+      <ul class="clean">
+        <li><strong>Project Title</strong> — clear, descriptive name</li>
+        <li><strong>Description</strong> — what & why, in 1–2 sentences</li>
+        <li><strong>Installation</strong> — how to set it up locally</li>
+        <li><strong>Usage</strong> — how to actually run it, with examples</li>
+        <li><strong>Features</strong> — key functionality at a glance</li>
+      </ul>
+      <ul class="clean">
+        <li><strong>Tech Stack</strong> — languages, frameworks, tools</li>
+        <li><strong>Screenshots</strong> — visual proof it works</li>
+        <li><strong>Contributing</strong> — how others can help</li>
+        <li><strong>License</strong> — legal terms of use</li>
+        <li><strong>Credits / Contact</strong> — who built it</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: MARKDOWN INTRO -->
+  <section class="slide" data-notes="Markdown is the secret sauce. It's a lightweight syntax that GitHub, GitLab, and most platforms render automatically. Students might know it from Discord or Reddit. Show how the raw text on the left becomes the formatted output on the right.">
+    <div class="slide-num">07 / 12</div>
+    <div class="slide-tag">Markdown 101</div>
+    <h2>Written in <span style="color: var(--accent); font-style: italic;">Markdown</span>.</h2>
+    <p class="lead" style="margin-bottom: 32px;">A simple syntax that platforms like GitHub render automatically. Easy to write, easy to read.</p>
+    <div class="grid-2">
+      <div>
+        <h3>You write</h3>
+<div class="code-block"><span class="md-h"># Heading 1</span>
+<span class="md-h">## Heading 2</span>
+
+<span class="md-bold">**bold text**</span>
+<span class="md-italic">*italic text*</span>
+
+- bullet point
+- another point
+
+<span class="md-link">[link](https://example.com)</span>
+<span class="md-code">`inline code`</span></div>
+      </div>
+      <div>
+        <h3>GitHub renders</h3>
+        <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
+          <h2 style="font-family: 'Fraunces', serif; font-size: 28px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line);">Heading 1</h2>
+          <h3 style="font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 16px; color: var(--ink); text-transform: none; letter-spacing: 0;">Heading 2</h3>
+          <p style="font-size: 15px; margin-bottom: 8px;"><strong>bold text</strong></p>
+          <p style="font-size: 15px; margin-bottom: 16px;"><em>italic text</em></p>
+          <ul style="font-size: 15px; padding-left: 20px; margin-bottom: 16px;">
+            <li>bullet point</li>
+            <li>another point</li>
+          </ul>
+          <p style="font-size: 15px;"><a href="#" style="color: var(--green);">link</a> <code style="background: #0a0d12; padding: 2px 6px; border-radius: 3px; color: #ff7b72; font-size: 13px;">inline code</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: GOOD VS BAD -->
+  <section class="slide" data-notes="Real talk on what separates a great README from a forgettable one. The bad column is what most beginners produce. The good column is what gets you hired. Drive home: SHOW, don't tell. A screenshot or demo GIF is worth 1000 words.">
+    <div class="slide-num">08 / 12</div>
+    <div class="slide-tag">Quality Check</div>
+    <h2>Good vs. forgettable.</h2>
+    <div class="grid-2" style="margin-top: 16px;">
+      <div class="card" style="border-color: #f85149;">
+        <div class="label" style="color: #f85149;">✗ Forgettable</div>
+        <ul class="clean" style="margin-top: 8px;">
+          <li>One vague line: "my project"</li>
+          <li>No installation instructions</li>
+          <li>No usage examples</li>
+          <li>Outdated or broken steps</li>
+          <li>Walls of text, no formatting</li>
+          <li>No screenshots or demos</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color: var(--green);">
+        <div class="label" style="color: var(--green);">✓ Great</div>
+        <ul class="clean" style="margin-top: 8px;">
+          <li>Clear title + one-line pitch</li>
+          <li>Copy-paste install commands</li>
+          <li>Real usage examples</li>
+          <li>Maintained alongside the code</li>
+          <li>Scannable structure with headings</li>
+          <li>Screenshots, GIFs, or live demo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: REAL EXAMPLE -->
+  <section class="slide" data-notes="Show this template structure. This is the skeleton students should aim for. The terminal commands at the bottom are realistic — they'll see these in actual READMEs all over GitHub. Live demo: pull up a popular open-source project README and dissect it together.">
+    <div class="slide-num">09 / 12</div>
+    <div class="slide-tag">Real Example</div>
+    <h2>What it looks like in the wild.</h2>
+<div class="code-block" style="margin-top: 16px;"><span class="md-h"># 🐾 PawPing</span>
+
+A pet GPS tracker that lets you find your dog before they find the neighbour's chickens.
+
+<span class="md-h">## Features</span>
+
+- Real-time location tracking
+- Geofence alerts
+- Battery-efficient pings every 30 seconds
+
+<span class="md-h">## Installation</span>
+
+<span class="md-code">```bash</span>
+<span style="color: var(--green);">git clone https://github.com/user/pawping.git</span>
+<span style="color: var(--green);">cd pawping</span>
+<span style="color: var(--green);">npm install</span>
+<span class="md-code">```</span>
+
+<span class="md-h">## Usage</span>
+
+<span class="md-code">```bash</span>
+<span style="color: var(--green);">npm start</span>
+<span class="md-code">```</span>
+
+Then visit <span class="md-link">http://localhost:3000</span>
+
+<span class="md-h">## Tech Stack</span>
+
+<span class="md-bold">**Frontend:**</span> React, Tailwind CSS
+<span class="md-bold">**Backend:**</span> Node.js, Express, MongoDB</div>
+  </section>
+
+  <!-- SLIDE 10: ACTIVITY -->
+  <section class="slide" data-notes="15 minutes of hands-on work. Walk the room. Common stumbling blocks: students freeze on the title (tell them to just pick something), or write essays in the description (force them to one sentence). Bonus task: add a badge — point them to shields.io.">
+    <div class="slide-num">10 / 12</div>
+    <div class="slide-tag">Your Turn</div>
+    <h2>Write your own.</h2>
+    <p class="lead" style="margin-bottom: 32px;">Pick a real or fictional project. Draft a README that hits the basics in 15 minutes.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Minimum Requirements</h3>
+        <div class="checklist">
+          <div class="item"><span class="check">✓</span> Title</div>
+          <div class="item"><span class="check">✓</span> One-line description</div>
+          <div class="item"><span class="check">✓</span> Installation steps</div>
+          <div class="item"><span class="check">✓</span> Usage example</div>
+          <div class="item"><span class="check">✓</span> Tech stack list</div>
+          <div class="item"><span class="check">✓</span> Screenshot placeholder</div>
+        </div>
+      </div>
+      <div>
+        <h3>Bonus Round</h3>
+        <ul class="clean">
+          <li>Add a status badge from shields.io</li>
+          <li>Include a table of contents</li>
+          <li>Add a Contributing section</li>
+          <li>Drop in an emoji or two (don't overdo it)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: TAKEAWAYS -->
+  <section class="slide" data-notes="Three things to remember. If they only walk away with one, make it the third — write the README as you build, not at the end. It forces clearer thinking and stops the dreaded 'I'll do it later' (which becomes 'never').">
+    <div class="slide-num">11 / 12</div>
+    <div class="slide-tag">Key Takeaways</div>
+    <h2>Three things to remember.</h2>
+    <div class="grid-3" style="margin-top: 32px;">
+      <div class="card">
+        <div class="big-stat">01</div>
+        <h4>It's a first impression</h4>
+        <p>Treat it like a CV cover letter. Polished, clear, and confidence-inspiring.</p>
+      </div>
+      <div class="card">
+        <div class="big-stat">02</div>
+        <h4>Show, don't tell</h4>
+        <p>Screenshots, GIFs, and live demos beat paragraphs of explanation every time.</p>
+      </div>
+      <div class="card">
+        <div class="big-stat">03</div>
+        <h4>Write it as you build</h4>
+        <p>Not after. Documenting in real time forces clearer thinking and stops the rot.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: HOMEWORK -->
+  <section class="slide" data-notes="Wrap up. Homework is to apply what they've learned to a real project. The 'find a weak README and rewrite it' task is the most valuable — it teaches critical reading and gives them a concrete improvement to point at. Open Q&A.">
+    <div class="slide-num">12 / 12</div>
+    <div class="slide-tag">Wrap-Up</div>
+    <h2>Take it home.</h2>
+    <div class="grid-2" style="margin-top: 16px;">
+      <div>
+        <h3>Homework</h3>
+        <ul class="clean">
+          <li>Add a polished README to one of your existing projects</li>
+          <li>Find an open-source repo with a weak README → rewrite it</li>
+          <li>Submit your file via GitHub or LMS by next class</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Going Further</h3>
+        <ul class="clean">
+          <li>Explore badges (shields.io)</li>
+          <li>Try animated GIF demos (LICEcap, Kap)</li>
+          <li>Look up "awesome README" on GitHub for inspiration</li>
+          <li>Read the README of your favourite framework</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: auto; padding-top: 48px; text-align: center;">
+      <p style="font-family: 'Fraunces', serif; font-size: 32px; font-style: italic; color: var(--accent);">Questions?</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="speaker-notes" id="speakerNotes">
+  <div class="note-label">Speaker Notes</div>
+  <div id="notesContent">Welcome students...</div>
+</div>
+
+<div class="nav">
+  <button onclick="prevSlide()" id="prevBtn">← Prev</button>
+  <span class="counter" id="counter">1 / 12</span>
+  <button onclick="nextSlide()" id="nextBtn">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const notesEl = document.getElementById('speakerNotes');
+  const notesContent = document.getElementById('notesContent');
+  let current = 0;
+
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    counter.textContent = `${i + 1} / ${slides.length}`;
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === slides.length - 1;
+    notesContent.textContent = slides[i].dataset.notes || '';
+  }
+
+  function nextSlide() {
+    if (current < slides.length - 1) {
+      current++;
+      showSlide(current);
+    }
+  }
+
+  function prevSlide() {
+    if (current > 0) {
+      current--;
+      showSlide(current);
+    }
+  }
+
+  function toggleNotes() {
+    notesEl.classList.toggle('visible');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key.toLowerCase() === 'n') toggleNotes();
+    if (e.key === 'Home') { current = 0; showSlide(0); }
+    if (e.key === 'End') { current = slides.length - 1; showSlide(current); }
+  });
+
+  showSlide(0);
+</script>
+
+</body>
+</html>
