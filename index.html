@@ -8,12 +8,14 @@
 <meta name="author" content="Tim Daly · The Daly Creative">
 <meta name="theme-color" content="#5865f2">
 
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" href="assets/logos-icons/Favicon.png">
+<link rel="apple-touch-icon" href="assets/logos-icons/Favicon.png">
 
 <meta property="og:title" content="26B Class Hub · EQC Front End Web Dev">
 <meta property="og:description" content="12-week front-end web dev course hub for Intake 26B. Lessons, downloads, resources, examples.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/og-image.svg">
+<meta property="og:image" content="assets/logos-icons/Square%20logo%20(2000x2000).png">
+<meta name="twitter:image" content="assets/logos-icons/Square%20logo%20(2000x2000).png">
 <meta property="og:locale" content="en_AU">
 
 <meta name="twitter:card" content="summary_large_image">
@@ -83,6 +85,16 @@ a:hover { color: #7983f5; text-decoration: underline; }
 .logo {
   font-size: 48px;
   margin-bottom: 4px;
+}
+
+.hero-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(420px, 70vw);
+  margin: 0 auto 12px;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
 }
 
 .header h1 {
@@ -494,11 +506,33 @@ a:hover { color: #7983f5; text-decoration: underline; }
 
 /* ============================================================
    BADGES
+   Two clear visual tiers:
+     1) "links" row  — interactive, brighter fill, lift on hover, pointer cursor
+     2) "info" row   — non-interactive tags (HUB activities, file refs),
+                       dashed outline, transparent fill, no pointer
    ============================================================ */
 .badges {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+.badges + .badges-info { margin-top: 8px; }
+
+.badges-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--dc-border);
+}
+.badges-info::before {
+  content: "Also referenced";
+  display: inline-flex; align-items: center;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--dc-muted);
+  margin-right: 4px;
 }
 
 .badge {
@@ -509,40 +543,58 @@ a:hover { color: #7983f5; text-decoration: underline; }
   font-weight: 600;
   padding: 3px 8px;
   border-radius: 4px;
-  cursor: default;
-  transition: transform 0.15s;
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
 }
-
-.badge:hover { transform: translateY(-1px); }
-
 .badge i { font-size: 12px; }
 
-.badge.file {
+/* ---- LINK badges (row 1) ---- */
+.badges > .badge {
+  cursor: pointer;
   background: rgba(88, 101, 242, 0.2);
   color: #8b9bf7;
-  border: 1px solid rgba(88, 101, 242, 0.3);
+  border: 1px solid rgba(88, 101, 242, 0.35);
 }
+.badges > .badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.badges > .badge a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.badges > .badge:hover a { text-decoration: underline; }
 
-.badge.link {
-  background: rgba(87, 242, 135, 0.12);
+.badges > .badge.file {
+  background: rgba(88, 101, 242, 0.2);
+  color: #8b9bf7;
+  border-color: rgba(88, 101, 242, 0.35);
+}
+.badges > .badge.link {
+  background: rgba(87, 242, 135, 0.15);
   color: #57f287;
-  border: 1px solid rgba(87, 242, 135, 0.25);
+  border-color: rgba(87, 242, 135, 0.35);
 }
-
-.badge a { color: inherit; text-decoration: none; }
-.badge a:hover { text-decoration: underline; }
-
-.badge.code {
+.badges > .badge.code {
   background: rgba(254, 231, 92, 0.15);
   color: #fee75c;
-  border: 1px solid rgba(254, 231, 92, 0.3);
+  border-color: rgba(254, 231, 92, 0.4);
 }
 
-.badge.hub {
-  background: rgba(235, 69, 158, 0.15);
-  color: #eb459e;
-  border: 1px solid rgba(235, 69, 158, 0.25);
+/* ---- INFO badges (row 2) — NOT clickable ---- */
+.badges-info > .badge {
+  cursor: default;
+  background: transparent;
+  border: 1px dashed;
+  font-weight: 500;
+  opacity: 0.85;
 }
+.badges-info > .badge:hover { transform: none; box-shadow: none; opacity: 1; }
+
+.badges-info > .badge.hub  { color: #eb459e; border-color: rgba(235, 69, 158, 0.45); }
+.badges-info > .badge.file { color: #8b9bf7; border-color: rgba(88, 101, 242, 0.45); }
+.badges-info > .badge.code { color: #fee75c; border-color: rgba(254, 231, 92, 0.45); }
+.badges-info > .badge.link { color: #57f287; border-color: rgba(87, 242, 135, 0.45); }
 
 /* ============================================================
    RESOURCES SECTION
@@ -624,6 +676,27 @@ a:hover { color: #7983f5; text-decoration: underline; }
   gap: 10px;
   font-size: 13px;
   color: var(--dc-light);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.cheat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--dc-blurple);
+  background: var(--dc-bg3);
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  color: var(--dc-white);
+}
+.cheat-card .cheat-arrow {
+  margin-left: auto;
+  color: var(--dc-muted);
+  font-size: 14px;
+  transition: transform 0.15s, color 0.15s;
+}
+.cheat-card:hover .cheat-arrow {
+  transform: translateX(3px);
+  color: var(--dc-blurple);
 }
 
 .cheat-card i {
@@ -739,7 +812,7 @@ a:hover { color: #7983f5; text-decoration: underline; }
 <nav class="topnav">
   <div class="topnav-inner">
     <a href="index.html" class="topnav-brand">
-      <img src="assets/logo.svg" alt="26B Class Hub" width="220" height="56">
+      <img src="assets/logos-icons/Landscape%20Logo.png" alt="Intake 26B · Absolute Web Dev Legends" width="220" height="56">
       <span class="sr-only">26B Class Hub Home</span>
     </a>
     <div class="topnav-links">
@@ -756,7 +829,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
      ============================================================ -->
 <header class="header">
   <div class="header-inner">
-    <div class="logo">🚀</div>
+    <img src="assets/logos-icons/Dark%20Variation.png" alt="Intake 26B · Absolute Web Dev Legends"
+         class="hero-logo" width="420" height="420">
     <h1>26b <span>Class Hub</span></h1>
     <p class="subtitle">Front End Web Development &middot; Subjects 1 &amp; 2 &middot; Equinim College</p>
     <div class="intake-info">
@@ -788,18 +862,10 @@ a:hover { color: #7983f5; text-decoration: underline; }
   <div class="contact-inner">
     <span class="contact-item trainer">
       <i class="bi bi-person-fill"></i>
-      Tim Daly
-    </span>
-    <span class="contact-item trainer">
-      <i class="bi bi-telephone-fill"></i>
-      <a href="tel:0414265050">0414 265 050</a>
-    </span>
-    <span class="contact-item trainer">
-      <i class="bi bi-envelope-fill"></i>
-      <a href="mailto:thetimdaly@gmail.com">thetimdaly@gmail.com</a>
+      Tim Daly &middot; Trainer
     </span>
     <span class="contact-item school">
-      <i class="bi bi-mortarboard-fill"></i>
+      <i class="bi bi-envelope-fill"></i>
       <a href="mailto:tim@equinimcollege.com">tim@equinimcollege.com</a>
     </span>
     <span class="contact-item services">
@@ -847,9 +913,11 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Introduction <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Welcome to the course! Setup VS Code, intro to how the web works.</div>
         <div class="badges">
-          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Welcome 26b.pdf</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://code.visualstudio.com" target="_blank">VS Code</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com" target="_blank">W3Schools</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Welcome 26b.pdf</span>
         </div>
       </div>
 
@@ -861,11 +929,13 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Basic HTML <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">HTML tags, structure, headings, paragraphs, images, links.</div>
         <div class="badges">
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML" target="_blank">MDN HTML</a></span>
+        </div>
+        <div class="badges-info">
           <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 2 Lesson Doc</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Tag Reference Sheet.pdf</span>
           <span class="badge code"><i class="bi bi-file-earmark-zip"></i> FrontEndClass2</span>
-          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML</a></span>
-          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML" target="_blank">MDN HTML</a></span>
         </div>
       </div>
 
@@ -908,13 +978,15 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Basic CSS (Inline) <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Inline styles, colours, fonts, the box model basics.</div>
         <div class="badges">
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://coolors.co" target="_blank">Coolors.co</a></span>
+        </div>
+        <div class="badges-info">
           <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 3 Lesson Doc</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Class 3 Reference Sheet</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Color Model.pdf</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Hex Color Model.pdf</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Accessible Design.pdf</span>
-          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS</a></span>
-          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://coolors.co" target="_blank">Coolors.co</a></span>
         </div>
       </div>
 
@@ -926,10 +998,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">External Stylesheets &amp; Classes <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Linking CSS files, class selectors, IDs, specificity basics.</div>
         <div class="badges">
-          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 4 Lesson Doc</span>
-          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> FrontEndClass4</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/css/css_selectors.asp" target="_blank">CSS Selectors</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://fonts.google.com" target="_blank">Google Fonts</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Class 4 Lesson Doc</span>
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> FrontEndClass4</span>
         </div>
       </div>
 
@@ -985,7 +1059,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Originate &amp; Develop Concepts <span class="subject-tag s1">S1</span></div>
         <div class="class-desc">Understanding client briefs, target audience, design concepts.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge file"><i class="bi bi-file-earmark-code"></i> 26b-OriginateDevelop.html</span>
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 1</span>
         </div>
@@ -1000,7 +1075,7 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-desc">HTML tables, icon fonts, Font Awesome, symbol libraries.</div>
         <div class="badges">
           <span class="badge file"><i class="bi bi-file-earmark-ppt"></i> <a href="downloads/code/icons-and-symbols.pptx" target="_blank">Icons &amp; Symbols.pptx</a></span>
-          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> <a href="downloads/pdfs/icon-audit-worksheet.pdf" target="_blank">Icon Audit Worksheet.pdf</a></span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> <a href="pdf.html#file=downloads/pdfs/icon-audit-worksheet.pdf" target="_blank">Icon Audit Worksheet.pdf</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://fontawesome.com" target="_blank">Font Awesome</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/html/html_tables.asp" target="_blank">W3Schools Tables</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/icons/" target="_blank">W3Schools Icons</a></span>
@@ -1100,10 +1175,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Match ICT Needs &amp; Intro Bootstrap <span class="subject-tag s1">S1</span><span class="subject-tag s2">S2</span></div>
         <div class="class-desc">First half: Match ICT needs assessment. Second half: what is Bootstrap and why use it.</div>
         <div class="badges">
-          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Intro to Bootstrap.docx</span>
-          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Bootstrap Breakpoints.pdf</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/" target="_blank">Bootstrap 5 Docs</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com/bootstrap5/" target="_blank">W3Schools Bootstrap</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge file"><i class="bi bi-file-earmark-word"></i> Intro to Bootstrap.docx</span>
+          <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Bootstrap Breakpoints.pdf</span>
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 Bootstrap</span>
         </div>
       </div>
@@ -1116,9 +1193,11 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Bootstrap Demo <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Live demo: building a page with Bootstrap components, grid, navbar.</div>
         <div class="badges">
-          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> 26b-Topic5-Bootstrap.zip</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/components/" target="_blank">Components</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">Examples</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge code"><i class="bi bi-file-earmark-zip"></i> 26b-Topic5-Bootstrap.zip</span>
         </div>
       </div>
 
@@ -1154,10 +1233,14 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Begin Skywings Website <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Start the first Bootstrap website build using the Skywings starter kit.</div>
         <div class="badges">
+          <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-04-readme-lesson-deck.html" target="_blank">README Deck</a></span>
+          <span class="badge file"><i class="bi bi-question-circle"></i> <a href="lessons/2026-05-04-readme-quiz.html" target="_blank">README Quiz</a></span>
+          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/" target="_blank">Bootstrap Docs</a></span>
+        </div>
+        <div class="badges-info">
           <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Skywings.zip (starter)</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Skywings Home Content.pdf</span>
           <span class="badge file"><i class="bi bi-file-earmark-pdf"></i> Skywings About Content.pdf</span>
-          <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://getbootstrap.com/docs/5.3/" target="_blank">Bootstrap Docs</a></span>
         </div>
       </div>
 
@@ -1205,10 +1288,11 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Skywings Build &amp; Complete <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Finish and polish the Skywings Bootstrap website.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Cloneskywings.zip</span>
           <span class="badge code"><i class="bi bi-file-earmark-zip"></i> Crestia.zip</span>
-          <span class="badge file"><i class="bi bi-file-earmark-code"></i> Lesson Plan 13 May.html</span>
+          <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-11-lesson-plan.html" target="_blank">Lesson Plan 11 May</a></span>
         </div>
       </div>
 
@@ -1219,8 +1303,10 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Manage Client Problems <span class="subject-tag s1">S1</span></div>
         <div class="class-desc">Dealing with scope creep, client feedback, communication strategies.</div>
-        <div class="badges">
-          <span class="badge file"><i class="bi bi-file-earmark-code"></i> Manage Client Problems.html</span>
+        <div class="badges"></div>
+        <div class="badges-info">
+          <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-15-readme-lesson-deck.html" target="_blank">README Deck (15 May)</a></span>
+          <span class="badge file"><i class="bi bi-question-circle"></i> <a href="lessons/2026-05-15-readme-quiz.html" target="_blank">README Quiz (15 May)</a></span>
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 2</span>
         </div>
       </div>
@@ -1266,7 +1352,7 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="badges">
           <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/how-to-organise.html" target="_blank">how-to-organise.html</a></span>
           <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/why-tidy-folders.html" target="_blank">why-tidy-folders.html</a></span>
-          <span class="badge code"><i class="bi bi-file-earmark-pdf"></i> <a href="downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" target="_blank">Terminal Commands Cheat Sheet</a></span>
+          <span class="badge code"><i class="bi bi-file-earmark-pdf"></i> <a href="pdf.html#file=downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" target="_blank">Terminal Commands Cheat Sheet</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://excalidraw.com" target="_blank">Excalidraw</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.figma.com" target="_blank">Figma</a></span>
         </div>
@@ -1331,9 +1417,11 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-desc">Turn your wireframe into a working prototype. Start coding your site.</div>
         <div class="badges">
           <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-25-lesson-plan.html" target="_blank">Lesson Plan Deck</a></span>
-          <span class="badge file"><i class="bi bi-file-earmark-text"></i> <a href="lessons/2026-05-25-lesson-plan.md" target="_blank">Teacher Notes</a></span>
-          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 1</span>
+          <span class="badge file"><i class="bi bi-file-earmark-ruled"></i> <a href="lessons/sub2-02-build-original-front-end-website.md" target="_blank">Assignment Brief (S2)</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="resources.html#games" target="_blank">Practice Games</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 1</span>
         </div>
       </div>
 
@@ -1345,8 +1433,10 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Continue building your original website.</div>
         <div class="badges">
-          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 2</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="resources.html#templates" target="_blank">Templates</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 2</span>
         </div>
       </div>
 
@@ -1385,7 +1475,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Continue building. Focus on responsive design and layout.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 3</span>
         </div>
       </div>
@@ -1397,7 +1488,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Continue building. Polish and refine.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 3 cont.</span>
         </div>
       </div>
@@ -1428,7 +1520,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Final build sessions. Make sure all pages are working.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 4 (Submit)</span>
         </div>
       </div>
@@ -1441,9 +1534,11 @@ a:hover { color: #7983f5; text-decoration: underline; }
         <div class="class-topic">Review &amp; Test <span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Step 5: Review and test your website. Cross-browser, responsive, accessibility checks.</div>
         <div class="badges">
-          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 5</span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://validator.w3.org" target="_blank">W3C Validator</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://wave.webaim.org" target="_blank">WAVE Accessibility</a></span>
+        </div>
+        <div class="badges-info">
+          <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 5</span>
         </div>
       </div>
 
@@ -1478,7 +1573,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Lead &amp; Facilitate a Team <span class="subject-tag s1">S1</span></div>
         <div class="class-desc">Team leadership, collaboration, giving and receiving feedback.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S01 Mod 3</span>
         </div>
       </div>
@@ -1490,7 +1586,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="class-topic">Submission &amp; Feedback <span class="subject-tag s1">S1</span><span class="subject-tag s2">S2</span></div>
         <div class="class-desc">Submit your final website. Peer review and trainer feedback session.</div>
-        <div class="badges">
+        <div class="badges"></div>
+        <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Final Submission</span>
         </div>
       </div>
@@ -1594,22 +1691,26 @@ a:hover { color: #7983f5; text-decoration: underline; }
 <section class="resources-section">
   <h2><i class="bi bi-file-earmark-text-fill"></i> Cheat Sheets</h2>
   <div class="cheat-grid">
-    <div class="cheat-card">
+    <a href="pdf.html#file=downloads/pdfs/terminal-commands-cheat-sheet-26b.pdf" target="_blank" rel="noopener" class="cheat-card">
       <i class="bi bi-terminal"></i>
-      <span>Terminal Commands Cheat Sheet.pdf</span>
-    </div>
-    <div class="cheat-card">
+      <span>Terminal Commands Cheat Sheet</span>
+      <i class="bi bi-arrow-right cheat-arrow"></i>
+    </a>
+    <a href="pdf.html#file=downloads/pdfs/html-tag-reference-sheet.pdf" target="_blank" rel="noopener" class="cheat-card">
       <i class="bi bi-filetype-html"></i>
-      <span>HTML Tag Reference Sheet.pdf</span>
-    </div>
-    <div class="cheat-card">
+      <span>HTML Tag Reference Sheet</span>
+      <i class="bi bi-arrow-right cheat-arrow"></i>
+    </a>
+    <a href="pdf.html#file=downloads/pdfs/css-class-3-reference-sheet.pdf" target="_blank" rel="noopener" class="cheat-card">
       <i class="bi bi-filetype-css"></i>
-      <span>CSS Class 3 Reference Sheet.pdf</span>
-    </div>
-    <div class="cheat-card">
+      <span>CSS Class 3 Reference Sheet</span>
+      <i class="bi bi-arrow-right cheat-arrow"></i>
+    </a>
+    <a href="pdf.html#file=downloads/pdfs/bootstrap-breakpoints.pdf" target="_blank" rel="noopener" class="cheat-card">
       <i class="bi bi-bootstrap"></i>
-      <span>Bootstrap Breakpoints.pdf</span>
-    </div>
+      <span>Bootstrap Breakpoints</span>
+      <i class="bi bi-arrow-right cheat-arrow"></i>
+    </a>
   </div>
 </section>
 

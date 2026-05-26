@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Viewer · 26B Class Hub</title>
+<meta name="description" content="PDF viewer with hub navigation. Pass ?file=path/to.pdf to load a PDF.">
+
+<link rel="icon" type="image/png" href="assets/logos-icons/Favicon.png">
+<link rel="apple-touch-icon" href="assets/logos-icons/Favicon.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/theme.css">
+
+<style>
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--dc-bg);
+    color: var(--dc-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Hidden attribute must beat the default `display` on .pdf-meta and .pdf-empty */
+  [hidden] { display: none !important; }
+
+  .pdf-meta {
+    background: var(--dc-bg2);
+    border-bottom: 1px solid var(--dc-border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+  }
+  .pdf-meta .filename {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    color: var(--dc-white);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+  .pdf-meta .meta-actions {
+    display: inline-flex; gap: 8px; flex-shrink: 0;
+  }
+  .pdf-meta .meta-actions a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--dc-bg3); border: 1px solid var(--dc-border);
+    color: var(--dc-light); font-size: 12px; font-weight: 600;
+    text-decoration: none; transition: all 0.15s;
+  }
+  .pdf-meta .meta-actions a:hover {
+    background: var(--dc-bg4); color: var(--dc-white);
+    border-color: var(--dc-blurple); text-decoration: none;
+  }
+  .pdf-meta .meta-actions a.primary {
+    background: var(--dc-blurple); color: white;
+    border-color: var(--dc-blurple);
+  }
+  .pdf-meta .meta-actions a.primary:hover {
+    background: var(--dc-blurple-2);
+  }
+
+  .pdf-frame {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    background: #2b2d31;
+  }
+
+  .pdf-empty {
+    flex: 1; display: grid; place-items: center;
+    padding: 40px 20px; text-align: center;
+  }
+  .pdf-empty h2 { color: var(--dc-white); margin-bottom: 8px; font-size: 22px; }
+  .pdf-empty p { color: var(--dc-muted); max-width: 480px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="topnav-brand">
+      <img src="assets/logos-icons/Landscape%20Logo.png" alt="Intake 26B · Absolute Web Dev Legends" width="220" height="56">
+      <span class="sr-only">26B Class Hub Home</span>
+    </a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link"><i class="bi bi-house-door"></i><span>Hub</span></a>
+      <a href="lessons/" class="topnav-link"><i class="bi bi-journal-text"></i><span>Lessons</span></a>
+      <a href="resources.html" class="topnav-link"><i class="bi bi-bookmark-star"></i><span>Resources</span></a>
+      <a href="downloads.html" class="topnav-link active"><i class="bi bi-download"></i><span>Downloads</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="pdf-meta" id="meta" hidden>
+  <i class="bi bi-file-earmark-pdf-fill" style="font-size:18px; color:var(--dc-red);"></i>
+  <span class="filename" id="filename"></span>
+  <div class="meta-actions">
+    <a id="downloadBtn" download><i class="bi bi-download"></i> Download</a>
+    <a id="openBtn" target="_blank" rel="noopener" class="primary"><i class="bi bi-box-arrow-up-right"></i> Open in new tab</a>
+  </div>
+</div>
+
+<iframe id="pdf" class="pdf-frame" title="PDF document" hidden></iframe>
+
+<div class="pdf-empty" id="empty">
+  <div>
+    <h2>No PDF specified</h2>
+    <p>This page is a viewer. Open it via a link with <code>?file=path/to.pdf</code>, or head back to <a href="downloads.html">Downloads</a> to pick one.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  // Read ?file= from either the query OR the hash fragment.
+  // Hash is preferred because it survives static-server URL rewrites
+  // (e.g. `npx serve` and Vercel both strip .html and may drop ?query).
+  let file = null;
+  const hash = location.hash.startsWith('#') ? location.hash.slice(1) : '';
+  const hashParams = new URLSearchParams(hash);
+  if (hashParams.get('file')) file = hashParams.get('file');
+  if (!file) {
+    const q = new URLSearchParams(location.search);
+    if (q.get('file')) file = q.get('file');
+  }
+  if (!file) return;
+
+  // Block javascript:, data:, and absolute http(s) URLs to prevent abuse — only allow same-origin paths.
+  const ok = /^(?!javascript:|data:|vbscript:|file:|https?:)([\w\-./%]+\.pdf)(\?[^#]*)?(#.*)?$/i.test(file);
+  if (!ok) return;
+
+  const frame = document.getElementById('pdf');
+  const empty = document.getElementById('empty');
+  const meta  = document.getElementById('meta');
+  const fname = document.getElementById('filename');
+  const dl    = document.getElementById('downloadBtn');
+  const open  = document.getElementById('openBtn');
+
+  // Display name = last path segment, URL-decoded
+  let display = file.split('/').pop();
+  try { display = decodeURIComponent(display); } catch {}
+  fname.textContent = display;
+  document.title = display + ' · 26B Class Hub';
+
+  frame.src = file;
+  dl.href   = file;
+  open.href = file;
+
+  frame.hidden = false;
+  meta.hidden  = false;
+  empty.hidden = true;
+})();
+</script>
+</body>
+</html>
