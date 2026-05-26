@@ -719,6 +719,384 @@ a:hover { color: #7983f5; text-decoration: underline; }
 .footer .heart { color: var(--dc-red); }
 
 /* ============================================================
+   WELCOME / INTRO BLOCK
+   ============================================================ */
+.welcome {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+.welcome-inner {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.welcome-media {
+  display: flex;
+  justify-content: center;
+}
+.welcome-media img {
+  width: 120px; height: 120px;
+  border-radius: 16px;
+  background: var(--dc-bg3);
+  padding: 12px;
+  border: 1px solid var(--dc-border);
+}
+.welcome h2 {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  color: var(--dc-white);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.welcome h2 span { color: var(--dc-blurple); }
+.welcome p.welcome-lead {
+  font-size: 15px;
+  color: var(--dc-light);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+.welcome-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+.btn:hover { transform: translateY(-1px); text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.btn-primary {
+  background: var(--dc-blurple);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--dc-blurple-dark); color: #fff; }
+.btn-success {
+  background: var(--dc-green-dark);
+  color: #fff;
+}
+.btn-success:hover { background: #1b6536; color: #fff; }
+.btn-outline {
+  background: transparent;
+  color: var(--dc-light);
+  border-color: var(--dc-border);
+}
+.btn-outline:hover { background: var(--dc-bg3); color: var(--dc-white); border-color: var(--dc-muted); }
+.btn i { font-size: 16px; }
+
+/* ============================================================
+   COURSE OVERVIEW
+   ============================================================ */
+.overview {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.section-heading h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dc-white);
+}
+.section-heading h2 i { color: var(--dc-blurple); margin-right: 8px; }
+.section-heading p {
+  font-size: 13px;
+  color: var(--dc-muted);
+  margin-left: auto;
+}
+.overview-card {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.overview-media {
+  display: flex;
+  justify-content: center;
+}
+.overview-media img {
+  width: 140px; height: auto;
+  border-radius: var(--radius);
+}
+.overview ul.learn-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.overview ul.learn-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--dc-bg3);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--dc-light);
+}
+.overview ul.learn-list li i {
+  font-size: 18px;
+  color: var(--dc-blurple);
+  margin-top: 1px;
+}
+.overview ul.learn-list li strong {
+  color: var(--dc-white);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ============================================================
+   SCHEDULE + ATTENDANCE
+   ============================================================ */
+.schedule {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  display: grid;
+  gap: 16px;
+}
+.sched-card, .attend-card {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.sched-card { border-left: 3px solid var(--dc-blurple); }
+.attend-card {
+  border-left: 3px solid var(--dc-green);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+}
+.sched-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.sched-head h3 {
+  font-size: 17px;
+  color: var(--dc-white);
+  font-weight: 700;
+}
+.sched-head i { color: var(--dc-blurple); font-size: 20px; }
+.sched-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.sched-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--dc-bg3);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--dc-light);
+}
+.sched-pill strong { color: var(--dc-white); }
+.sched-pill .day {
+  font-weight: 700;
+  color: var(--dc-blurple);
+  min-width: 64px;
+}
+.sched-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--dc-muted);
+}
+.sched-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.sched-meta i { color: var(--dc-fuchsia); }
+
+.attend-media {
+  display: flex;
+  justify-content: center;
+}
+.attend-media img {
+  width: 90px; height: 90px;
+  border-radius: 14px;
+  background: var(--dc-bg3);
+  padding: 8px;
+  border: 1px solid var(--dc-border);
+}
+.attend-card h3 {
+  font-size: 17px;
+  color: var(--dc-white);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.attend-card h3 i { color: var(--dc-green); }
+.attend-card p {
+  font-size: 14px;
+  color: var(--dc-light);
+  margin-bottom: 12px;
+}
+
+/* ============================================================
+   USEFUL LINKS
+   ============================================================ */
+.useful {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+.useful-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.link-group {
+  background: var(--dc-bg2);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+.link-group h3 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dc-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.link-group h3 i { font-size: 16px; }
+.link-group.primary h3 i  { color: var(--dc-blurple); }
+.link-group.tools h3 i    { color: var(--dc-green); }
+.link-group.ext h3 i      { color: var(--dc-yellow); }
+.link-group.learn h3 i    { color: var(--dc-fuchsia); }
+.link-group.class-l h3 i  { color: var(--dc-current); }
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: var(--dc-bg3);
+  border: 1px solid var(--dc-border);
+  color: var(--dc-light);
+  text-decoration: none;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+}
+.link-chip:hover {
+  transform: translateY(-1px);
+  background: var(--dc-bg4);
+  color: var(--dc-white);
+  border-color: var(--dc-muted);
+  text-decoration: none;
+}
+.link-chip i { font-size: 13px; }
+.link-chip.primary  { color: #8b9bf7; border-color: rgba(88, 101, 242, 0.35); }
+.link-chip.primary:hover  { background: rgba(88, 101, 242, 0.15); color: #fff; }
+.link-chip.tools    { color: #57f287; border-color: rgba(87, 242, 135, 0.35); }
+.link-chip.tools:hover    { background: rgba(87, 242, 135, 0.12); color: #fff; }
+.link-chip.ext      { color: #fee75c; border-color: rgba(254, 231, 92, 0.4); }
+.link-chip.ext:hover      { background: rgba(254, 231, 92, 0.12); color: #fff; }
+.link-chip.learn    { color: #eb459e; border-color: rgba(235, 69, 158, 0.4); }
+.link-chip.learn:hover    { background: rgba(235, 69, 158, 0.12); color: #fff; }
+.link-chip.class-l  { color: #f0b232; border-color: rgba(240, 178, 50, 0.4); }
+.link-chip.class-l:hover  { background: rgba(240, 178, 50, 0.12); color: #fff; }
+
+/* ============================================================
+   TALKING POINTS (inside class-tile)
+   ============================================================ */
+.class-tile .talking-points {
+  list-style: none;
+  margin: 4px 0 4px;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.class-tile .talking-points li {
+  font-size: 13px;
+  color: var(--dc-light);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.45;
+}
+.class-tile .talking-points li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--dc-blurple);
+  font-weight: 700;
+}
+
+/* Key resources highlight callout */
+.class-tile .key-res {
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: rgba(88, 101, 242, 0.08);
+  border: 1px solid rgba(88, 101, 242, 0.25);
+  border-left: 3px solid var(--dc-blurple);
+  border-radius: var(--radius);
+  font-size: 12px;
+  color: var(--dc-light);
+}
+.class-tile .key-res strong {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dc-blurple);
+  margin-bottom: 4px;
+}
+.class-tile .key-res a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--dc-white);
+  text-decoration: none;
+  font-weight: 600;
+}
+.class-tile .key-res a:hover { color: var(--dc-blurple); text-decoration: underline; }
+.class-tile .key-res .res-sep { color: var(--dc-muted); margin: 0 6px; }
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (min-width: 768px) {
@@ -727,6 +1105,30 @@ a:hover { color: #7983f5; text-decoration: underline; }
   }
   .thu-note, .mc-modules, .holiday-note {
     grid-column: 1 / -1;
+  }
+  .welcome-inner {
+    grid-template-columns: 160px 1fr;
+    gap: 28px;
+    padding: 28px;
+  }
+  .overview-card {
+    grid-template-columns: 180px 1fr;
+    gap: 28px;
+  }
+  .overview ul.learn-list {
+    grid-template-columns: 1fr 1fr;
+  }
+  .schedule {
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .attend-card {
+    grid-template-columns: 110px 1fr;
+  }
+  .sched-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .useful-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -817,6 +1219,7 @@ a:hover { color: #7983f5; text-decoration: underline; }
     </a>
     <div class="topnav-links">
       <a href="index.html" class="topnav-link active"><i class="bi bi-house-door-fill"></i><span>Hub</span></a>
+      <a href="#overview" class="topnav-link"><i class="bi bi-mortarboard-fill"></i><span>Overview</span></a>
       <a href="lessons/" class="topnav-link"><i class="bi bi-journal-text"></i><span>Lessons</span></a>
       <a href="resources.html" class="topnav-link"><i class="bi bi-bookmark-star"></i><span>Resources</span></a>
       <a href="downloads.html" class="topnav-link"><i class="bi bi-download"></i><span>Downloads</span></a>
@@ -876,6 +1279,190 @@ a:hover { color: #7983f5; text-decoration: underline; }
 </section>
 
 <!-- ============================================================
+     WELCOME / INTRO
+     ============================================================ -->
+<section class="welcome" id="welcome">
+  <div class="welcome-inner">
+    <div class="welcome-media">
+      <img src="assets/logos-icons/Standalone%20Icon.png" alt="26B mascot" width="120" height="120">
+    </div>
+    <div>
+      <h2>Welcome to your <span>Class Hub</span></h2>
+      <p class="welcome-lead">
+        Everything for Intake 26b in one place &mdash; the week-by-week schedule, lesson decks, downloads,
+        cheat sheets and the quick links you&rsquo;ll reach for every day. Bookmark this page; it&rsquo;s
+        your home base for the next 12 weeks.
+      </p>
+      <div class="welcome-cta">
+        <a class="btn btn-success" href="https://form.jotform.com/260060120423841" target="_blank" rel="noopener">
+          <i class="bi bi-check2-square"></i> Mark Attendance
+        </a>
+        <a class="btn btn-primary" href="#weeks">
+          <i class="bi bi-arrow-down-circle"></i> Jump to Current Week
+        </a>
+        <a class="btn btn-outline" href="lessons/">
+          <i class="bi bi-journal-text"></i> Browse Lessons
+        </a>
+        <a class="btn btn-outline" href="#useful">
+          <i class="bi bi-link-45deg"></i> Useful Links
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COURSE OVERVIEW
+     ============================================================ -->
+<section class="overview" id="overview">
+  <div class="section-heading">
+    <h2><i class="bi bi-mortarboard-fill"></i>Course Overview</h2>
+    <p>12 weeks &middot; 24 classes &middot; Subjects 1 &amp; 2</p>
+  </div>
+  <div class="overview-card">
+    <div class="overview-media">
+      <img src="assets/logos-icons/Portrait%20Logo.png" alt="Intake 26B portrait logo" width="180" height="240">
+    </div>
+    <ul class="learn-list">
+      <li>
+        <i class="bi bi-filetype-html"></i>
+        <span><strong>HTML &amp; CSS Fundamentals</strong>Structure, styling, the box model, layout with Flexbox &amp; Grid.</span>
+      </li>
+      <li>
+        <i class="bi bi-bootstrap-fill"></i>
+        <span><strong>Bootstrap 5</strong>Components, responsive grid, building real pages quickly.</span>
+      </li>
+      <li>
+        <i class="bi bi-people-fill"></i>
+        <span><strong>Client &amp; Concept Skills <span class="subject-tag s1">S1</span></strong>Briefs, scope, leading a small team &mdash; the professional side.</span>
+      </li>
+      <li>
+        <i class="bi bi-laptop"></i>
+        <span><strong>Real Project Builds <span class="subject-tag s2">S2</span></strong>Skywings demo, then plan &amp; build your own original website.</span>
+      </li>
+      <li>
+        <i class="bi bi-pencil-square"></i>
+        <span><strong>Wireframes, Prototypes &amp; AI Tools</strong>From sketch to clickable. Figma, Excalidraw, Claude, Gemini.</span>
+      </li>
+      <li>
+        <i class="bi bi-trophy-fill"></i>
+        <span><strong>Test, Submit &amp; Portfolio</strong>Accessibility, validation, peer review, final submission.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     SCHEDULE + ATTENDANCE
+     ============================================================ -->
+<section class="schedule" id="schedule">
+  <div class="sched-card">
+    <div class="sched-head">
+      <i class="bi bi-calendar-week-fill"></i>
+      <h3>When &amp; Where We Meet</h3>
+    </div>
+    <div class="sched-row">
+      <div class="sched-pill"><span class="day">Mon</span> <strong>9:30am&ndash;2pm</strong></div>
+      <div class="sched-pill"><span class="day">Wed</span> <strong>9:30am&ndash;2pm</strong></div>
+      <div class="sched-pill"><span class="day">Thu</span> <strong>9:30am&ndash;2pm</strong></div>
+    </div>
+    <div class="sched-meta">
+      <span><i class="bi bi-geo-alt-fill"></i> EQC West Perth</span>
+      <span><img src="assets/logos-icons/Light%20Variation.png" alt="" width="18" height="18" style="border-radius:4px;background:var(--dc-bg3);padding:2px;vertical-align:middle"> Intake 26b</span>
+      <span><i class="bi bi-clock"></i> 4.5 hours per class</span>
+    </div>
+  </div>
+
+  <div class="attend-card">
+    <div class="attend-media">
+      <img src="assets/logos-icons/Light%20Variation%20(2).png" alt="Attendance" width="90" height="90">
+    </div>
+    <div>
+      <h3><i class="bi bi-check2-square"></i> Mark Your Attendance</h3>
+      <p>Sign in for every class with the Jotform link &mdash; it takes about 30 seconds and keeps your record up to date with EQC.</p>
+      <a class="btn btn-success" href="https://form.jotform.com/260060120423841" target="_blank" rel="noopener">
+        <i class="bi bi-box-arrow-up-right"></i> Open Attendance Form
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     USEFUL LINKS (day-to-day)
+     ============================================================ -->
+<section class="useful" id="useful">
+  <div class="section-heading">
+    <img src="assets/logos-icons/Transparent%20Icon.png" alt="" width="40" height="40"
+         style="border-radius:8px;background:var(--dc-bg3);padding:4px;border:1px solid var(--dc-border)">
+    <h2>Useful Links</h2>
+    <p>The quick stuff you&rsquo;ll reach for every day</p>
+  </div>
+  <div class="useful-grid">
+
+    <div class="link-group primary">
+      <h3><i class="bi bi-star-fill"></i> Primary</h3>
+      <div class="link-row">
+        <a class="link-chip primary" href="https://form.jotform.com/260060120423841" target="_blank" rel="noopener"><i class="bi bi-check2-square"></i> Attendance Form</a>
+        <a class="link-chip primary" href="https://study.equinimcollege.com/login" target="_blank" rel="noopener"><i class="bi bi-house-door"></i> Equinim Hub</a>
+        <a class="link-chip primary" href="mailto:tim@equinimcollege.com"><i class="bi bi-envelope"></i> Email Tim</a>
+        <a class="link-chip primary" href="mailto:team@equinimcollege.com"><i class="bi bi-people"></i> Student Services</a>
+      </div>
+    </div>
+
+    <div class="link-group tools">
+      <h3><i class="bi bi-tools"></i> Dev Tools</h3>
+      <div class="link-row">
+        <a class="link-chip tools" href="https://code.visualstudio.com" target="_blank" rel="noopener"><i class="bi bi-braces"></i> VS Code</a>
+        <a class="link-chip tools" href="https://getbootstrap.com/docs/5.3/" target="_blank" rel="noopener"><i class="bi bi-bootstrap"></i> Bootstrap 5</a>
+        <a class="link-chip tools" href="https://www.figma.com" target="_blank" rel="noopener"><i class="bi bi-vector-pen"></i> Figma</a>
+        <a class="link-chip tools" href="https://excalidraw.com" target="_blank" rel="noopener"><i class="bi bi-pencil"></i> Excalidraw</a>
+        <a class="link-chip tools" href="https://fonts.google.com" target="_blank" rel="noopener"><i class="bi bi-fonts"></i> Google Fonts</a>
+        <a class="link-chip tools" href="https://fontawesome.com" target="_blank" rel="noopener"><i class="bi bi-star"></i> Font Awesome</a>
+        <a class="link-chip tools" href="https://icons.getbootstrap.com" target="_blank" rel="noopener"><i class="bi bi-bookmark-star"></i> Bootstrap Icons</a>
+        <a class="link-chip tools" href="https://coolors.co" target="_blank" rel="noopener"><i class="bi bi-palette"></i> Coolors</a>
+      </div>
+    </div>
+
+    <div class="link-group ext">
+      <h3><i class="bi bi-plug-fill"></i> VS Code Extensions</h3>
+      <div class="link-row">
+        <a class="link-chip ext" href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" target="_blank" rel="noopener"><i class="bi bi-magic"></i> Prettier</a>
+        <a class="link-chip ext" href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener"><i class="bi bi-broadcast"></i> Live Server</a>
+        <a class="link-chip ext" href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat" target="_blank" rel="noopener"><i class="bi bi-chat-dots"></i> Copilot Chat</a>
+        <a class="link-chip ext" href="https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github" target="_blank" rel="noopener"><i class="bi bi-git"></i> GitHub PR</a>
+        <a class="link-chip ext" href="https://education.github.com/pack" target="_blank" rel="noopener"><i class="bi bi-mortarboard"></i> GitHub Student Pack</a>
+      </div>
+    </div>
+
+    <div class="link-group learn">
+      <h3><i class="bi bi-book-half"></i> Learning</h3>
+      <div class="link-row">
+        <a class="link-chip learn" href="https://www.w3schools.com" target="_blank" rel="noopener"><i class="bi bi-code-slash"></i> W3Schools</a>
+        <a class="link-chip learn" href="https://developer.mozilla.org" target="_blank" rel="noopener"><i class="bi bi-book"></i> MDN Docs</a>
+        <a class="link-chip learn" href="https://flexboxfroggy.com" target="_blank" rel="noopener"><i class="bi bi-controller"></i> Flexbox Froggy</a>
+        <a class="link-chip learn" href="https://cssgridgarden.com" target="_blank" rel="noopener"><i class="bi bi-grid-3x3-gap"></i> Grid Garden</a>
+        <a class="link-chip learn" href="https://flukeout.github.io" target="_blank" rel="noopener"><i class="bi bi-egg-fried"></i> CSS Diner</a>
+        <a class="link-chip learn" href="https://monkeytype.com" target="_blank" rel="noopener"><i class="bi bi-keyboard"></i> Monkeytype</a>
+        <a class="link-chip learn" href="https://www.w3.org/WAI/standards-guidelines/" target="_blank" rel="noopener"><i class="bi bi-universal-access"></i> W3 Accessibility</a>
+      </div>
+    </div>
+
+    <div class="link-group class-l">
+      <h3><i class="bi bi-collection-fill"></i> This Class</h3>
+      <div class="link-row">
+        <a class="link-chip class-l" href="lessons/"><i class="bi bi-journal-text"></i> All Lessons</a>
+        <a class="link-chip class-l" href="resources.html"><i class="bi bi-bookmark-star"></i> Resources</a>
+        <a class="link-chip class-l" href="downloads.html"><i class="bi bi-download"></i> Downloads</a>
+        <a class="link-chip class-l" href="lessons/welcome-to-learning-with-tim.html"><i class="bi bi-emoji-smile"></i> Tips from Tim</a>
+        <a class="link-chip class-l" href="https://wave.webaim.org" target="_blank" rel="noopener"><i class="bi bi-check-circle"></i> WAVE Checker</a>
+        <a class="link-chip class-l" href="https://validator.w3.org" target="_blank" rel="noopener"><i class="bi bi-check2-all"></i> W3C Validator</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
      BADGE LEGEND
      ============================================================ -->
 <div class="legend">
@@ -911,7 +1498,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
           <span class="class-day">Mon 23 Mar</span>
         </div>
         <div class="class-topic">Introduction <span class="subject-tag s2">S2</span></div>
-        <div class="class-desc">Welcome to the course! Setup VS Code, intro to how the web works.</div>
+        <div class="class-desc">Welcome to the course &mdash; meet the cohort, set up your machine, see how the web actually works.</div>
+        <ul class="talking-points">
+          <li>Course structure &amp; what to expect over 12 weeks</li>
+          <li>Install &amp; configure VS Code with Live Server &amp; Prettier</li>
+          <li>How the browser, HTML, CSS &amp; JavaScript fit together</li>
+        </ul>
         <div class="badges">
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://code.visualstudio.com" target="_blank">VS Code</a></span>
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="https://www.w3schools.com" target="_blank">W3Schools</a></span>
@@ -1364,7 +1956,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
           <span class="class-day">Wed 20 May</span>
         </div>
         <div class="class-topic">Wireframes &amp; AI Tools <span class="subject-tag s2">S2</span></div>
-        <div class="class-desc">Wireframing, prototyping, AI platforms overview (Claude, Gemini), prompt craft.</div>
+        <div class="class-desc">From sketch to clickable &mdash; planning before you code, and using AI as a coding partner.</div>
+        <ul class="talking-points">
+          <li>Low-fi wireframes in Excalidraw, then Figma for hi-fi</li>
+          <li>AI platform tour: Claude, Gemini &mdash; strengths &amp; differences</li>
+          <li>Prompt craft: give context, be specific, iterate in small steps</li>
+        </ul>
         <div class="badges">
           <span class="badge file"><i class="bi bi-file-earmark-code"></i> <a href="lessons/2026-05-20-class.html" target="_blank">Wireframes &amp; AI Slides</a></span>
           <span class="badge file"><i class="bi bi-file-earmark-image"></i> <a href="downloads/images/gsd-wireframe.png" target="_blank">gsd-wireframe.png</a></span>
@@ -1414,7 +2011,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
           <span class="class-day">Mon 25 May</span>
         </div>
         <div class="class-topic">Prototype &amp; Begin Website <span class="subject-tag s2">S2</span></div>
-        <div class="class-desc">Turn your wireframe into a working prototype. Start coding your site.</div>
+        <div class="class-desc">Turn your wireframe into a working prototype &mdash; the bridge between planning and shipping.</div>
+        <ul class="talking-points">
+          <li>Translate the wireframe into a real folder structure &amp; HTML skeleton</li>
+          <li>Pick your colour palette, typography &amp; Bootstrap version</li>
+          <li>Set up the homepage layout first, then stub the other pages</li>
+        </ul>
         <div class="badges">
           <span class="badge file"><i class="bi bi-file-earmark-slides"></i> <a href="lessons/2026-05-25-lesson-plan.html" target="_blank">Lesson Plan Deck</a></span>
           <span class="badge file"><i class="bi bi-file-earmark-ruled"></i> <a href="lessons/sub2-02-build-original-front-end-website.md" target="_blank">Assignment Brief (S2)</a></span>
@@ -1422,6 +2024,14 @@ a:hover { color: #7983f5; text-decoration: underline; }
         </div>
         <div class="badges-info">
           <span class="badge hub"><i class="bi bi-collection"></i> Activity S02 &ndash; Step 1</span>
+        </div>
+        <div class="key-res">
+          <strong><i class="bi bi-bookmark-star-fill"></i> Key resources</strong>
+          <a href="lessons/2026-05-25-lesson-plan.html" target="_blank">Today&rsquo;s deck</a>
+          <span class="res-sep">&middot;</span>
+          <a href="lessons/sub2-02-build-original-front-end-website.md" target="_blank">Assignment brief</a>
+          <span class="res-sep">&middot;</span>
+          <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank" rel="noopener">Bootstrap starter examples</a>
         </div>
       </div>
 
@@ -1431,7 +2041,12 @@ a:hover { color: #7983f5; text-decoration: underline; }
           <span class="class-day">Wed 27 May</span>
         </div>
         <div class="class-topic">Build Website <span class="subject-tag s2">S2</span></div>
-        <div class="class-desc">Continue building your original website.</div>
+        <div class="class-desc">Continue building your original website &mdash; first pass at all main pages.</div>
+        <ul class="talking-points">
+          <li>Wire up the navbar &amp; footer across every page</li>
+          <li>Drop real content into each section (no more lorem ipsum)</li>
+          <li>Check responsive behaviour on mobile width as you go</li>
+        </ul>
         <div class="badges">
           <span class="badge link"><i class="bi bi-box-arrow-up-right"></i> <a href="resources.html#templates" target="_blank">Templates</a></span>
         </div>
@@ -1718,6 +2333,8 @@ a:hover { color: #7983f5; text-decoration: underline; }
      FOOTER
      ============================================================ -->
 <footer class="footer">
+  <img src="assets/logos-icons/Transparent%20Square.png" alt="" width="48" height="48"
+       style="display:block;margin:0 auto 10px;opacity:0.85">
   <p>26b Class Hub &middot; Equinim College &middot; Front End Web Development 2026</p>
   <p style="margin-top: 4px;">Built with <span class="heart">&hearts;</span> by Tim Daly</p>
   <p style="margin-top: 8px; font-size: 11px; color: var(--dc-muted);">
