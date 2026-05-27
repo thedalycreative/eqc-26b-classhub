@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 3 · Inline Styling & Navigation</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafaf7;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 { font-family: 'Fraunces', serif; color: #ff8a3d; }
+    h2 { margin-top: 2.5rem; }
+    a { color: #2f9ea0; text-decoration: none; border-bottom: 1px solid #2f9ea0; }
+    a:hover { background: #2f9ea0; color: #fafaf7; padding: 0 2px; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+    pre { background: #1a1a1a; color: #fafaf7; padding: 1rem; border-radius: 6px; overflow-x: auto; font-family: 'Courier New', monospace; line-height: 1.4; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .resource { background: #fff; padding: 1rem; margin: 1rem 0; border-left: 4px solid #2f9ea0; }
+    .tip { background: #ffeaa7; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <h1>🎨 Class 3 — Continue Inline Styling</h1>
+  <p><strong>Topic 1 · HTML & CSS</strong> — 3 hours · Recap, nav bars, buttons, tables, accessibility & colour</p>
+
+  <h2>Part 1 · Recap & Inspect Tool</h2>
+  <p>We started by recapping last week — building a page from scratch and using inline styling. Don't assume you remember it perfectly; rebuilding is the best way to lock it in.</p>
+
+  <p>Then we explored some live websites with the browser's <strong>Inspect tool</strong> (right-click → Inspect). This lets you see the HTML and CSS behind any website — a free education on how the web is built.</p>
+
+  <div class="tip">
+    <strong>🔍 Try it:</strong> Visit any site, right-click anything on the page, and choose Inspect. The panel that opens shows the HTML structure on the left and the CSS rules applied to whatever you've selected.
+  </div>
+
+  <h2>Building a Nav Bar with <code>&lt;ul&gt;</code></h2>
+  <p>A navigation bar is just an unordered list of links. We write the HTML first, get it working, <em>then</em> add styling — that way you understand what styling actually does to your raw structure.</p>
+
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+  <p>With inline styling we turn the bullet-point list into a clean horizontal bar:</p>
+
+<pre><code>&lt;ul style="list-style: none; display: flex; gap: 20px; background: #2f9ea0; padding: 12px;"&gt;
+  &lt;li&gt;&lt;a href="index.html" style="color: white; text-decoration: none;"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="about.html" style="color: white; text-decoration: none;"&gt;About&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="contact.html" style="color: white; text-decoration: none;"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+  <div class="tip">
+    <strong>📸 Activity:</strong> Build your own nav bar, screenshot it, and share with the class. Make it yours — pick your own colours and link names.
+  </div>
+
+  <h2>Part 2 · Buttons</h2>
+  <p>Buttons are <code>&lt;button&gt;</code> elements. Like the nav bar, we'll write the HTML first then style it. Buttons can be wrapped inside an anchor tag (<code>&lt;a&gt;</code>) to turn them into clickable links.</p>
+
+<pre><code>&lt;a href="contact.html"&gt;
+  &lt;button style="background: #ff8a3d; color: white; padding: 10px 24px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;"&gt;
+    Get in Touch
+  &lt;/button&gt;
+&lt;/a&gt;</code></pre>
+
+  <p><strong>Your turn:</strong> create two buttons. Link each one to a different page or section of your site.</p>
+
+  <h2>Tables</h2>
+  <p>Tables are great for tabular data — schedules, price lists, comparison charts. The building blocks:</p>
+
+  <ul>
+    <li><code>&lt;table&gt;</code> — the table itself</li>
+    <li><code>&lt;tr&gt;</code> — table row</li>
+    <li><code>&lt;th&gt;</code> — table header cell</li>
+    <li><code>&lt;td&gt;</code> — table data cell</li>
+  </ul>
+
+<pre><code>&lt;table style="border-collapse: collapse; width: 100%;"&gt;
+  &lt;tr&gt;
+    &lt;th style="border: 1px solid #1a1a1a; padding: 8px;"&gt;Class&lt;/th&gt;
+    &lt;th style="border: 1px solid #1a1a1a; padding: 8px;"&gt;Topic&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td style="border: 1px solid #1a1a1a; padding: 8px;"&gt;1&lt;/td&gt;
+    &lt;td style="border: 1px solid #1a1a1a; padding: 8px;"&gt;Intro to HTML&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+  <p>Personalise your page with your own table. Make it reflect content that matters to you.</p>
+
+  <h2>Quick Recap Checklist</h2>
+  <ul>
+    <li>✅ Use Inspect to learn from real websites</li>
+    <li>✅ Build a nav bar from <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code>/<code>&lt;a&gt;</code></li>
+    <li>✅ Make and style two buttons; wrap one in an <code>&lt;a&gt;</code> tag</li>
+    <li>✅ Build a 2+ row table using <code>&lt;table&gt;</code>/<code>&lt;tr&gt;</code>/<code>&lt;th&gt;</code>/<code>&lt;td&gt;</code></li>
+    <li>✅ Always write HTML first, <em>then</em> add styling</li>
+  </ul>
+
+  <div class="resource">
+    <h4>🔗 References & Companion Files</h4>
+    <p><a href="../downloads/pdfs/26b-class-03-reference-sheet.pdf" target="_blank">Class 3 Reference Sheet (PDF)</a></p>
+    <p><a href="../downloads/pdfs/26b-class-03-color-model.pdf" target="_blank">Colour Model (PDF)</a></p>
+    <p><a href="../downloads/pdfs/26b-class-03-hex-color-model.pdf" target="_blank">Hex Colour Model (PDF)</a></p>
+    <p><a href="../downloads/pdfs/26b-class-03-accessible-design.pdf" target="_blank">Accessible Design (PDF)</a></p>
+    <p><a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS</a></p>
+    <p><a href="https://coolors.co" target="_blank">Coolors.co — Colour Palette Generator</a></p>
+  </div>
+
+  <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
+  <p style="font-size: 0.9rem; color: #666;">
+    <strong>Class 3</strong> — Equinim College · Front End Web Development · 26B
+  </p>
+
+</body>
+</html>

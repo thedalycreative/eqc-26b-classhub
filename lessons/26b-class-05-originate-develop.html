@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concepts — Intro · Wed 29 Apr · 26B — Equinim College</title>
+<meta name="description" content="Subject 2 kickoff — BSBCRT512 Originate & Develop Concepts for Intake 26B at Equinim College. Wednesday 29 April 2026.">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWYzYTVmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTkgMThoNk0xMCAyMmg0TTEyIDJhNyA3IDAgMCAwLTQgMTIuOWMuNi41IDEgMS4xIDEgMS44VjE3aDZ2LS4zYzAtLjcuNC0xLjQgMS0xLjhBNyA3IDAgMCAwIDEyIDJ6Ii8+PC9zdmc+">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --ink: #14181f;
+    --ink-soft: #3a4250;
+    --muted: #6b7380;
+    --line: #dfe2e6;
+    --line-soft: #ecedef;
+    --paper: #fafaf7;
+    --paper-pure: #ffffff;
+    --accent: #1f3a5f;
+    --accent-soft: #eef2f7;
+    --warm: #b45a1f;
+    --warm-soft: #fbf3e9;
+    --ok: #1f6b3a;
+    --ok-soft: #f2f9f3;
+    --radius: 4px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 640px) { .wrap { padding: 0 20px; } }
+
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+
+  /* --- Lucide icon defaults --- */
+  .lu, [data-lucide] { width: 1em; height: 1em; stroke-width: 1.75; vertical-align: -0.15em; }
+  .lu-lg, [data-lucide].lu-lg { width: 1.4em; height: 1.4em; }
+
+  /* --- Animations for icons --- */
+  @keyframes spin   { to { transform: rotate(360deg); } }
+  @keyframes pulse-soft { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+  @keyframes bob    { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-7deg); } 75% { transform: rotate(7deg); } }
+  @keyframes draw   { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
+  @keyframes shimmer { 0% { opacity:.4 } 50% { opacity: 1 } 100% { opacity: .4 } }
+
+  .anim-spin   [data-lucide] { animation: spin 6s linear infinite; transform-origin: 50% 50%; }
+  .anim-pulse  [data-lucide] { animation: pulse-soft 2.4s ease-in-out infinite; }
+  .anim-bob    [data-lucide] { animation: bob 2.6s ease-in-out infinite; }
+  .anim-wiggle:hover [data-lucide] { animation: wiggle .6s ease-in-out 1; transform-origin: 50% 50%; }
+  .anim-draw   [data-lucide] { stroke-dasharray: 60; animation: draw 1.4s ease-out forwards; }
+  .anim-shimmer [data-lucide] { animation: shimmer 2.2s ease-in-out infinite; }
+
+  /* --- Utility bar --- */
+  .utility { background: var(--ink); color: #d8dce2; font-size: 12.5px; }
+  .utility .wrap { display: flex; justify-content: space-between; align-items: center; padding: 10px 28px; gap: 16px; }
+  .utility .crest { display:flex; align-items:center; gap:10px; font-family: 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; font-size: 10.5px; color:#a9b0bb; }
+  .utility .crest [data-lucide] { color: #6b8bbd; width: 14px; height: 14px; animation: pulse-soft 2.4s ease-in-out infinite; }
+  .utility a { color: #d8dce2; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .utility a:hover { color: #fff; }
+  .utility .links { display:flex; gap: 22px; }
+  @media (max-width: 640px) { .utility .links { display: none; } }
+
+  /* --- Masthead --- */
+  header.masthead { border-bottom: 1px solid var(--line); background: var(--paper-pure); position: sticky; top: 0; z-index: 20; }
+  .masthead .wrap { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; gap: 20px; }
+  .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); }
+  .logo .mark { width: 44px; height: 44px; border: 1.5px solid var(--ink); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; flex-shrink: 0; }
+  .logo .mark [data-lucide] { width: 22px; height: 22px; stroke-width: 2; animation: bob 3s ease-in-out infinite; }
+  .logo .lockup { display: flex; flex-direction: column; gap: 2px; }
+  .logo .name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1; }
+  .logo .name em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .logo small { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; font-weight: 400; }
+  nav.primary { display: flex; gap: 28px; font-size: 14px; }
+  nav.primary a { text-decoration: none; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 6px; }
+  nav.primary a:hover { color: var(--ink); }
+  nav.primary a [data-lucide] { width: 14px; height: 14px; color: var(--muted); }
+  nav.primary a:hover [data-lucide] { color: var(--accent); }
+  @media (max-width: 820px) { nav.primary { display: none; } }
+
+  /* --- Hero --- */
+  .hero { border-bottom: 1px solid var(--line); background: var(--paper-pure); overflow: hidden; }
+  .hero .wrap { padding: 56px 28px 0; display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: end; }
+  @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; gap: 32px; padding-bottom: 40px; } }
+
+  .hero-content { padding-bottom: 64px; }
+  .hero-graphic { position: relative; align-self: center; padding: 28px 0 36px; }
+  .hero-graphic .stack {
+    aspect-ratio: 1 / 1;
+    max-width: 380px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(circle at 20% 20%, var(--accent-soft) 0%, transparent 35%),
+      radial-gradient(circle at 80% 70%, var(--warm-soft) 0%, transparent 35%),
+      var(--paper);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+    overflow: hidden;
+  }
+  .hero-graphic .quad {
+    background: var(--paper-pure);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px;
+    text-align: center;
+  }
+  .hero-graphic .quad [data-lucide] { width: 36px; height: 36px; color: var(--accent); stroke-width: 1.6; }
+  .hero-graphic .quad:nth-child(1) [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite; }
+  .hero-graphic .quad:nth-child(2) [data-lucide] { animation: bob 2.8s ease-in-out infinite; }
+  .hero-graphic .quad:nth-child(3) [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite .6s; }
+  .hero-graphic .quad:nth-child(4) [data-lucide] { animation: bob 2.8s ease-in-out infinite .8s; }
+  .hero-graphic .quad span { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .hero-graphic .quad strong { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; letter-spacing: -0.005em; color: var(--ink); }
+
+  .hero-meta-strip { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .hero-meta-strip .wrap { padding: 22px 28px; }
+  .hero-meta-strip dl { margin: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; }
+  @media (max-width: 900px) { .hero-meta-strip dl { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+  @media (max-width: 560px) { .hero-meta-strip dl { grid-template-columns: repeat(2, 1fr); } }
+  .hero-meta-strip .meta-row { display: block; padding: 0 18px 0 0; border-right: 1px solid var(--line); }
+  .hero-meta-strip .meta-row:last-child { border-right: 0; }
+  @media (max-width: 900px) { .hero-meta-strip .meta-row { border-right: 0; padding-right: 0; } }
+  .hero-meta-strip .meta-row dt { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; display: inline-flex; align-items: center; gap: 6px; }
+  .hero-meta-strip .meta-row dt [data-lucide] { width: 11px; height: 11px; color: var(--accent); }
+  .hero-meta-strip .meta-row dd { margin: 0; font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+
+  .hero .kicker { display: flex; gap: 14px; align-items: center; margin-bottom: 22px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); background: var(--paper); }
+  .pill [data-lucide] { width: 12px; height: 12px; }
+  .pill.live { color: var(--ok); border-color: #cbe3d0; background: var(--ok-soft); }
+  .pill.live .blink { width:6px; height: 6px; border-radius: 50%; background: var(--ok); animation: pulse 1.8s infinite; display: inline-block; }
+  .pill.warm { color: var(--warm); border-color: #e9cfb5; background: var(--warm-soft); }
+  .pill.warm [data-lucide] { animation: pulse-soft 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(31,107,58,.45);} 70% { box-shadow: 0 0 0 8px rgba(31,107,58,0);} 100% { box-shadow: 0 0 0 0 rgba(31,107,58,0);} }
+
+  .hero h1 { font-size: clamp(40px, 5.6vw, 72px); line-height: 1.02; font-weight: 400; }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero .lede { margin-top: 22px; max-width: 56ch; font-size: 18px; color: var(--ink-soft); line-height: 1.55; }
+
+  /* --- Quick links --- */
+  .quick { border-bottom: 1px solid var(--line); background: var(--paper); }
+  .quick .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 0 28px; }
+  @media (max-width: 820px) { .quick .wrap { grid-template-columns: repeat(2, 1fr); } }
+  .ql { padding: 22px 24px; border-left: 1px solid var(--line); text-decoration: none; color: inherit; transition: background .18s ease; display: block; }
+  .ql:first-child { border-left: 0; }
+  @media (max-width: 820px) { .ql:nth-child(odd) { border-left: 0; } .ql:nth-child(n+3) { border-top: 1px solid var(--line); } }
+  .ql:hover { background: var(--paper-pure); }
+  .ql .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .12em; display: inline-flex; align-items: center; gap: 6px; }
+  .ql .num [data-lucide] { width: 13px; height: 13px; color: var(--accent); }
+  .ql:hover .num [data-lucide] { animation: bob 1.2s ease-in-out infinite; }
+  .ql .t { margin-top: 6px; font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
+  .ql .arrow { display: inline-flex; vertical-align: -3px; margin-left: 4px; transition: transform .2s ease; }
+  .ql:hover .arrow { transform: translateX(4px); color: var(--accent); }
+  .ql .d { margin-top: 4px; font-size: 13.5px; color: var(--muted); }
+
+  /* --- Sections --- */
+  section.body { padding: 72px 0; border-top: 1px solid var(--line); }
+  section.body.alt { background: var(--paper-pure); }
+  .section-head { display: grid; grid-template-columns: 220px 1fr; gap: 48px; margin-bottom: 40px; align-items: baseline; }
+  @media (max-width: 820px) { .section-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; } }
+  .section-head .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: 12px; border-top: 2px solid var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+  .section-head .label [data-lucide] { width: 14px; height: 14px; color: var(--accent); }
+  .section-head h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; max-width: 26ch; }
+  .section-head .intro { margin-top: 14px; color: var(--ink-soft); font-size: 16px; max-width: 64ch; }
+
+  /* --- Plan grid --- */
+  .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); background: var(--paper-pure); }
+  @media (max-width: 820px) { .plan-grid { grid-template-columns: 1fr; } }
+  .plan-block { padding: 28px 26px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; position: relative; }
+  .plan-block:last-child { border-right: 0; }
+  @media (max-width: 820px) { .plan-block { border-right: 0; border-bottom: 1px solid var(--line); } .plan-block:last-child { border-bottom: 0; } }
+  .plan-block .step { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+  .plan-block .step [data-lucide] { width: 13px; height: 13px; }
+  .plan-block .time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .plan-block h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; }
+  .plan-block p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+
+  /* --- Buttons --- */
+  .btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 8px 14px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: var(--radius); cursor: pointer; transition: all .15s ease; display: inline-flex; align-items: center; gap: 6px; }
+  .btn [data-lucide] { width: 13px; height: 13px; }
+  .btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+  .btn.danger:hover { background: #6b1f1f; border-color: #6b1f1f; }
+
+  /* --- Flow diagram --- */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); background: var(--paper-pure); }
+  @media (max-width: 900px) { .flow { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+  .flow-step { padding: 26px 22px; border-right: 1px solid var(--line); position: relative; display: flex; flex-direction: column; gap: 10px; }
+  .flow-step:last-child { border-right: 0; }
+  @media (max-width: 900px) {
+    .flow-step { border-right: 0; border-bottom: 1px solid var(--line); }
+    .flow-step:nth-child(odd):not(:last-child) { border-right: 1px solid var(--line); }
+    .flow-step:nth-last-child(-n+2) { border-bottom: 0; }
+  }
+  @media (max-width: 520px) { .flow-step { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; } .flow-step:last-child { border-bottom: 0 !important; } }
+  .flow-step .top { display: flex; align-items: center; gap: 12px; }
+  .flow-step .num-bubble { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .flow-step .icon-mark { color: var(--accent); display: inline-flex; }
+  .flow-step .icon-mark [data-lucide] { width: 22px; height: 22px; }
+  .flow-step:nth-child(1) .icon-mark [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite; }
+  .flow-step:nth-child(2) .icon-mark [data-lucide] { animation: spin 12s linear infinite; transform-origin: 50% 50%; }
+  .flow-step:nth-child(3) .icon-mark [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite .4s; }
+  .flow-step:nth-child(4) .icon-mark [data-lucide] { animation: bob 2.8s ease-in-out infinite; }
+  .flow-step h4 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; line-height: 1.25; }
+  .flow-step p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .flow-step .qrange { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); }
+
+  /* --- Categories grid --- */
+  .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); background: var(--paper-pure); }
+  @media (max-width: 900px) { .cats { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cats { grid-template-columns: 1fr; } }
+  .cat { padding: 24px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
+  .cat .tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+  .cat .tag .count { color: var(--accent); font-weight: 500; }
+  .cat .head-icon { color: var(--accent); }
+  .cat .head-icon [data-lucide] { width: 24px; height: 24px; stroke-width: 1.6; }
+  .cat:nth-child(1) .head-icon [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite; }
+  .cat:nth-child(2) .head-icon [data-lucide] { animation: bob 2.6s ease-in-out infinite; }
+  .cat:nth-child(3) .head-icon [data-lucide] { animation: pulse-soft 2.6s ease-in-out infinite .5s; }
+  .cat:nth-child(4) .head-icon [data-lucide] { animation: bob 2.6s ease-in-out infinite .5s; }
+  .cat:nth-child(5) .head-icon [data-lucide], .cat:nth-child(6) .head-icon [data-lucide] { color: var(--warm); animation: wiggle 5s ease-in-out infinite; transform-origin: 50% 50%; }
+  .cat h3 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; }
+  .cat ul { margin: 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--ink-soft); }
+  .cat ul li { padding: 5px 0; border-top: 1px dashed var(--line-soft); }
+  .cat ul li:first-child { border-top: 0; }
+  .cat ul li::before { content: "— "; color: var(--muted); }
+  .cat code { background: var(--paper); padding: 1px 5px; border-radius: 3px; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+
+  /* --- Callout (trainer-only) --- */
+  .callout { border: 1px solid var(--line); background: var(--paper-pure); padding: 26px 28px; margin-top: 32px; border-left: 3px solid var(--warm); }
+  .callout .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--warm); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 8px; }
+  .callout .meta [data-lucide] { width: 14px; height: 14px; animation: pulse-soft 2.4s ease-in-out infinite; }
+  .callout h4 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+  .callout p { margin: 0 0 10px; color: var(--ink-soft); font-size: 14.5px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--ink); }
+
+  /* --- Checklist --- */
+  .checklist-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; padding: 14px 16px; background: var(--paper-pure); border: 1px solid var(--line); border-radius: var(--radius); }
+  .checklist-controls .hint { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; flex: 1 1 auto; display: inline-flex; align-items: center; gap: 8px; }
+  .checklist-controls .hint [data-lucide] { width: 14px; height: 14px; color: var(--accent); }
+  .checklist-controls .progress { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); padding: 5px 10px; background: var(--accent-soft); border-radius: 999px; letter-spacing: .04em; }
+
+  .checklist { background: var(--paper-pure); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .check-group { border-bottom: 1px solid var(--line); }
+  .check-group:last-child { border-bottom: 0; }
+  .check-group-head {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 18px 22px;
+    background: var(--paper);
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid var(--line);
+    transition: background .15s ease;
+  }
+  .check-group-head:hover { background: var(--accent-soft); }
+  .check-group-head .part-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); font-weight: 500; letter-spacing: .08em; padding: 6px 10px; background: var(--accent-soft); border-radius: 4px; text-align: center; }
+  .check-group-head .part-title { display: flex; flex-direction: column; gap: 2px; }
+  .check-group-head .part-title strong { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; letter-spacing: -0.005em; }
+  .check-group-head .part-title span { font-size: 13px; color: var(--muted); }
+  .check-group-head .part-progress { display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+  .check-group-head .part-progress [data-lucide] { width: 18px; height: 18px; color: var(--muted); transition: transform .25s ease; }
+  .check-group.open .check-group-head .part-progress [data-lucide].chevron { transform: rotate(180deg); }
+
+  .check-items { padding: 6px 0; display: none; }
+  .check-group.open .check-items { display: block; }
+
+  .check-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 14px;
+    padding: 12px 22px;
+    align-items: start;
+    border-top: 1px dashed var(--line-soft);
+    cursor: pointer;
+    transition: background .12s ease;
+  }
+  .check-item:first-child { border-top: 0; }
+  .check-item:hover { background: var(--paper); }
+  .check-item.done { opacity: .6; }
+  .check-item.done .q-text > span:last-child { text-decoration: line-through; text-decoration-thickness: 1px; }
+  .check-item .q-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .08em; padding-top: 4px; }
+  .check-item .q-body { display: flex; flex-direction: column; gap: 4px; }
+  .check-item .q-text { font-size: 14.5px; line-height: 1.45; color: var(--ink); display: flex; align-items: flex-start; gap: 10px; }
+  .check-item .q-text .box { width: 18px; height: 18px; border: 1.5px solid var(--line); border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; transition: all .15s ease; background: #fff; }
+  .check-item .q-text .box [data-lucide] { width: 12px; height: 12px; color: #fff; opacity: 0; transition: opacity .12s ease; }
+  .check-item.done .q-text .box { background: var(--ok); border-color: var(--ok); }
+  .check-item.done .q-text .box [data-lucide] { opacity: 1; }
+  .check-item .q-hint { font-size: 12.5px; color: var(--muted); padding-left: 28px; }
+
+  /* --- Case study card --- */
+  .case-card { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 28px 30px; border: 1px solid var(--line); background: var(--paper-pure); border-radius: var(--radius); margin-bottom: 28px; }
+  @media (max-width: 640px) { .case-card { grid-template-columns: 1fr; gap: 16px; } }
+  .case-card .icon-bx { width: 64px; height: 64px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; }
+  .case-card .icon-bx [data-lucide] { width: 32px; height: 32px; animation: pulse-soft 2.6s ease-in-out infinite; }
+  .case-card .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .case-card h3 { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .case-card p { margin: 0 0 10px; color: var(--ink-soft); font-size: 14.5px; line-height: 1.55; }
+  .case-card p:last-child { margin-bottom: 0; }
+
+  /* --- Footer --- */
+  footer.foot { background: var(--ink); color: #b3bac4; padding: 48px 0 28px; }
+  footer.foot .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding: 0 28px; }
+  @media (max-width: 820px) { footer.foot .wrap { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { footer.foot .wrap { grid-template-columns: 1fr; } }
+  footer.foot .brand-name { font-family: 'Fraunces', serif; font-size: 24px; color: #fff; font-weight: 500; letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  footer.foot .brand-name em { font-style: italic; font-weight: 400; color: #6b8bbd; }
+  footer.foot .brand-name [data-lucide] { width: 26px; height: 26px; color: #6b8bbd; animation: pulse-soft 2.6s ease-in-out infinite; }
+  footer.foot p { margin: 0; font-size: 13.5px; line-height: 1.6; }
+  footer.foot h5 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #fff; font-weight: 500; margin: 0 0 14px; }
+  footer.foot ul { list-style: none; padding: 0; margin: 0; }
+  footer.foot li { margin-bottom: 8px; font-size: 14px; }
+  footer.foot a { color: #b3bac4; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  footer.foot a [data-lucide] { width: 12px; height: 12px; opacity: .6; }
+  footer.foot a:hover { color: #fff; }
+  footer.foot a:hover [data-lucide] { opacity: 1; }
+  .colophon { border-top: 1px solid #2a2f38; margin-top: 40px; padding: 20px 28px 0; font-size: 12px; color: #7a8391; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: 1180px; margin-left: auto; margin-right: auto; }
+  .colophon .rto { font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+
+  /* --- Toast --- */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: var(--radius); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: 0; transition: opacity .25s ease, transform .25s ease; pointer-events: none; z-index: 100; display: inline-flex; align-items: center; gap: 8px; }
+  .toast [data-lucide] { width: 14px; height: 14px; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="wrap">
+    <div class="crest"><i data-lucide="building-2"></i>EQC Institute of Technology · Perth WA</div>
+    <div class="links">
+      <a href="https://hub.equinim.edu.au/26b" target="_blank" rel="noopener"><i data-lucide="external-link"></i>Class hub</a>
+      <a href="#assessment"><i data-lucide="clipboard-list"></i>Assessment</a>
+      <a href="#filters"><i data-lucide="filter"></i>Filters</a>
+      <a href="#tomorrow"><i data-lucide="sunrise"></i>Tomorrow</a>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <span class="mark"><i data-lucide="lightbulb"></i></span>
+      <div class="lockup">
+        <div class="name">Equinim<em>·</em>College</div>
+        <small>RTO 45758 · Intake 26B</small>
+      </div>
+    </a>
+    <nav class="primary">
+      <a href="#plan"><i data-lucide="calendar-days"></i>Plan</a>
+      <a href="#unit"><i data-lucide="book-open"></i>Unit</a>
+      <a href="#assessment"><i data-lucide="clipboard-list"></i>Assessment</a>
+      <a href="#filters"><i data-lucide="filter"></i>Filters</a>
+      <a href="#tomorrow"><i data-lucide="sunrise"></i>Tomorrow</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-content">
+      <div class="kicker">
+        <span class="pill live"><span class="blink"></span>Live · In Class</span>
+        <span class="pill"><i data-lucide="calendar"></i>Wed 29 Apr</span>
+        <span class="pill warm"><i data-lucide="rocket"></i>Subject 2 · Day 1</span>
+        <span class="pill">Intake 26B</span>
+      </div>
+      <h1>Today, we <em>originate</em>.</h1>
+      <p class="lede">
+        Subject 2 starts now: Working with Clients — Originate &amp; Develop Concepts (BSBCRT512). Today is the unpack — what the unit covers, what good concept work actually looks like, and a walk-through of tomorrow's in-class activity. No deliverables today. Just the lay of the land so tomorrow's flying.
+      </p>
+    </div>
+
+    <div class="hero-graphic">
+      <div class="stack">
+        <div class="quad"><i data-lucide="search"></i><span>Step 01</span><strong>Scope</strong></div>
+        <div class="quad"><i data-lucide="lightbulb"></i><span>Step 02</span><strong>Originate</strong></div>
+        <div class="quad"><i data-lucide="presentation"></i><span>Step 03</span><strong>Present</strong></div>
+        <div class="quad"><i data-lucide="refresh-cw"></i><span>Step 04</span><strong>Refine</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hero-meta-strip">
+  <div class="wrap">
+    <dl>
+      <div class="meta-row"><dt><i data-lucide="layout-template"></i>Format</dt><dd>Intro lecture + discussion</dd></div>
+      <div class="meta-row"><dt><i data-lucide="calendar"></i>Date</dt><dd>Wed 29 Apr 2026</dd></div>
+      <div class="meta-row"><dt><i data-lucide="clock"></i>Schedule</dt><dd>9:00 – 3:30</dd></div>
+      <div class="meta-row"><dt><i data-lucide="map-pin"></i>Room</dt><dd>Classroom 1</dd></div>
+      <div class="meta-row"><dt><i data-lucide="users"></i>Trainers</dt><dd>Tim &amp; Duke</dd></div>
+      <div class="meta-row"><dt><i data-lucide="book-open"></i>Unit</dt><dd>BSBCRT512</dd></div>
+      <div class="meta-row"><dt><i data-lucide="hash"></i>Cohort</dt><dd>26B · ~12 students</dd></div>
+    </dl>
+  </div>
+</div>
+
+<section class="quick">
+  <div class="wrap">
+    <a class="ql" href="#plan"><div class="num"><i data-lucide="calendar-days"></i>01</div><div class="t">Today's plan<i class="arrow" data-lucide="arrow-right"></i></div><div class="d">Three blocks · concept-first thinking</div></a>
+    <a class="ql" href="#unit"><div class="num"><i data-lucide="book-open"></i>02</div><div class="t">The unit<i class="arrow" data-lucide="arrow-right"></i></div><div class="d">BSBCRT512 broken down properly</div></a>
+    <a class="ql" href="#assessment"><div class="num"><i data-lucide="clipboard-list"></i>03</div><div class="t">Assessment walkthrough<i class="arrow" data-lucide="arrow-right"></i></div><div class="d">4 parts · 25 questions + pitch · in class</div></a>
+    <a class="ql" href="#filters"><div class="num"><i data-lucide="filter"></i>04</div><div class="t">What good looks like<i class="arrow" data-lucide="arrow-right"></i></div><div class="d">Four filters of a strong concept</div></a>
+  </div>
+</section>
+
+<section class="body" id="plan">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="calendar-days"></i>§ 01 — Today's plan</span>
+      <div>
+        <h2>An intro day, not an assessment day. Take notes — tomorrow you build.</h2>
+        <p class="intro">Three blocks. The unit unpack, what "a good concept" actually means, and a walkthrough of tomorrow's activity so nothing's a surprise.</p>
+      </div>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan-block">
+        <div class="step"><i data-lucide="book-open"></i>Block 01</div>
+        <div class="time">09:00 – 10:30</div>
+        <h3>Subject 2 in plain English</h3>
+        <p>What BSBCRT512 actually asks of you. Performance criteria translated. Why this unit sits where it does in the qualification.</p>
+      </div>
+      <div class="plan-block">
+        <div class="step"><i data-lucide="filter"></i>Block 02</div>
+        <div class="time">10:45 – 12:30</div>
+        <h3>The four filters of a good concept</h3>
+        <p>Viable, original, presentable, refinable. Walk through worked examples — concepts that pass each filter, and ones that flunk it.</p>
+      </div>
+      <div class="plan-block">
+        <div class="step"><i data-lucide="clipboard-list"></i>Block 03</div>
+        <div class="time">13:30 – 15:30</div>
+        <h3>Tomorrow's activity, walked through</h3>
+        <p>The four-part case-study activity, end to end. Every question, what it's looking for, and where past students get stuck.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="body alt" id="unit">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="book-open"></i>§ 02 — Subject 2 unit</span>
+      <div>
+        <h2>BSBCRT512 — Originate &amp; Develop Concepts.</h2>
+        <p class="intro">Plain English version. The unit asks you to take a real issue, generate ideas to address it, evaluate those ideas honestly, present one to stakeholders, and refine it based on feedback. Four moves, in order.</p>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="top"><span class="num-bubble">1</span><span class="icon-mark"><i data-lucide="search"></i></span></div>
+        <h4>Scope the issue</h4>
+        <p>Workplace, community, or business. Specific enough to research, big enough to matter. No "make an app" energy.</p>
+        <div class="qrange">Maps to PC 1.1–1.4</div>
+      </div>
+      <div class="flow-step">
+        <div class="top"><span class="num-bubble">2</span><span class="icon-mark"><i data-lucide="lightbulb"></i></span></div>
+        <h4>Generate &amp; evaluate</h4>
+        <p>Multiple ideas, brainstormed wide. Cost, capability, timeline, fit. Cut what doesn't survive scrutiny.</p>
+        <div class="qrange">Maps to PC 2.1–2.3</div>
+      </div>
+      <div class="flow-step">
+        <div class="top"><span class="num-bubble">3</span><span class="icon-mark"><i data-lucide="presentation"></i></span></div>
+        <h4>Present to stakeholders</h4>
+        <p>One concept, in a format that fits the audience. Slides, doc, prototype — whatever lands the idea cleanly.</p>
+        <div class="qrange">Maps to PC 2.4 + 3.1–3.2</div>
+      </div>
+      <div class="flow-step">
+        <div class="top"><span class="num-bubble">4</span><span class="icon-mark"><i data-lucide="refresh-cw"></i></span></div>
+        <h4>Refine on feedback</h4>
+        <p>Document what changed. Answer questions with substance. Revise until it's actually implementable.</p>
+        <div class="qrange">Maps to PC 3.3–3.4</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="meta"><i data-lucide="zap"></i>Trainer-only · presenter notes</div>
+      <h4>Anchor the unit in something real</h4>
+      <p><strong>Use a worked example:</strong> walk through a past student concept (anonymised) start-to-finish so they see what each step looks like in practice. The "evaluate honestly" step is where students usually skip — call it out.</p>
+      <p><strong>Watch for:</strong> students fixating on a "cool idea" before they've nailed the issue. Push them back to step 1 every time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="body" id="assessment">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="clipboard-list"></i>§ 03 — Tomorrow's assessment</span>
+      <div>
+        <h2>Originate and Develop Concepts — the in-class activity.</h2>
+        <p class="intro">Four parts, 25 questions plus a 5-minute pitch, all completed live in class. You'll get a case study from your trainer, work through it solo, present, and refine. Tick each item off below as we walk through what it's actually asking.</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="icon-bx"><i data-lucide="briefcase"></i></div>
+      <div>
+        <div class="meta">Case study</div>
+        <h3>Your trainer presents the scenario in class.</h3>
+        <p>You'll be given a short business case — the kind of issue an organisation might actually face. From there, the activity is yours: identify the issue, develop two solution paths, pick one, present it, and refine it based on feedback.</p>
+        <p>Bring a laptop and an open mind. No pre-reading required.</p>
+      </div>
+    </div>
+
+    <div class="checklist-controls">
+      <span class="hint"><i data-lucide="mouse-pointer-click"></i>Click any question to tick it off · saves automatically</span>
+      <span class="progress" id="progressLabel">0 / 26</span>
+      <button class="btn" id="resetCheck"><i data-lucide="rotate-ccw"></i>Reset</button>
+      <button class="btn primary" id="expandAll"><i data-lucide="unfold-vertical"></i>Expand all</button>
+    </div>
+
+    <div class="checklist" id="checklist"></div>
+
+    <div class="callout">
+      <div class="meta"><i data-lucide="zap"></i>Trainer-only · presenter notes</div>
+      <h4>How to walk this section</h4>
+      <p><strong>Open expand-all.</strong> Step through Part 1 first — emphasise that questions 1–8 are about <em>solution one</em>, then questions 9–11 are the evaluation. Same shape repeats for solution two (12–21).</p>
+      <p><strong>Part 2 is the pitch.</strong> 5 minutes, last 2 minutes are Q&amp;A. Remind them this is a soft skills assessment as much as a content one.</p>
+      <p><strong>Parts 3 &amp; 4 are short but high-leverage.</strong> Feedback documentation + reflection. Easy marks if they actually take notes during the pitch.</p>
+    </div>
+  </div>
+</section>
+
+<section class="body alt" id="filters">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="filter"></i>§ 04 — Concept lens</span>
+      <div>
+        <h2>The four filters of a good concept.</h2>
+        <p class="intro">Every concept that survives this unit passes through these four filters. If it fails one, you fix it or you bin it. Use this as your gut-check tomorrow when you're choosing what to develop.</p>
+      </div>
+    </div>
+
+    <div class="cats">
+      <div class="cat">
+        <div class="tag"><span>Filter 01 · Reality check</span><span class="head-icon"><i data-lucide="shield-check"></i></span></div>
+        <h3>Viable</h3>
+        <ul>
+          <li>Can this actually be built with available time, money, skills?</li>
+          <li>Does it match the constraints of the brief?</li>
+          <li>Are there legal, ethical, or operational blockers?</li>
+          <li>Maps to: <code>PC 1.4 — assess factors affecting viability</code></li>
+        </ul>
+      </div>
+
+      <div class="cat">
+        <div class="tag"><span>Filter 02 · Differentiator</span><span class="head-icon"><i data-lucide="sparkles"></i></span></div>
+        <h3>Original</h3>
+        <ul>
+          <li>How does it differ from existing solutions?</li>
+          <li>What gap does it fill that competitors miss?</li>
+          <li>Have you compared it against best-practice examples?</li>
+          <li>Maps to: <code>PC 2.3 — compare with best practice</code></li>
+        </ul>
+      </div>
+
+      <div class="cat">
+        <div class="tag"><span>Filter 03 · Communicable</span><span class="head-icon"><i data-lucide="presentation"></i></span></div>
+        <h3>Presentable</h3>
+        <ul>
+          <li>Can a stakeholder understand it in 60 seconds?</li>
+          <li>Is the format right for the audience (slides, doc, demo)?</li>
+          <li>Does it land the value, not just the features?</li>
+          <li>Maps to: <code>PC 2.4 — select &amp; present a solution</code></li>
+        </ul>
+      </div>
+
+      <div class="cat">
+        <div class="tag"><span>Filter 04 · Adaptable</span><span class="head-icon"><i data-lucide="refresh-cw"></i></span></div>
+        <h3>Refinable</h3>
+        <ul>
+          <li>Can it absorb feedback without falling apart?</li>
+          <li>Have you actually sought stakeholder input?</li>
+          <li>Did you document what changed and why?</li>
+          <li>Maps to: <code>PC 3.1–3.4 — seek feedback &amp; refine</code></li>
+        </ul>
+      </div>
+
+      <div class="cat">
+        <div class="tag"><span>Anti-pattern · Avoid</span><span class="head-icon"><i data-lucide="alert-triangle"></i></span></div>
+        <h3>The "cool idea" trap</h3>
+        <ul>
+          <li>Concept is exciting but solves no real issue</li>
+          <li>No comparable products researched</li>
+          <li>Demo-driven, not stakeholder-driven</li>
+          <li>Symptoms: starts with "wouldn't it be cool if…"</li>
+        </ul>
+      </div>
+
+      <div class="cat">
+        <div class="tag"><span>Anti-pattern · Avoid</span><span class="head-icon"><i data-lucide="alert-triangle"></i></span></div>
+        <h3>The "first idea" trap</h3>
+        <ul>
+          <li>Locked in before brainstorming alternatives</li>
+          <li>No evaluation against viability factors</li>
+          <li>Refinement = polish, not rethink</li>
+          <li>Symptoms: skipped step 2, jumped to step 4</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="body" id="tomorrow">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="sunrise"></i>§ 05 — Tomorrow</span>
+      <div>
+        <h2>Build day. Bring the issue, leave with a concept.</h2>
+        <p class="intro">Tomorrow is hands-on assessment work. Trainer presents the case study, you scope the issue, develop two solutions, pick one, pitch it, and refine on feedback. Same loop you saw today — now you're driving.</p>
+      </div>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan-block">
+        <div class="step"><i data-lucide="package"></i>Bring</div>
+        <div class="time">Before 9am</div>
+        <h3>Laptop, charger, headphones</h3>
+        <p>Plus any rough notes from today — half-formed ideas welcome. The case study is presented in class, so don't worry about pre-reading.</p>
+      </div>
+      <div class="plan-block">
+        <div class="step"><i data-lucide="brain-circuit"></i>Expect</div>
+        <div class="time">All day</div>
+        <h3>Scope → solve → pitch → refine</h3>
+        <p>Morning: scope the issue and develop both solution paths. Afternoon: pick one, present for 5 minutes, take feedback, refine.</p>
+      </div>
+      <div class="plan-block">
+        <div class="step"><i data-lucide="check-check"></i>Walk away with</div>
+        <div class="time">By 3:30pm</div>
+        <h3>One refined concept</h3>
+        <p>Documented, presented, feedback-incorporated. That's a chunk of your portfolio evidence for BSBCRT512 done in a day.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="meta"><i data-lucide="zap"></i>Trainer-only · presenter notes</div>
+      <h4>End-of-day handover</h4>
+      <p><strong>Confirm:</strong> everyone has portfolio template access on the hub. Anyone missing it, sort it tonight not tomorrow morning.</p>
+      <p><strong>Soft signal:</strong> ask for raised hands on confidence (1–5). Anyone at 1–2, grab them at the door for a 2-min check-in.</p>
+      <p><strong>Pitch listeners:</strong> Tim takes odd-numbered students, Duke takes even. Adjust on the day if anyone needs more support.</p>
+    </div>
+  </div>
+</section>
+
+<section class="body alt" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="label"><i data-lucide="life-buoy"></i>§ 06 — Need help?</span>
+      <div>
+        <h2>Questions before tomorrow?</h2>
+        <p class="intro">If anything from today is fuzzy, ping us tonight. Better a 30-second message now than 30 minutes lost tomorrow morning.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <a class="ql" style="border: 1px solid var(--line); background: var(--paper-pure);" href="mailto:tim.daly@equinim.edu.au">
+        <div class="num"><i data-lucide="mail"></i>TIM</div>
+        <div class="t">Tim Daly<i class="arrow" data-lucide="arrow-right"></i></div>
+        <div class="d">Lead trainer · concept questions</div>
+      </a>
+      <a class="ql" style="border: 1px solid var(--line); background: var(--paper-pure);" href="mailto:duke@equinim.edu.au">
+        <div class="num"><i data-lucide="mail"></i>DUKE</div>
+        <div class="t">Duke<i class="arrow" data-lucide="arrow-right"></i></div>
+        <div class="d">Co-trainer · classroom support</div>
+      </a>
+      <a class="ql" style="border: 1px solid var(--line); background: var(--paper-pure);" href="https://hub.equinim.edu.au/26b" target="_blank" rel="noopener">
+        <div class="num"><i data-lucide="external-link"></i>HUB</div>
+        <div class="t">Class hub<i class="arrow" data-lucide="arrow-right"></i></div>
+        <div class="d">Materials · slides · recordings</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <div class="brand-name"><i data-lucide="lightbulb"></i>Equinim<em>·</em>College</div>
+      <p>EQC Institute of Technology — delivering nationally recognised training in IT and digital skills from our Perth campus.</p>
+    </div>
+    <div>
+      <h5>Today</h5>
+      <ul>
+        <li><a href="#plan"><i data-lucide="chevron-right"></i>Plan</a></li>
+        <li><a href="#unit"><i data-lucide="chevron-right"></i>Unit</a></li>
+        <li><a href="#assessment"><i data-lucide="chevron-right"></i>Assessment</a></li>
+        <li><a href="#filters"><i data-lucide="chevron-right"></i>Filters</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Cohort</h5>
+      <ul>
+        <li><a href="https://hub.equinim.edu.au/26b" target="_blank" rel="noopener"><i data-lucide="external-link"></i>Class hub</a></li>
+        <li><a href="https://hub.equinim.edu.au/26b/subjects/concepts" target="_blank" rel="noopener"><i data-lucide="external-link"></i>Subject 2 hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <ul>
+        <li>Trainers: Tim &amp; Duke</li>
+        <li>Classroom 1 · Perth CBD</li>
+        <li><a href="mailto:tim.daly@equinim.edu.au"><i data-lucide="mail"></i>tim.daly@equinim.edu.au</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">
+    <span>© 2026 Equinim College · Concepts — Intro for Intake 26B · Wednesday 29 April 2026</span>
+    <span class="rto">RTO 45758 · CRICOS 00000A</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><i data-lucide="check"></i><span id="toastMsg">Saved</span></div>
+
+<script>
+  /* ---------------- Toast ---------------- */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    const m = document.getElementById('toastMsg');
+    if (!t || !m) return;
+    m.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => t.classList.remove('show'), 1300);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* ---------------- Assessment checklist ---------------- */
+  const CHECK_KEY = 'eqc-26b-concepts-checklist-2026-04-29';
+
+  const PARTS = [
+    {
+      id: 'part-1',
+      num: 'Part 1',
+      title: 'Scope the issue',
+      blurb: 'Solution one (Q1–8) + evaluation (Q9–11). Then solution two (Q12–18) + evaluation (Q19–21).',
+      questions: [
+        { n: 1,  q: 'Identify the issue from the case study and describe it in a paragraph.', hint: 'You\'re looking for the underlying problem, not a symptom.' },
+        { n: 2,  q: 'What is your potential (overall) solution one?', hint: 'High-level — one or two sentences.' },
+        { n: 3,  q: 'How will solution one fix the issue?', hint: 'Connect the dots: this solution → addresses this issue → because…' },
+        { n: 4,  q: 'How will solution one address the specific needs?', hint: 'Get concrete about the people / processes affected.' },
+        { n: 5,  q: 'Research one off-the-shelf piece of tech that supports solution one.', hint: 'Hardware or software. Real product, real research.' },
+        { n: 6,  q: 'What are the restrictions of that tech against your job role or organisation?', hint: 'Scope, expertise, budget — be honest about constraints.' },
+        { n: 7,  q: 'What are the expected costs?', hint: 'Use real pricing where you can find it.' },
+        { n: 8,  q: 'Name one factor that could affect the viability of solution one.', hint: 'Technical complexity, scalability, resources, adoption…' },
+        { n: 9,  q: 'How much training will be involved for staff?', hint: 'Setup, core use, advanced features, ongoing support.' },
+        { n: 10, q: 'Time frame to develop and implement?', hint: 'Days, weeks, or months. Be specific and explain why.' },
+        { n: 11, q: 'Compare solution one to two best-in-class examples in the same area.', hint: 'List both. Note where yours stands up and where it lags.' },
+        { n: 12, q: 'What is your potential (overall) solution two?', hint: 'A genuine alternative — not a tweak of solution one.' },
+        { n: 13, q: 'How will solution two fix the issue?', hint: 'Same logic chain as Q3.' },
+        { n: 14, q: 'How will solution two address the specific needs?', hint: 'Same logic chain as Q4.' },
+        { n: 15, q: 'Research one off-the-shelf piece of tech that supports solution two.', hint: 'Different tech to Q5 unless there\'s a good reason.' },
+        { n: 16, q: 'What are the restrictions of that tech against your job role or organisation?', hint: 'Scope, expertise, budget — be honest.' },
+        { n: 17, q: 'What are the expected costs?', hint: 'Real pricing where possible.' },
+        { n: 18, q: 'Name one factor that could affect the viability of solution two.', hint: 'Same lens as Q8 but for the second path.' },
+        { n: 19, q: 'How much training will be involved for staff?', hint: 'Same lens as Q9 but for solution two.' },
+        { n: 20, q: 'Time frame to develop and implement?', hint: 'Same lens as Q10.' },
+        { n: 21, q: 'Compare solution two to two best-in-class examples.', hint: 'List both. Note where yours stands up and where it lags.' }
+      ]
+    },
+    {
+      id: 'part-2',
+      num: 'Part 2',
+      title: 'Present the solution',
+      blurb: 'Pick solution one or two and pitch it for 5 minutes — last 2 minutes are Q&A. No numbered questions here, just the pitch itself.',
+      questions: [
+        { n: 'P', q: 'Deliver the 5-minute pitch — engaging language, confident delivery, professional tone, then handle 2 minutes of Q&A.', hint: 'Pick the solution you can defend best, not the one you like most. Take notes during Q&A — you\'ll need them for Part 3.' }
+      ]
+    },
+    {
+      id: 'part-3',
+      num: 'Part 3',
+      title: 'Seek feedback from supervisor',
+      blurb: 'Document the feedback you got immediately after the pitch.',
+      questions: [
+        { n: 22, q: 'What feedback did your supervisor and/or colleagues give you?', hint: 'Write it down before you forget. Quote them where you can.' }
+      ]
+    },
+    {
+      id: 'part-4',
+      num: 'Part 4',
+      title: 'Refine idea based on feedback',
+      blurb: 'Three reflection questions. Easy marks if you took good notes in Part 3.',
+      questions: [
+        { n: 23, q: 'Based on the feedback given, how would you modify your idea?', hint: 'Concrete changes — not "I\'d think about it more".' },
+        { n: 24, q: 'What key concepts and principles could you adapt to future scenarios?', hint: 'Lessons that travel beyond this specific case study.' },
+        { n: 25, q: 'Reflect on the methods you used to develop your idea — list at least two ways to improve them.', hint: 'Research, comparison, brainstorming — what would you do differently next time?' }
+      ]
+    }
+  ];
+
+  let checkState = JSON.parse(localStorage.getItem(CHECK_KEY) || 'null') || {};
+  let openParts = new Set(['part-1']);
+
+  function totalQuestions() {
+    return PARTS.reduce((sum, p) => sum + p.questions.length, 0);
+  }
+
+  function doneCount() {
+    return Object.values(checkState).filter(Boolean).length;
+  }
+
+  function partDoneCount(part) {
+    return part.questions.filter(q => checkState[part.id + '-' + q.n]).length;
+  }
+
+  function saveCheck() {
+    localStorage.setItem(CHECK_KEY, JSON.stringify(checkState));
+  }
+
+  function renderChecklist() {
+    const wrap = document.getElementById('checklist');
+    if (!wrap) return;
+
+    wrap.innerHTML = PARTS.map(part => {
+      const open = openParts.has(part.id) ? 'open' : '';
+      const done = partDoneCount(part);
+      const total = part.questions.length;
+      const items = part.questions.map(q => {
+        const key = part.id + '-' + q.n;
+        const isDone = !!checkState[key];
+        const hintHtml = q.hint ? '<div class="q-hint">' + escapeHtml(q.hint) + '</div>' : '';
+        return ''
+          + '<div class="check-item ' + (isDone ? 'done' : '') + '" data-key="' + key + '">'
+          +   '<div class="q-num">Q' + q.n + '</div>'
+          +   '<div class="q-body">'
+          +     '<div class="q-text">'
+          +       '<span class="box"><i data-lucide="check"></i></span>'
+          +       '<span>' + escapeHtml(q.q) + '</span>'
+          +     '</div>'
+          +     hintHtml
+          +   '</div>'
+          + '</div>';
+      }).join('');
+
+      return ''
+        + '<div class="check-group ' + open + '" data-part="' + part.id + '" id="' + part.id + '">'
+        +   '<div class="check-group-head">'
+        +     '<div class="part-num">' + part.num + '</div>'
+        +     '<div class="part-title">'
+        +       '<strong>' + escapeHtml(part.title) + '</strong>'
+        +       '<span>' + escapeHtml(part.blurb) + '</span>'
+        +     '</div>'
+        +     '<div class="part-progress">'
+        +       '<span>' + done + '/' + total + '</span>'
+        +       '<i data-lucide="chevron-down" class="chevron"></i>'
+        +     '</div>'
+        +   '</div>'
+        +   '<div class="check-items">' + items + '</div>'
+        + '</div>';
+    }).join('');
+
+    document.getElementById('progressLabel').textContent = doneCount() + ' / ' + totalQuestions();
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  document.addEventListener('click', function(e) {
+    const head = e.target.closest('.check-group-head');
+    if (head) {
+      const part = head.parentElement.dataset.part;
+      if (openParts.has(part)) openParts.delete(part); else openParts.add(part);
+      renderChecklist();
+      return;
+    }
+
+    const item = e.target.closest('.check-item');
+    if (item) {
+      const key = item.dataset.key;
+      checkState[key] = !checkState[key];
+      saveCheck();
+      renderChecklist();
+      showToast(checkState[key] ? 'Ticked' : 'Unticked');
+      return;
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('resetCheck').addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (!confirm('Reset all items to unticked?')) return;
+      checkState = {};
+      saveCheck();
+      renderChecklist();
+      showToast('Reset');
+    });
+
+    document.getElementById('expandAll').addEventListener('click', function(e) {
+      e.stopPropagation();
+      const allOpen = PARTS.every(function(p) { return openParts.has(p.id); });
+      if (allOpen) {
+        openParts.clear();
+        e.currentTarget.innerHTML = '<i data-lucide="unfold-vertical"></i>Expand all';
+      } else {
+        PARTS.forEach(function(p) { openParts.add(p.id); });
+        e.currentTarget.innerHTML = '<i data-lucide="fold-vertical"></i>Collapse all';
+      }
+      renderChecklist();
+      if (window.lucide) lucide.createIcons();
+    });
+  });
+
+  /* ---------------- Boot ---------------- */
+  function boot() {
+    renderChecklist();
+    if (window.lucide) lucide.createIcons();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+</script>
+
+</body>
+</html>

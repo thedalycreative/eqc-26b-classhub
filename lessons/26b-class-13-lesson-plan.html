@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!-- saved from url=(0093)file:///Users/tim.eqctrainer/Desktop/Trainer/Campus%20Admin/lesson-plan-2026-05-13/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- ==== META & TITLE ==== -->
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>26b — Lesson Plan · Wed 13 May 2026</title>
+
+  <!-- Bootstrap 5 CSS via CDN -->
+  <link href="./26b — Lesson Plan · Wed 13 May 2026_files/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons via CDN -->
+  <link rel="stylesheet" href="./26b — Lesson Plan · Wed 13 May 2026_files/bootstrap-icons.css">
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./26b — Lesson Plan · Wed 13 May 2026_files/css2" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    /* Base typography */
+    :root {
+      --brand: #6366f1;
+      --brand-dark: #4338ca;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --soft: #f1f5f9;
+      --accent: #f59e0b;
+      --ok: #10b981;
+      --warn: #ef4444;
+    }
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #fafafa 0%, #f1f5f9 100%);
+      color: var(--ink);
+    }
+    code, .mono {
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, #312e81 0%, #6366f1 60%, #8b5cf6 100%);
+      color: #fff;
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .hero .meta-chip {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Section cards */
+    .section-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.75rem;
+      height: 100%;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(15,23,42,0.06);
+    }
+    .section-card h3 {
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .section-card h3 i {
+      color: var(--brand);
+    }
+
+    /* Timeline list */
+    .timeline {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .timeline li {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .timeline li:last-child { border-bottom: 0; }
+    .timeline .time {
+      font-weight: 600;
+      color: var(--brand-dark);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+    }
+    .timeline .what strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+    .timeline .what span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Concept pills */
+    .pill {
+      display: inline-block;
+      background: var(--soft);
+      color: var(--ink);
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 0.2rem 0.2rem 0.2rem 0;
+    }
+    .pill-accent {
+      background: rgba(99,102,241,0.12);
+      color: var(--brand-dark);
+    }
+
+    /* Activity card */
+    .activity {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-radius: 18px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .activity i {
+      font-size: 1.6rem;
+      color: #b45309;
+    }
+
+    /* Resource link */
+    .resource-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--soft);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 500;
+      transition: background 0.15s;
+      margin-bottom: 0.5rem;
+    }
+    .resource-link:hover {
+      background: rgba(99,102,241,0.12);
+      color: var(--brand-dark);
+    }
+    .resource-link i { color: var(--brand); }
+
+    /* Homework callout */
+    .homework {
+      background: #0f172a;
+      color: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .homework h3 { color: #fff; }
+    .homework h3 i { color: #fbbf24; }
+    .homework code {
+      background: rgba(255,255,255,0.1);
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      color: #fbbf24;
+    }
+
+    /* Footer */
+    footer {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Section heading divider */
+    .section-heading {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 2.5rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-heading::before {
+      content: "";
+      width: 6px;
+      height: 22px;
+      background: var(--brand);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==== MAIN CONTAINER ==== -->
+  <div class="container py-5">
+
+    <!-- ==== HERO SECTION ==== -->
+    <section class="hero mb-5">
+      <!-- Meta chips: cohort + week -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="meta-chip"><i class="bi bi-calendar-event me-1"></i> Wed 13 May 2026</span>
+        <span class="meta-chip"><i class="bi bi-people me-1"></i> Intake 26b</span>
+        <span class="meta-chip"><i class="bi bi-mortarboard me-1"></i> ICT50220 · Week 9</span>
+        <span class="meta-chip"><i class="bi bi-geo-alt me-1"></i> Perth · Classroom 6</span>
+      </div>
+
+      <!-- Hero heading + subtitle -->
+      <h1 class="display-5 mb-2">Bootstrap Out, CSS In.</h1>
+      <p class="lead mb-0" style="opacity:0.9; max-width: 700px;">
+        Wrap up the Skywings / Apple clone, debrief the wins and the bloat, then
+        roll into hand-written CSS with Flexbox &amp; Grid. Finish strong with a
+        first taste of JavaScript DOM.
+      </p>
+    </section>
+
+    <!-- ==== TODAY'S FOCUS SECTION ==== -->
+    <h2 class="section-heading">Today's Focus</h2>
+    <div class="row g-4">
+
+      <!-- Focus card 1: Topic -->
+      <div class="col-lg-4">
+        <div class="section-card">
+          <h3><i class="bi bi-bullseye"></i> Topic</h3>
+          <p class="text-muted mb-3">
+            Closing out Bootstrap clone projects and bridging into vanilla CSS layout.
+          </p>
+          <span class="pill pill-accent">ICTWEB519</span>
+          <span class="pill pill-accent">ICTWEB520</span>
+          <span class="pill">CSS · Flexbox · Grid</span>
+        </div>
+      </div>
+
+      <!-- Focus card 2: Outcomes -->
+      <div class="col-lg-4">
+        <div class="section-card">
+          <h3><i class="bi bi-check2-square"></i> Outcomes</h3>
+          <ul class="ps-3 mb-0 text-muted">
+            <li>Submit Bootstrap clone (Skywings or Apple).</li>
+            <li>Recreate a layout in pure Flexbox.</li>
+            <li>Wire a button event with vanilla JS.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Focus card 3: Vibe -->
+      <div class="col-lg-4">
+        <div class="section-card">
+          <h3><i class="bi bi-lightning-charge"></i> Energy</h3>
+          <p class="text-muted mb-0">
+            Hands-on day. Less slides, more code. Pair-up encouraged during the
+            Flexbox sprint. Cap each demo at 8 minutes — students should be coding
+            most of the session.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== SCHEDULE / AGENDA SECTION ==== -->
+    <h2 class="section-heading">Schedule</h2>
+    <div class="section-card">
+      <ul class="timeline">
+
+        <!-- Block 1: Arrival + warm-up -->
+        <li>
+          <span class="time">09:00</span>
+          <div class="what">
+            <strong>Arrival &amp; warm-up</strong>
+            <span>Sign-on sheet, laptops up, Discord open. Quick win: each student shares one thing they nailed and one thing that broke in their Bootstrap clone.</span>
+          </div>
+        </li>
+
+        <!-- Block 2: Bootstrap debrief -->
+        <li>
+          <span class="time">09:15</span>
+          <div class="what">
+            <strong>Bootstrap clone debrief</strong>
+            <span>Show 2–3 submitted sites on the big screen. Mark for code quality, not pixel-perfect. Common pitfalls: specificity wars, !important abuse, inline style creep.</span>
+          </div>
+        </li>
+
+        <!-- Block 3: Flexbox demo -->
+        <li>
+          <span class="time">10:00</span>
+          <div class="what">
+            <strong>Flexbox first principles</strong>
+            <span>Live demo: rebuild the Skywings nav from scratch in pure Flexbox. No Bootstrap classes. Talk through main-axis vs cross-axis, justify vs align.</span>
+          </div>
+        </li>
+
+        <!-- Block 4: Break -->
+        <li>
+          <span class="time">10:45</span>
+          <div class="what">
+            <strong>Break</strong>
+            <span>15 minutes. Coffee, stretch, vibes.</span>
+          </div>
+        </li>
+
+        <!-- Block 5: Flexbox Froggy sprint -->
+        <li>
+          <span class="time">11:00</span>
+          <div class="what">
+            <strong>Flexbox Froggy sprint</strong>
+            <span>20-minute timer. First to finish all 24 levels wins. Then CSS Grid Garden as a stretch goal.</span>
+          </div>
+        </li>
+
+        <!-- Block 6: Grid intro -->
+        <li>
+          <span class="time">11:30</span>
+          <div class="what">
+            <strong>Grid for layout</strong>
+            <span>Short demo: a 3-column card grid in 6 lines of CSS. Compare to the Bootstrap equivalent. Show why Grid wins for 2D layouts.</span>
+          </div>
+        </li>
+
+        <!-- Block 7: Lunch -->
+        <li>
+          <span class="time">12:15</span>
+          <div class="what">
+            <strong>Lunch</strong>
+            <span>45 minutes.</span>
+          </div>
+        </li>
+
+        <!-- Block 8: JS DOM intro -->
+        <li>
+          <span class="time">13:00</span>
+          <div class="what">
+            <strong>JavaScript: make the button do the thing</strong>
+            <span>Variables, functions, <code>querySelector</code>, <code>addEventListener</code>. Build a counter button live. Then a colour-changer. Then a toggle. Each ~10 min.</span>
+          </div>
+        </li>
+
+        <!-- Block 9: Inspect &amp; Steal -->
+        <li>
+          <span class="time">14:00</span>
+          <div class="what">
+            <strong>Inspect &amp; Steal</strong>
+            <span>Open Stripe.com or Linear.app. Pick one component. Recreate the layout from scratch in 15 minutes. Compare results, vote best clone.</span>
+          </div>
+        </li>
+
+        <!-- Block 10: Wrap + 1-on-1s -->
+        <li>
+          <span class="time">14:30</span>
+          <div class="what">
+            <strong>Wrap up + 1-on-1 catch-ups</strong>
+            <span>Quick recap. Then pull aside Hayden, Courtney, Beren — quick check-in on the recent absences. Set homework expectations.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ==== CONCEPTS SECTION ==== -->
+    <h2 class="section-heading">Concepts to Cover</h2>
+    <div class="row g-4">
+
+      <!-- Concepts card: CSS -->
+      <div class="col-md-6">
+        <div class="section-card">
+          <h3><i class="bi bi-palette"></i> CSS Layout</h3>
+          <p class="text-muted">Move beyond utility classes. Hand-write the layout primitives.</p>
+          <!-- Flexbox concepts -->
+          <span class="pill">display: flex</span>
+          <span class="pill">flex-direction</span>
+          <span class="pill">justify-content</span>
+          <span class="pill">align-items</span>
+          <span class="pill">flex-wrap</span>
+          <span class="pill">gap</span>
+          <!-- Grid concepts -->
+          <span class="pill pill-accent">display: grid</span>
+          <span class="pill pill-accent">grid-template-columns</span>
+          <span class="pill pill-accent">grid-area</span>
+          <span class="pill pill-accent">minmax()</span>
+          <span class="pill pill-accent">repeat()</span>
+        </div>
+      </div>
+
+      <!-- Concepts card: JS -->
+      <div class="col-md-6">
+        <div class="section-card">
+          <h3><i class="bi bi-braces"></i> JavaScript DOM</h3>
+          <p class="text-muted">First contact. Make a button do something visible on the page.</p>
+          <!-- Core JS DOM concepts -->
+          <span class="pill">let / const</span>
+          <span class="pill">function</span>
+          <span class="pill">document.querySelector</span>
+          <span class="pill">addEventListener</span>
+          <span class="pill">element.textContent</span>
+          <span class="pill">element.classList.toggle</span>
+          <span class="pill pill-accent">arrow functions</span>
+          <span class="pill pill-accent">template literals</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== ACTIVITIES SECTION ==== -->
+    <h2 class="section-heading">Make It Fun</h2>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <!-- Activity: Flexbox Froggy -->
+        <div class="activity">
+          <i class="bi bi-controller"></i>
+          <div>
+            <strong>Flexbox Froggy Sprint</strong><br>
+            <small>flexboxfroggy.com — 24 levels, 20-minute timer, winner gets bragging rights.</small>
+          </div>
+        </div>
+        <!-- Activity: Grid Garden -->
+        <div class="activity">
+          <i class="bi bi-flower2"></i>
+          <div>
+            <strong>CSS Grid Garden</strong><br>
+            <small>cssgridgarden.com — stretch goal for the speedrunners.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- Activity: Inspect &amp; Steal -->
+        <div class="activity">
+          <i class="bi bi-search"></i>
+          <div>
+            <strong>Inspect &amp; Steal</strong><br>
+            <small>Pick a component from Stripe / Linear / NYTimes. Recreate from scratch in 15 minutes.</small>
+          </div>
+        </div>
+        <!-- Activity: Button Battle -->
+        <div class="activity">
+          <i class="bi bi-cursor"></i>
+          <div>
+            <strong>Button Battle</strong><br>
+            <small>Pair-up. Each pair builds one JS-powered button. Vote on cleverest output.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== RESOURCES SECTION ==== -->
+    <h2 class="section-heading">Resources</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <!-- Resource: Kevin Powell -->
+        <a class="resource-link" href="https://www.youtube.com/@KevinPowell" target="_blank">
+          <i class="bi bi-youtube"></i>
+          Kevin Powell — best free CSS instructor online
+        </a>
+        <!-- Resource: MDN Flexbox -->
+        <a class="resource-link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox" target="_blank">
+          <i class="bi bi-book"></i>
+          MDN — Basic Concepts of Flexbox
+        </a>
+        <!-- Resource: CSS-Tricks Flexbox -->
+        <a class="resource-link" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">
+          <i class="bi bi-bookmark-star"></i>
+          CSS-Tricks — Complete Guide to Flexbox
+        </a>
+      </div>
+      <div class="col-md-6">
+        <!-- Resource: Flexbox Froggy -->
+        <a class="resource-link" href="https://flexboxfroggy.com/" target="_blank">
+          <i class="bi bi-controller"></i>
+          Flexbox Froggy
+        </a>
+        <!-- Resource: Grid Garden -->
+        <a class="resource-link" href="https://cssgridgarden.com/" target="_blank">
+          <i class="bi bi-flower2"></i>
+          CSS Grid Garden
+        </a>
+        <!-- Resource: MDN JS DOM -->
+        <a class="resource-link" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents" target="_blank">
+          <i class="bi bi-braces"></i>
+          MDN — Manipulating Documents (DOM)
+        </a>
+      </div>
+    </div>
+
+    <!-- ==== HOMEWORK SECTION ==== -->
+    <h2 class="section-heading">Homework</h2>
+    <div class="homework">
+      <h3><i class="bi bi-house-door"></i> Due Friday 15 May</h3>
+      <ul class="ps-3 mb-3" style="opacity:0.9;">
+        <!-- Homework item 1 -->
+        <li>Submit your Bootstrap clone if you haven't already — Thursday catch-up is the safety net.</li>
+        <!-- Homework item 2 -->
+        <li>Finish Flexbox Froggy and CSS Grid Garden. Screenshot the finish screens, drop in Discord.</li>
+        <!-- Homework item 3 -->
+        <li>Build a single-page <code>index.html</code> with one button that changes its own text on click. Pure HTML + CSS + JS, no frameworks.</li>
+      </ul>
+      <small style="opacity:0.7;">Stuck? Discord channel is the first stop. Email if it's urgent.</small>
+    </div>
+
+    <!-- ==== STUDENT CHECK-INS SECTION ==== -->
+    <h2 class="section-heading">Today's Check-ins</h2>
+    <div class="section-card">
+      <p class="text-muted mb-3">Quiet word with these students during break or wrap-up — not a confrontation, just a temperature check.</p>
+      <!-- Hayden -->
+      <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="bi bi-person-circle fs-3 text-primary"></i>
+        <div>
+          <strong>Hayden</strong> — missed last two sessions after a solid run. 20% attendance. Quick "everything okay?" is enough.
+        </div>
+      </div>
+      <!-- Courtney -->
+      <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="bi bi-person-circle fs-3 text-primary"></i>
+        <div>
+          <strong>Courtney Marlborough</strong> — same pattern. Two missed in a row. Check her Bootstrap clone is on track.
+        </div>
+      </div>
+      <!-- Beren -->
+      <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="bi bi-person-circle fs-3 text-primary"></i>
+        <div>
+          <strong>Beren Scott</strong> — sporadic May attendance. Also has a duplicate student number on the roster — flag with admin separately.
+        </div>
+      </div>
+      <!-- Fatemeh -->
+      <div class="d-flex align-items-start gap-3">
+        <i class="bi bi-telephone fs-3 text-warning"></i>
+        <div>
+          <strong>Fatemeh Imani</strong> — hasn't shown since 2 April. Phone call after class, not email.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== FOOTER ==== -->
+    <footer class="text-center mt-5 pt-4 border-top">
+      <p class="mb-1">Intake 26b · ICT50220 Diploma of Web Development · Equinim College Perth</p>
+      <p class="mb-0">Prepared Wed 13 May 2026 · Tim Daly</p>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap JS Bundle (Popper included) -->
+  <script src="./26b — Lesson Plan · Wed 13 May 2026_files/bootstrap.bundle.min.js"></script>
+
+
+</body></html>

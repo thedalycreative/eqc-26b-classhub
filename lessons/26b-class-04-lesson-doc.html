@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 4 · Practice Session</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafaf7;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 { font-family: 'Fraunces', serif; color: #ff8a3d; }
+    h2 { margin-top: 2.5rem; }
+    a { color: #2f9ea0; text-decoration: none; border-bottom: 1px solid #2f9ea0; }
+    a:hover { background: #2f9ea0; color: #fafaf7; padding: 0 2px; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+    pre { background: #1a1a1a; color: #fafaf7; padding: 1rem; border-radius: 6px; overflow-x: auto; font-family: 'Courier New', monospace; line-height: 1.4; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .resource { background: #fff; padding: 1rem; margin: 1rem 0; border-left: 4px solid #2f9ea0; }
+    .tip { background: #ffeaa7; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+    .theme-list { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; }
+    .theme-list li { background: #fff; padding: 10px 18px; border-radius: 999px; border: 1px solid #ff8a3d; color: #1a1a1a; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Class 4 — Practice Session</h1>
+  <p><strong>Topic 1 · HTML & CSS</strong> — 3 hours · Design thinking, digital résumé, and a themed practice site</p>
+
+  <h2>Part 1 · Design Thinking</h2>
+  <p>Before we wrote any code today, we had an important conversation: <strong>the way you see something visually is not always the way other people see it</strong>.</p>
+
+  <p>As a web developer, your job isn't to build the site <em>you</em> want — it's to listen to the client and build the site <em>they</em> need. Different people respond to colours, layouts, and tone in very different ways depending on their age, gender, culture, and context.</p>
+
+  <h3>Colours influence us</h3>
+  <p>We looked at adverts and websites and discussed:</p>
+  <ul>
+    <li>What feelings do the colours evoke?</li>
+    <li>What is the website essentially trying to do — sell, inform, entertain, build trust?</li>
+    <li>Who is the target audience? How do you know?</li>
+    <li>Would the design choices work for a different audience?</li>
+  </ul>
+
+  <div class="tip">
+    <strong>💡 Key takeaway:</strong> Listen to your client. Be aware that what looks "obviously right" to you may not work for them or their audience. Design is a conversation, not a decree.
+  </div>
+
+  <h2>Build a Digital Résumé (with me)</h2>
+  <p>We built a digital résumé together — HTML version first, then layered the styling in afterwards. This is the rule: <strong>structure first, style second</strong>.</p>
+
+  <p>A simple résumé skeleton:</p>
+
+<pre><code>&lt;header&gt;
+  &lt;h1&gt;Your Name&lt;/h1&gt;
+  &lt;p&gt;Front End Web Developer · Perth, WA&lt;/p&gt;
+&lt;/header&gt;
+
+&lt;section&gt;
+  &lt;h2&gt;About Me&lt;/h2&gt;
+  &lt;p&gt;A short, punchy paragraph about who you are.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section&gt;
+  &lt;h2&gt;Experience&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Role · Company · Dates&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
+
+&lt;section&gt;
+  &lt;h2&gt;Skills&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+
+  <h2>Part 2 · Themed Webpage Activity</h2>
+  <p>This activity is your chance to practice everything you've learned and get more confident typing your own code. You'll build your own webpage and choose <strong>one</strong> of the following themes:</p>
+
+  <ul class="theme-list">
+    <li>Sporting Goods</li>
+    <li>Children's Products</li>
+    <li>Health & Beauty</li>
+    <li>Food / Cooking</li>
+    <li>Travel & Tourism</li>
+    <li>Music</li>
+    <li>Tech</li>
+    <li>Pets & Animals</li>
+  </ul>
+
+  <p>Use <a href="https://coolors.co" target="_blank">Coolors.co</a> to pick a colour palette that fits your theme.</p>
+
+  <h3>HTML Skeleton to Start From</h3>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Your Website Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;header&gt;
+    &lt;h1&gt;Welcome to Your Website&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;h2&gt;About Us&lt;/h2&gt;
+      &lt;p&gt;This is where you can provide information about your company or yourself.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section&gt;
+      &lt;h2&gt;Contact Us&lt;/h2&gt;
+      &lt;p&gt;Feel free to reach out to us using the contact information provided.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2026 Your Website. All rights reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="tip">
+    <strong>🎨 Make it yours:</strong> Add real content. Pick photos that match your theme. Pick fonts and colours that match your audience. Spend the rest of the lesson getting it looking the way <em>your audience</em> would expect — not just the way you like it.
+  </div>
+
+  <h2>Quick Recap Checklist</h2>
+  <ul>
+    <li>✅ Think about who you're designing <em>for</em>, not just what you like</li>
+    <li>✅ Build a digital résumé in HTML, then style it</li>
+    <li>✅ Pick a theme and build a 1-page site for it</li>
+    <li>✅ Use Coolors.co for your colour palette</li>
+    <li>✅ Always: structure first, style second</li>
+  </ul>
+
+  <div class="resource">
+    <h4>🔗 References</h4>
+    <p><a href="https://coolors.co" target="_blank">Coolors.co — Colour Palette Generator</a></p>
+    <p><a href="https://www.w3schools.com/css/css_selectors.asp" target="_blank">CSS Selectors (W3Schools)</a></p>
+    <p><a href="https://fonts.google.com" target="_blank">Google Fonts</a></p>
+    <p><a href="../downloads/code/26b-class-04-frontend.zip" target="_blank">FrontEndClass4 sample code (ZIP)</a></p>
+  </div>
+
+  <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
+  <p style="font-size: 0.9rem; color: #666;">
+    <strong>Class 4</strong> — Equinim College · Front End Web Development · 26B
+  </p>
+
+</body>
+</html>
