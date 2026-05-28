@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 2 · Diving into HTML</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafaf7;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 { font-family: 'Fraunces', serif; color: #ff8a3d; }
+    h2 { margin-top: 2.5rem; }
+    a { color: #2f9ea0; text-decoration: none; border-bottom: 1px solid #2f9ea0; }
+    a:hover { background: #2f9ea0; color: #fafaf7; padding: 0 2px; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+    pre { background: #1a1a1a; color: #fafaf7; padding: 1rem; border-radius: 6px; overflow-x: auto; font-family: 'Courier New', monospace; line-height: 1.4; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .resource { background: #fff; padding: 1rem; margin: 1rem 0; border-left: 4px solid #2f9ea0; }
+    .tip { background: #ffeaa7; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+    .tag-list li { margin-bottom: 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Class 2 — Diving into HTML</h1>
+  <p><strong>Topic 1 · HTML Fundamentals</strong> — 3 hours · Recap, page structure, lists, and images</p>
+
+  <h2>Part 1 · Recap & New Tags</h2>
+  <p>We started by reviewing the tags from Class 1 — <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, and <code>&lt;a&gt;</code>. Then we added a handful of text-formatting tags that handle small but essential jobs.</p>
+
+  <h3>New HTML Tags</h3>
+  <ul class="tag-list">
+    <li><code>&lt;br&gt;</code> — line break</li>
+    <li><code>&lt;strong&gt;</code> — bold</li>
+    <li><code>&lt;em&gt;</code> — italics</li>
+    <li><code>&lt;hr&gt;</code> — horizontal line (divider)</li>
+    <li><code>&lt;u&gt;</code> — underline</li>
+  </ul>
+
+  <div class="tip">
+    <strong>💡 Check in:</strong> Does this make sense? Try each tag yourself in VS Code before moving on. Pause if you need to.
+  </div>
+
+  <h2>Part 2 · HTML Page Setup</h2>
+  <p>Every HTML page follows the same skeleton. Once you know the structure, every site you build starts the same way.</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <h3>What each piece does</h3>
+  <ul>
+    <li><code>&lt;!DOCTYPE html&gt;</code> — tells the browser this is an HTML5 document so it renders correctly.</li>
+    <li><code>&lt;html lang="en"&gt;</code> — the root element. <code>lang="en"</code> tells browsers and search engines the document is in English (helps with accessibility and SEO).</li>
+    <li><code>&lt;head&gt;</code> — invisible meta-information about the page: character encoding, viewport, title, stylesheets, scripts.</li>
+    <li><code>&lt;meta charset="UTF-8"&gt;</code> — supports a wide range of characters and symbols from any language.</li>
+    <li><code>&lt;meta name="viewport"&gt;</code> — makes the page responsive on mobile devices.</li>
+    <li><code>&lt;title&gt;</code> — the text in the browser tab and search results.</li>
+    <li><code>&lt;body&gt;</code> — everything visible to the user lives in here.</li>
+  </ul>
+
+  <h3>Semantic structural tags</h3>
+  <ul>
+    <li><code>&lt;header&gt;</code> — top-of-page content, usually where the nav bar goes. <strong>Not the same as <code>&lt;head&gt;</code>.</strong></li>
+    <li><code>&lt;footer&gt;</code> — bottom-of-page content. Can include text, links, images.</li>
+  </ul>
+
+  <div class="tip">
+    <strong>🛠 Activity:</strong> Build a webpage using everything you've learned — heading tags, paragraph tag, anchor tag, <code>&lt;strong&gt;</code>, and other text-adjusting tags. Use your reference sheet. Screen-share and show the class when you're done.
+  </div>
+
+  <h2>Lists</h2>
+  <p>Two ways to list things:</p>
+  <ul>
+    <li><code>&lt;ol&gt;</code> — ordered list (numbered)</li>
+    <li><code>&lt;ul&gt;</code> — unordered list (bulleted)</li>
+    <li><code>&lt;li&gt;</code> — list item (used inside both)</li>
+  </ul>
+
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;First item&lt;/li&gt;
+  &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+  <h2>Part 3 · Images</h2>
+  <p>To put an image on a page, use the <code>&lt;img&gt;</code> tag. It's self-closing — no <code>&lt;/img&gt;</code>.</p>
+
+<pre><code>&lt;img src="path/to/your/image.jpg" alt="Description of the image"&gt;</code></pre>
+
+  <ul>
+    <li><strong>src</strong> — the path to the image file (usually inside an <code>images</code> folder).</li>
+    <li><strong>alt</strong> — describes the image for screen readers and shows if the image fails to load. Important for accessibility.</li>
+  </ul>
+
+  <div class="tip">
+    <strong>📁 Folder discipline:</strong> Create an <code>images</code> folder inside your project. Keep all your images in there. Never reference an image that lives on someone else's computer or random web URL — copy it into your project first.
+  </div>
+
+  <h3>Sizing an image</h3>
+  <p>If an image doesn't fit, use the <code>style</code> attribute for quick adjustments:</p>
+
+<pre><code>&lt;img src="images/hero.jpg" alt="Hero photo" style="width: 400px;"&gt;</code></pre>
+
+  <h2>Background images</h2>
+  <p>To set a background image on the whole page, use a <code>style</code> attribute on the <code>&lt;body&gt;</code> tag (we'll move this into CSS files later):</p>
+
+<pre><code>&lt;body style="background-image: url('images/background.jpg'); background-size: cover;"&gt;</code></pre>
+
+  <h2>Quick Recap Checklist</h2>
+  <ul>
+    <li>✅ Use <code>&lt;br&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;u&gt;</code> for small text adjustments</li>
+    <li>✅ Every page starts with <code>&lt;!DOCTYPE html&gt;</code> and the <code>&lt;html&gt;</code>/<code>&lt;head&gt;</code>/<code>&lt;body&gt;</code> structure</li>
+    <li>✅ Know the difference between <code>&lt;head&gt;</code> and <code>&lt;header&gt;</code></li>
+    <li>✅ Use <code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code> with <code>&lt;li&gt;</code> for lists</li>
+    <li>✅ Add images with <code>&lt;img src alt&gt;</code> and always include alt text</li>
+    <li>✅ Keep an <code>images/</code> folder in your project</li>
+  </ul>
+
+  <div class="resource">
+    <h4>🔗 References</h4>
+    <p><a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML</a></p>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank">MDN HTML Element Index</a></p>
+    <p><a href="../downloads/pdfs/26b-class-02-tag-reference.pdf" target="_blank">Tag Reference Sheet (PDF)</a></p>
+    <p><a href="../downloads/code/26b-class-02-frontend.zip" target="_blank">FrontEndClass2 sample code (ZIP)</a></p>
+  </div>
+
+  <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
+  <p style="font-size: 0.9rem; color: #666;">
+    <strong>Class 2</strong> — Equinim College · Front End Web Development · 26B
+  </p>
+
+</body>
+</html>
